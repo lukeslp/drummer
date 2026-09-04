@@ -33,6 +33,19 @@ def _config(path):
     return json.loads(Path(path).read_text()) if path else {}
 
 
+ADAPTER_NAMES = ["codex", "claude", "qwen-0.5b", "qwen-1.5b", "qwen-8b"]
+
+
+def _adapter(name, *, base_url="http://127.0.0.1:11434/v1", trusted_hosts=(), model=None):
+    from drummer.adapters import ClaudeCLIAdapter, CodexCLIAdapter, LocalOpenAIAdapter
+    if name in {"codex", "claude"}:
+        return (CodexCLIAdapter if name == "codex" else ClaudeCLIAdapter)(allow_live=True, model=model)
+    local_model = {"qwen-0.5b": "qwen2.5:0.5b", "qwen-1.5b": "qwen2.5:1.5b",
+                   "qwen-8b": "qwen3:8b"}[name]
+    return LocalOpenAIAdapter(model=model or local_model, base_url=base_url,
+                              trusted_hosts=trusted_hosts, allow_live=True)
+
+
 def parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="drummer", description="Learned communication and exact protocol experiments")
     commands = p.add_subparsers(dest="command", required=True)
@@ -56,6 +69,12 @@ def parser() -> argparse.ArgumentParser:
     train.add_argument("--run-name")
     train.add_argument("--tiny", action="store_true", help="One layer, width32: correctness only, not Drummer-0 research evidence")
     train.add_argument("--resume")
+    pilot = commands.add_parser("pilot", help="Run the preregistered local pipeline, stopping at failed quality gates")
+    pilot.add_argument("--config", default="configs/pilot.json")
+    pilot.add_argument("--corpus", required=True)
+    pilot.add_argument("--output", required=True)
+    pilot.add_argument("--device", default="cpu")
+    pilot.add_argument("--minutes", type=int, default=240, help="Conservative local elapsed-time bound")
     evaluate = commands.add_parser("evaluate", help="Evaluate one frozen checkpoint")
     evaluate.add_argument("--checkpoint", required=True)
     evaluate.add_argument("--corpus", required=True)
@@ -84,13 +103,51 @@ def parser() -> argparse.ArgumentParser:
     cloud.add_argument("--root", default=".")
     cloud.add_argument("--ledger", required=True)
     cloud.add_argument("--verification", required=True)
+    cloud_pilot = commands.add_parser("cloud-pilot", help="PAID: explicitly launch a gated L4 pilot, at most four hours")
+    cloud_pilot.add_argument("--root", default=".")
+    cloud_pilot.add_argument("--ledger", required=True)
+    cloud_pilot.add_argument("--verification", required=True)
+    cloud_pilot.add_argument("--smoke-report", required=True)
+    cloud_pilot.add_argument("--minutes", type=int, default=240)
     handoff = commands.add_parser("handoff", help="Inspect fixtures or explicitly run bounded model calls")
-    handoff.add_argument("--adapter", choices=["codex", "claude", "qwen-0.5b", "qwen-1.5b", "qwen-8b"], default="qwen-1.5b")
+    handoff.add_argument("--adapter", choices=ADAPTER_NAMES, default="qwen-1.5b")
+    handoff.add_argument("--model", help="Explicit installed model ID; recorded in the run")
     handoff.add_argument("--limit", type=int, default=1)
-    handoff.add_argument("--variant", default="full_english")
+    handoff.add_argument("--variant", default="full-english")
     handoff.add_argument("--timeout", type=float, default=180)
+    handoff.add_argument("--base-url", default="http://127.0.0.1:11434/v1", help="Local OpenAI-compatible endpoint")
+    handoff.add_argument("--trust-host", action="append", default=[], help="Explicitly allow one non-loopback local endpoint host")
     handoff.add_argument("--live", action="store_true", help="Allow calls to the selected installed client or local endpoint")
     handoff.add_argument("--output")
+    pair = commands.add_parser("pair", help="Run actual sender-to-receiver handoffs, counting both clients")
+    pair.add_argument("--direction", choices=["codex-claude", "claude-codex"], default="codex-claude")
+    pair.add_argument("--sender", choices=ADAPTER_NAMES, help="Override direction together with --receiver")
+    pair.add_argument("--receiver", choices=ADAPTER_NAMES)
+    pair.add_argument("--sender-model")
+    pair.add_argument("--receiver-model")
+    pair.add_argument("--local-base-url", default="http://127.0.0.1:11434/v1")
+    pair.add_argument("--trust-host", action="append", default=[])
+    pair.add_argument("--variant", default="full-english")
+    pair.add_argument("--limit", type=int, default=1)
+    pair.add_argument("--timeout", type=float, default=180)
+    pair.add_argument("--contract", help="Protocol encoding contract supplied to the sender; its tokens count")
+    pair.add_argument("--expanded", action="store_true")
+    pair.add_argument("--live", action="store_true")
+    pair.add_argument("--output")
+    matrix = commands.add_parser("crossplay", help="Compare independently trained checkpoints")
+    matrix.add_argument("--checkpoints", nargs="+", required=True)
+    matrix.add_argument("--corpus", required=True)
+    matrix.add_argument("--split", choices=["validation", "test"], default="validation")
+    matrix.add_argument("--device", default="cpu")
+    matrix.add_argument("--output")
+    gates = commands.add_parser("gates", help="Evaluate five paired seeds; validation never establishes promotion")
+    gates.add_argument("--optional", nargs=5, required=True)
+    gates.add_argument("--compulsory", nargs=5, required=True)
+    gates.add_argument("--corpus", required=True)
+    gates.add_argument("--split", choices=["validation", "test"], default="validation")
+    gates.add_argument("--device", default="cpu")
+    gates.add_argument("--output")
+    gates.add_argument("--conformance-report", help="Independent source-matched diagnostic review required for eligibility")
     return p
 
 
@@ -127,10 +184,17 @@ def _run(args):
             from drummer.evaluation import evaluate
             emit(evaluate(args.checkpoint, {"data_root": args.corpus, "split": args.split,
                                             "device": args.device}), args.output)
+        case "pilot":
+            import time
+            from drummer.pilot import run_pilot
+            if not 1 <= args.minutes <= 240:
+                raise ValueError("--minutes must be between 1 and 240")
+            emit(run_pilot(_config(args.config), data_root=args.corpus, output_root=args.output,
+                           device=args.device, deadline_unix=time.time() + args.minutes * 60))
         case "baselines":
-            from drummer.evaluation import baseline_report
-            from drummer.world import load_split
-            emit(baseline_report(load_split(args.corpus, args.split)), args.output)
+            from drummer.evaluation import evaluate_control
+            emit({name: evaluate_control(name, args.corpus, split=args.split)
+                  for name in ("null", "full", "deterministic")}, args.output)
         case "unseal":
             from drummer.world import unseal_test
             emit(unseal_test(args.corpus, args.confirm))
@@ -144,19 +208,21 @@ def _run(args):
             result = verify(args.root, args.output)
             emit(result)
             return 0 if result["passed"] else 1
-        case "budget" | "cloud-smoke":
+        case "budget" | "cloud-smoke" | "cloud-pilot":
             from drummer.budget import BudgetLedger
             ledger = BudgetLedger(args.ledger)
             if args.command == "cloud-smoke":
                 from drummer.cloud import launch_smoke
                 emit(launch_smoke(args.root, ledger, args.verification))
+            elif args.command == "cloud-pilot":
+                from drummer.cloud import launch_pilot
+                emit(launch_pilot(args.root, ledger, args.verification, args.smoke_report, minutes=args.minutes))
             elif args.reconcile:
                 from drummer.cloud import reconcile
                 emit(reconcile(ledger))
             else:
                 emit(ledger.snapshot())
         case "handoff":
-            from drummer.adapters import ClaudeCLIAdapter, CodexCLIAdapter, LocalOpenAIAdapter
             from drummer.handoffs import HandoffHarness, PromptVariant, render_prompt, synthetic_handoff_cases
             if not 1 <= args.limit <= 24:
                 raise ValueError("--limit must be between 1 and 24")
@@ -165,14 +231,45 @@ def _run(args):
             if not args.live:
                 emit([render_prompt(case, variant) for case in cases], args.output)
             else:
-                if args.adapter in {"codex", "claude"}:
-                    adapter = (CodexCLIAdapter if args.adapter == "codex" else ClaudeCLIAdapter)(allow_live=True)
-                else:
-                    model, host = {"qwen-0.5b": ("qwen2.5:0.5b", "192.168.0.100"),
-                                   "qwen-1.5b": ("qwen2.5:1.5b", "192.168.0.100"),
-                                   "qwen-8b": ("qwen3:8b", "127.0.0.1")}[args.adapter]
-                    adapter = LocalOpenAIAdapter(model=model, base_url=f"http://{host}:11434/v1", allow_live=True)
+                adapter = _adapter(args.adapter, base_url=args.base_url, trusted_hosts=args.trust_host, model=args.model)
                 emit(HandoffHarness().run(cases, adapter=adapter, variants=[variant], timeout_seconds=args.timeout), args.output)
+        case "pair":
+            from drummer.handoffs import DeliveryMode, HandoffHarness, PromptVariant, synthetic_handoff_cases
+            if not 1 <= args.limit <= 24:
+                raise ValueError("--limit must be between 1 and 24")
+            variant = PromptVariant(args.variant)
+            if bool(args.sender) != bool(args.receiver):
+                raise ValueError("Provide both --sender and --receiver")
+            sender, receiver = (args.sender, args.receiver) if args.sender else args.direction.split("-")
+            if not args.live:
+                emit({"direction": f"{sender}->{receiver}", "variant": variant.value,
+                      "cases": args.limit, "live": False, "message": "Add --live for explicit client calls"}, args.output)
+            else:
+                contract = Path(args.contract).read_text() if args.contract else None
+                sender_adapter = _adapter(sender, base_url=args.local_base_url, trusted_hosts=args.trust_host, model=args.sender_model)
+                receiver_adapter = _adapter(receiver, base_url=args.local_base_url, trusted_hosts=args.trust_host, model=args.receiver_model)
+                records = []
+                for case in synthetic_handoff_cases()[:args.limit]:
+                    record = HandoffHarness().run_pair(
+                        case, sender=sender_adapter, receiver=receiver_adapter, variant=variant,
+                        timeout_seconds=args.timeout, protocol_contract=contract,
+                        delivery_mode=DeliveryMode.DETERMINISTIC_EXPANDED if args.expanded else DeliveryMode.NATIVE,
+                        reverse=sender == "claude" or receiver == "codex")
+                    records.append(record)
+                    # Persist completed cases incrementally, including failures.
+                    if args.output:
+                        target = Path(args.output)
+                        target.parent.mkdir(parents=True, exist_ok=True)
+                        target.write_text(json.dumps(records, default=_json_default, indent=2, allow_nan=False) + "\n")
+                emit(records, args.output)
+        case "crossplay" | "gates":
+            from drummer.evaluation import crossplay, evaluate_five_seed
+            config = {"data_root": args.corpus, "split": args.split, "device": args.device}
+            if args.command == "crossplay":
+                emit(crossplay(args.checkpoints, config), args.output)
+            else:
+                config["conformance_report"] = args.conformance_report
+                emit(evaluate_five_seed(args.optional, config, compulsory_checkpoints=args.compulsory), args.output)
     return 0
 
 

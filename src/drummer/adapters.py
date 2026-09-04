@@ -68,6 +68,7 @@ class TokenUsage:
     total_tokens: int | None = None
     cached_input_tokens: int | None = None
     cache_creation_input_tokens: int | None = None
+    uncached_input_tokens: int | None = None
 
 
 @dataclass(frozen=True)
@@ -120,7 +121,7 @@ def _isolated_environment(removed: set[str]) -> dict[str, str]:
 def _integer(value: object) -> int | None:
     if isinstance(value, bool):
         return None
-    if isinstance(value, int):
+    if isinstance(value, int) and value >= 0:
         return value
     return None
 
@@ -132,6 +133,7 @@ def _usage(
     total_tokens: object = None,
     cached_input_tokens: object = None,
     cache_creation_input_tokens: object = None,
+    uncached_input_tokens: object = None,
 ) -> TokenUsage:
     reported_input = _integer(input_tokens)
     reported_output = _integer(output_tokens)
@@ -144,7 +146,20 @@ def _usage(
         total_tokens=reported_total,
         cached_input_tokens=_integer(cached_input_tokens),
         cache_creation_input_tokens=_integer(cache_creation_input_tokens),
+        uncached_input_tokens=_integer(uncached_input_tokens),
     )
+
+
+def _claude_usage(raw: Mapping[str, object]) -> TokenUsage:
+    # Claude reports uncached, cache-read, and cache-write input separately.
+    # Missing components are unknown, never assumed zero.
+    parts = [_integer(raw.get(key)) for key in (
+        "input_tokens", "cache_read_input_tokens", "cache_creation_input_tokens")]
+    total_input = sum(parts) if all(value is not None for value in parts) else None
+    return _usage(input_tokens=total_input, output_tokens=raw.get("output_tokens"),
+                  uncached_input_tokens=raw.get("input_tokens"),
+                  cached_input_tokens=raw.get("cache_read_input_tokens"),
+                  cache_creation_input_tokens=raw.get("cache_creation_input_tokens"))
 
 
 def _error_text(returncode: int, stderr: str) -> str:
@@ -346,12 +361,7 @@ class ClaudeCLIAdapter(_CLIAdapter):
         raw_usage = payload.get("usage", {})
         if not isinstance(raw_usage, dict):
             raw_usage = {}
-        usage = _usage(
-            input_tokens=raw_usage.get("input_tokens"),
-            output_tokens=raw_usage.get("output_tokens"),
-            cached_input_tokens=raw_usage.get("cache_read_input_tokens"),
-            cache_creation_input_tokens=raw_usage.get("cache_creation_input_tokens"),
-        )
+        usage = _claude_usage(raw_usage)
         return text, usage
 
     def _partial_usage(self, stdout: str) -> TokenUsage:
@@ -362,12 +372,7 @@ class ClaudeCLIAdapter(_CLIAdapter):
         if not isinstance(payload, dict) or not isinstance(payload.get("usage"), dict):
             return TokenUsage()
         raw_usage = payload["usage"]
-        return _usage(
-            input_tokens=raw_usage.get("input_tokens"),
-            output_tokens=raw_usage.get("output_tokens"),
-            cached_input_tokens=raw_usage.get("cache_read_input_tokens"),
-            cache_creation_input_tokens=raw_usage.get("cache_creation_input_tokens"),
-        )
+        return _claude_usage(raw_usage)
 
     def _reported_setup(self, stdout: str) -> dict[str, object]:
         try:
@@ -382,9 +387,12 @@ class ClaudeCLIAdapter(_CLIAdapter):
         model_usage = payload.get("modelUsage")
         if isinstance(model_usage, dict):
             reported.extend(key for key in model_usage if isinstance(key, str))
-        if not reported:
-            return {}
-        return {"provider_reported_models": tuple(dict.fromkeys(reported))}
+        raw_usage = payload.get("usage", {})
+        counts = {key: _integer(raw_usage.get(key)) for key in (
+            "input_tokens", "output_tokens", "cache_read_input_tokens", "cache_creation_input_tokens"
+        )} if isinstance(raw_usage, dict) else {}
+        return {"provider_reported_models": tuple(dict.fromkeys(reported)),
+                "provider_usage": counts, "input_accounting": "uncached+cache_read+cache_creation"}
 
 
 _CODEX_DISABLED_FEATURES: tuple[str, ...] = (

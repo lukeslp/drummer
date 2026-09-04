@@ -5,6 +5,7 @@ from __future__ import annotations
 import html
 import re
 from pathlib import Path
+from urllib.parse import unquote
 
 from markdown_it import MarkdownIt
 
@@ -42,6 +43,19 @@ def build_reference(root: str | Path, destination: str | Path) -> list[str]:
         body = parser.render(markdown)
         body = re.sub(r'href="([^":#]+)\.md(#[^"]*)?"',
                       lambda m: 'href="' + m[1] + '.html' + (m[2] or '') + '"', body)
+        def asset_link(match):
+            href = html.unescape(match[1])
+            if ":" in href or href.startswith("#") or href.split("#")[0].endswith(".html"):
+                return match[0]
+            source_asset = (source.parent / unquote(href.split("#")[0])).resolve()
+            if root.resolve() not in source_asset.parents or source_asset.suffix not in {".json", ".py"} or not source_asset.is_file():
+                raise ValueError(f"Unsupported or missing reference asset: {href}")
+            relative = Path("resources") / source_asset.relative_to(root.resolve())
+            asset_target = destination / relative
+            asset_target.parent.mkdir(parents=True, exist_ok=True)
+            asset_target.write_bytes(source_asset.read_bytes())
+            return 'href="' + html.escape(relative.as_posix(), quote=True) + '"'
+        body = re.sub(r'href="([^"]+)"', asset_link, body)
         title = markdown.splitlines()[0].lstrip("# ")
         document = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">

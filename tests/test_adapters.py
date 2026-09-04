@@ -85,11 +85,12 @@ def test_claude_cli_is_isolated_tool_free_and_reports_native_usage() -> None:
     assert "ANTHROPIC_API_KEY" not in env
     assert "CLAUDE_CODE_USE_BEDROCK" not in env
     assert result.text == '{"status":"ok"}'
-    assert result.usage.input_tokens == 31
+    assert result.usage.input_tokens == 45
+    assert result.usage.uncached_input_tokens == 31
     assert result.usage.output_tokens == 7
     assert result.usage.cached_input_tokens == 11
     assert result.usage.cache_creation_input_tokens == 3
-    assert result.usage.total_tokens == 38
+    assert result.usage.total_tokens == 52
     assert result.elapsed_seconds == pytest.approx(0.25)
     assert result.retries == 0
     assert result.errors == ()
@@ -323,9 +324,10 @@ def test_failed_cli_run_preserves_reported_partial_usage() -> None:
     result = adapter.generate("synthetic", timeout_seconds=4)
 
     assert result.errors
-    assert result.usage.input_tokens == 19
+    assert result.usage.input_tokens is None
+    assert result.usage.uncached_input_tokens == 19
     assert result.usage.output_tokens == 2
-    assert result.usage.total_tokens == 21
+    assert result.usage.total_tokens is None
 
 
 def test_adapter_environment_does_not_mutate_parent_environment(monkeypatch: pytest.MonkeyPatch) -> None:

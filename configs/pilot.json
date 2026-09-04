@@ -9,6 +9,8 @@
   "learning_rate": 0.0003,
   "batch_size": 128,
   "max_epochs": 10,
+  "warmup_epochs": 5,
+  "continuation_epochs": 5,
   "patience": 3,
   "gradient_clip": 1.0,
   "model": {"layers": 4, "width": 256, "heads": 4, "ffn": 1024, "context": 128, "private_residual": 8},

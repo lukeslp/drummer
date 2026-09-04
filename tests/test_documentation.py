@@ -31,3 +31,14 @@ def test_bad_reference_and_checkout_destination_rejected(tmp_path):
         build_reference(tmp_path, tmp_path / "html")
     with pytest.raises(ValueError, match="Broken"):
         build_reference(tmp_path, tmp_path.parent / (tmp_path.name + "-reference"))
+
+
+def test_offline_reference_bundles_schema_assets(tmp_path):
+    root, out = tmp_path / "source", tmp_path / "html"
+    (root / "docs").mkdir(parents=True)
+    (root / "src").mkdir()
+    (root / "src/packet.json").write_text('{"type":"object"}')
+    (root / "docs/index.md").write_text("# Manual\n\n[Schema](../src/packet.json)\n")
+    build_reference(root, out)
+    assert 'href="resources/src/packet.json"' in (out / "index.html").read_text()
+    assert (out / "resources/src/packet.json").read_bytes() == (root / "src/packet.json").read_bytes()

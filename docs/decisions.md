@@ -41,6 +41,25 @@ The former $1,000 allocation is superseded by $250. Initial credit funding is $5
 There is no automatic larger-model, new-provider, or multi-GPU escalation. A failed
 gate is a reportable outcome, not a reason to keep spending without a new decision.
 
+## DR-007 — Matched warm-up and continuation
+
+The sequential pilot splits the ten-pass ceiling into five compulsory warm-up
+passes and at most five continuation passes. All three arms, including the
+compulsory comparator, start from the same warm-up checkpoint within a seed;
+their optimizer reset and continuation schedule match. This avoids giving only
+the optional arm additional training. Shared warm-up compute is booked once.
+Early stopping can shorten either phase. Calibration seed 101 is separate from
+the five confirmatory seeds.
+
+## DR-008 — Handoff response ontology
+
+The first bootstrap contract called a response field `action` without specifying
+whether it meant the work process or requested permission class. Its multistep
+strings also relied on undocumented delimiters. Those records are preserved as
+instrumentation evidence, not used to score that semantic distinction. The v2
+fixture contract distinguishes process from effect and represents ordered steps
+structurally. This is a prospective benchmark correction, not a relaxed score.
+
 ## Historical input fingerprints
 
 Original historical files are preserved unchanged in the local research archive;

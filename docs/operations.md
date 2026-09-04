@@ -41,8 +41,8 @@ quietly schedule the entire pilot. Commit and publish the tested revision, then:
 
 ```sh
 uv run drummer verify --root . --output /path/to/artifacts/local-verification.json
-uv run drummer cloud-smoke --root . --verification /path/to/artifacts/local-verification.json --ledger /path/to/artifacts/budget.sqlite
-uv run drummer budget --ledger /path/to/artifacts/budget.sqlite --reconcile
+uv run drummer cloud-smoke --root . --verification /path/to/artifacts/local-verification.json --ledger "$HOME/.local/state/drummer/budget.sqlite3"
+uv run drummer budget --ledger "$HOME/.local/state/drummer/budget.sqlite3" --reconcile
 ```
 
 The launcher reads the current L4 quote, reserves 30 minutes rounded upward, and
@@ -58,6 +58,12 @@ the submission. A rejected request costs zero when the provider explicitly rejec
 creation. A completed or failed job is conservatively booked at its reserved
 maximum until actual billing evidence is available. Reports must distinguish this
 upper bound from measured charges.
+
+Paid commands require the canonical ledger at
+`~/.local/state/drummer/budget.sqlite3`; supplying a new empty ledger cannot reset
+the project budget. Library-level temporary ledgers exist only for isolated tests.
+The launcher preflights the published source archive, authenticated destination,
+exact verification evidence, and current hardware quote before reserving money.
 
 ## Funding
 
@@ -84,8 +90,35 @@ Unload only models loaded by the experiment. Do not stop an existing local servi
 or evict another task's resident model. Large local-model downloads are not part of
 this pilot.
 
-## Gated work
+## Gated pilot
 
-Five-seed research runs require the smoke result and a frozen calibration choice.
+After reviewing the source-matched CUDA smoke and reconciling its reservation,
+the separate `cloud-pilot` command can reserve at most four hours. It runs one
+calibration seed first, stops if compulsory accuracy is below 95%, tests the
+preregistered pressure candidates, freezes its validation-only choice, and only
+then starts the five paired seeds. Optional and receiver-blind arms start from
+the exact same warm-up checkpoint within each seed, as does the compulsory
+continuation comparator. Warm-up and continuation each permit at most five
+passes, keeping each arm within ten total. Warm-up cost is counted once and the
+parent checkpoint hash is retained.
+
+```sh
+uv run drummer cloud-pilot --root . --verification /path/to/artifacts/local-verification.json --smoke-report /path/to/artifacts/smoke_report.json --ledger "$HOME/.local/state/drummer/budget.sqlite3" --minutes 240
+```
+
+This is an explicit paid action, not an automatic follow-up. The complete
+pipeline is also available locally through `drummer pilot --config
+configs/pilot.json --corpus /path/to/data --output /path/to/runs --device mps`.
+The cloud deadline includes scheduling/bootstrap time and leaves 20 minutes
+before the provider timeout for checkpoint upload. Checkpoint callbacks occur
+at least every 15 minutes while training advances. A partial run is reported as
+partial; neither elapsed time nor a reserved budget establishes completion.
+
+The pipeline does not automatically resume or submit another job. Individual
+training checkpoints can resume through `train --resume`; continuation of a
+partial multi-arm pilot needs an explicit new manifest preserving earlier
+selection and seed provenance. Never treat a restarted seed as an independent
+replicate or retune a frozen selection after test access.
+
 Multi-turn actor–critic is not implemented or launched merely because a unit test
 passes. Consult the model card and experiment report for actual completion state.

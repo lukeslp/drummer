@@ -1162,7 +1162,7 @@ def _reference_text(reference: Mapping[str, Any]) -> str:
     if "content_sha256" in reference:
         text += f" sha256 {reference['content_sha256']}"
     if "fallback" in reference:
-        text += " (readable fallback supplied)"
+        text += " (inert readable fallback: " + canonical_json(reference["fallback"]) + ")"
     return text
 
 

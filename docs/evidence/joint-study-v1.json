@@ -1,0 +1,1248 @@
+{
+  "format": "drummer-joint-measurement-extract/1",
+  "author": "Luke Steuber",
+  "evidence_class": "Measured",
+  "status": "complete",
+  "source": {
+    "dirty": false,
+    "revision": "fff7df7c156685e90a5ad6620f6bd8b8d93191fd",
+    "revision_source": "git",
+    "tree_sha256": "745d34a86a0df939243fe410a43beaf5ee7646f6c9f042cd8de5e19af628909c"
+  },
+  "source_unchanged": true,
+  "raw_study": {
+    "bytes": 2870293,
+    "path": "study.json",
+    "sha256": "bf6843a25570e19eae0375e0b184f37530a235c4fc0f63c5d5cc6c70acd711d4"
+  },
+  "config": {
+    "anneal_steps": 1500,
+    "arms": [
+      "baseline",
+      "entropy_annealed",
+      "information_bonus"
+    ],
+    "batch_size": 128,
+    "coefficient": 0.1,
+    "evaluate_every": 250,
+    "format": "drummer-joint-study/1",
+    "max_seconds_per_arm": 900,
+    "seeds": [
+      101
+    ],
+    "steps": 3000,
+    "threads": 2
+  },
+  "model": {
+    "context": 128,
+    "dropout": 0,
+    "ffn": 1024,
+    "heads": 4,
+    "layers": 4,
+    "private_residual": 8,
+    "width": 256
+  },
+  "optimizer": {
+    "clip_norm": 1,
+    "learning_rate": 0.0003,
+    "name": "AdamW",
+    "weight_decay": 0.01
+  },
+  "channel": {
+    "ack_bits": 1,
+    "grounding_bits": 6,
+    "mode": "compulsory",
+    "probe_bits": 6
+  },
+  "selection": "fixed final step primary; best validation task loss secondary; no performance early stop",
+  "runtime": {
+    "architecture": "arm64",
+    "packages": {
+      "huggingface-hub": "1.30.0",
+      "jsonschema": "4.26.0",
+      "numpy": "2.5.2",
+      "safetensors": "0.8.0",
+      "torch": "2.14.0"
+    },
+    "platform": "Darwin",
+    "python": "3.12.12"
+  },
+  "lock_sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd",
+  "module_sha256": "2ab1233472fc160a75e6da49a40a1358def09f75cd9186bbe524fd0f9401efed",
+  "corpus_logical_sha256": {
+    "train": "876aca0c257bfd445a21a4b2fde06179b6dc9b9014ce65232d6d6715f1b51bb1",
+    "validation": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5"
+  },
+  "matched_initialization_verified": true,
+  "matched_training_order_verified": true,
+  "test_unsealed": false,
+  "test_labels_loaded": false,
+  "promotion_evidence": false,
+  "limitations": [
+    "Exploratory validation only; no original pilot promotion.",
+    "Information bonus uses finite complete-batch sender-observation MI, not target MI.",
+    "Shared CPU workloads make elapsed time descriptive, not a hardware benchmark.",
+    "No optimizer resume files; retained weights support evaluation, not exact continuation.",
+    "Empirical mutual information is a plug-in estimate from the observed count matrix. Finite samples can bias it upward, especially with sparse cells. It is descriptive, not a significance test or evidence that the receiver causally uses the packet.",
+    "Marginal symbol entropy describes variation across observed hard sends. Conditional policy entropy is the mean entropy of sender action probabilities given each observation, in nats, over all validation conditions. A confident deterministic policy can still use many symbols; near-zero conditional entropy alone does not establish vocabulary collapse.",
+    "Single development seed (101), no five-seed confidence or unfamiliar-partner inference.",
+    "All arms are compulsory six-bit channels; these results establish no omission or token savings.",
+    "The local 3000-step comparison is not a literal replication of the cloud warm-up/continuation schedule.",
+    "Fixed final-step accuracy is primary; no best-of-curve result substitutes for it.",
+    "None of the three final validation accuracies reaches the unchanged original 95 percent quality gate.",
+    "Symbol meanings, SFL functions, compositionality and native cross-model comprehension are not established.",
+    "Diagnostic shuffles retain receiver history; OOD uniform symbols are not naturally supported messages.",
+    "Checkpoint hashes and source integrity are verified, not external authentication or an independent conformance certificate."
+  ],
+  "runs": [
+    {
+      "arm": "baseline",
+      "seed": 101,
+      "status": "complete",
+      "steps": 3000,
+      "elapsed_seconds": 628.3791528750007,
+      "initial_checkpoint_sha256": "d697dbaa741dc3fa7c0b124e1d583367dc0a2846386b4d519c1f24da5e694c14",
+      "final_checkpoint_sha256": "72d4914b0b52c01dd53e3c3cf8caf4d70b526224a3bd88d32f95c91ec11bf001",
+      "training_examples_seen": 383712,
+      "training_order_sha256": "4c21daffb317e0c2d8c6dc867059817acc5b92e8e849f6a484ca60f99db58623",
+      "training_order_verified": true,
+      "final_condition_scores": {
+        "dropped_grounding": {
+          "correct": 954,
+          "episodes": 2000,
+          "success": 0.477
+        },
+        "new_reference": {
+          "correct": 647,
+          "episodes": 2000,
+          "success": 0.3235
+        },
+        "valid_repeat": {
+          "correct": 5798,
+          "episodes": 6000,
+          "success": 0.9663333333333334
+        }
+      },
+      "curves": [
+        {
+          "step": 0,
+          "success": 0.2521,
+          "task_loss": 1.3933280265808106,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 3.962347887802124,
+          "hard_marginal_entropy_bits": 0.22411575324580602,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 5.799792541991337
+        },
+        {
+          "step": 250,
+          "success": 0.5223,
+          "task_loss": 1.000001856803894,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.029047585678100587,
+          "hard_marginal_entropy_bits": 0.9931458878818347,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 58.13074258399138
+        },
+        {
+          "step": 500,
+          "success": 0.6403,
+          "task_loss": 0.6938127296447754,
+          "symbols_used": 3,
+          "conditional_entropy_nats": 0.003216912030428648,
+          "hard_marginal_entropy_bits": 1.2330271876747543,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 108.41626304200327
+        },
+        {
+          "step": 750,
+          "success": 0.6797,
+          "task_loss": 0.6783977823257447,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0008238599129021168,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 161.9650356249913
+        },
+        {
+          "step": 1000,
+          "success": 0.695,
+          "task_loss": 0.6363383080482483,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0005448047159239649,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 211.94857604199206
+        },
+        {
+          "step": 1250,
+          "success": 0.6877,
+          "task_loss": 0.6479395894050598,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0003323482264298946,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 263.4906563340046
+        },
+        {
+          "step": 1500,
+          "success": 0.6936,
+          "task_loss": 0.6344444076538086,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00016995620718225838,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 313.50218024999776
+        },
+        {
+          "step": 1750,
+          "success": 0.6888,
+          "task_loss": 0.6364457210540772,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00019701941711828112,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 365.5624808339926
+        },
+        {
+          "step": 2000,
+          "success": 0.7053,
+          "task_loss": 0.6268904548645019,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00029792354155797513,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 419.5643272919988
+        },
+        {
+          "step": 2250,
+          "success": 0.71,
+          "task_loss": 0.606761982536316,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0002807659311918542,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 472.07837629200367
+        },
+        {
+          "step": 2500,
+          "success": 0.7144,
+          "task_loss": 0.6024167207717895,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00020120890983380379,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 523.076545459
+        },
+        {
+          "step": 2750,
+          "success": 0.7306,
+          "task_loss": 0.5870079885482788,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00007734505304833874,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 574.7365965420031
+        },
+        {
+          "step": 3000,
+          "success": 0.7399,
+          "task_loss": 0.581335566520691,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.000055044026835821566,
+          "hard_marginal_entropy_bits": 0.9999981533495598,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 628.365867208995
+        }
+      ]
+    },
+    {
+      "arm": "entropy_annealed",
+      "seed": 101,
+      "status": "complete",
+      "steps": 3000,
+      "elapsed_seconds": 606.1372950420046,
+      "initial_checkpoint_sha256": "d697dbaa741dc3fa7c0b124e1d583367dc0a2846386b4d519c1f24da5e694c14",
+      "final_checkpoint_sha256": "c0e6e68847127d6409dffbff8ebfa9f5449ff68d1ed8ea11c7be4953c3d7ca08",
+      "training_examples_seen": 383712,
+      "training_order_sha256": "4c21daffb317e0c2d8c6dc867059817acc5b92e8e849f6a484ca60f99db58623",
+      "training_order_verified": true,
+      "final_condition_scores": {
+        "dropped_grounding": {
+          "correct": 1388,
+          "episodes": 2000,
+          "success": 0.694
+        },
+        "new_reference": {
+          "correct": 1528,
+          "episodes": 2000,
+          "success": 0.764
+        },
+        "valid_repeat": {
+          "correct": 5611,
+          "episodes": 6000,
+          "success": 0.9351666666666667
+        }
+      },
+      "curves": [
+        {
+          "step": 0,
+          "success": 0.2521,
+          "task_loss": 1.3933280265808106,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 3.962347887802124,
+          "hard_marginal_entropy_bits": 0.22411575324580602,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 5.818102874996839
+        },
+        {
+          "step": 250,
+          "success": 0.3794,
+          "task_loss": 1.2893722110748291,
+          "symbols_used": 9,
+          "conditional_entropy_nats": 4.155292687225342,
+          "hard_marginal_entropy_bits": 2.4380440180931706,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 59.021247333002975
+        },
+        {
+          "step": 500,
+          "success": 0.6543,
+          "task_loss": 0.6916963479995728,
+          "symbols_used": 24,
+          "conditional_entropy_nats": 3.427840646362305,
+          "hard_marginal_entropy_bits": 3.719122232040762,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 111.00704662500357
+        },
+        {
+          "step": 750,
+          "success": 0.6705,
+          "task_loss": 0.6735336144447327,
+          "symbols_used": 28,
+          "conditional_entropy_nats": 3.45663422203064,
+          "hard_marginal_entropy_bits": 3.431094175984602,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 162.45558520800842
+        },
+        {
+          "step": 1000,
+          "success": 0.6956,
+          "task_loss": 0.6463134317398072,
+          "symbols_used": 26,
+          "conditional_entropy_nats": 3.4516104850769045,
+          "hard_marginal_entropy_bits": 3.5168181151620157,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 210.60869012500916
+        },
+        {
+          "step": 1250,
+          "success": 0.7231,
+          "task_loss": 0.5890465894699096,
+          "symbols_used": 40,
+          "conditional_entropy_nats": 3.3584956256866456,
+          "hard_marginal_entropy_bits": 3.9467334545835593,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 259.33660187500936
+        },
+        {
+          "step": 1500,
+          "success": 0.7745,
+          "task_loss": 0.43405401248931885,
+          "symbols_used": 8,
+          "conditional_entropy_nats": 2.948032208633423,
+          "hard_marginal_entropy_bits": 2.1320970893515576,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 308.21135291700193
+        },
+        {
+          "step": 1750,
+          "success": 0.8298,
+          "task_loss": 0.28495780813694,
+          "symbols_used": 7,
+          "conditional_entropy_nats": 0.0656536297917366,
+          "hard_marginal_entropy_bits": 2.386570734745982,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 358.7451154580049
+        },
+        {
+          "step": 2000,
+          "success": 0.8489,
+          "task_loss": 0.2291587619304657,
+          "symbols_used": 7,
+          "conditional_entropy_nats": 0.005845515075325966,
+          "hard_marginal_entropy_bits": 2.445175742121506,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 411.7970064580004
+        },
+        {
+          "step": 2250,
+          "success": 0.8525,
+          "task_loss": 0.22392295651435853,
+          "symbols_used": 7,
+          "conditional_entropy_nats": 0.003762294112145901,
+          "hard_marginal_entropy_bits": 2.445175742121506,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 460.58865270800015
+        },
+        {
+          "step": 2500,
+          "success": 0.8363,
+          "task_loss": 0.2968324090242386,
+          "symbols_used": 7,
+          "conditional_entropy_nats": 0.007854337926208974,
+          "hard_marginal_entropy_bits": 2.4223401730616634,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 509.0955198330048
+        },
+        {
+          "step": 2750,
+          "success": 0.8473,
+          "task_loss": 0.26032427399158475,
+          "symbols_used": 7,
+          "conditional_entropy_nats": 0.001181144046038389,
+          "hard_marginal_entropy_bits": 2.4381213935645465,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 557.6016727079987
+        },
+        {
+          "step": 3000,
+          "success": 0.8527,
+          "task_loss": 0.25142839424610136,
+          "symbols_used": 7,
+          "conditional_entropy_nats": 0.000605280221067369,
+          "hard_marginal_entropy_bits": 2.4381213935645465,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 606.119913167
+        }
+      ]
+    },
+    {
+      "arm": "information_bonus",
+      "seed": 101,
+      "status": "complete",
+      "steps": 3000,
+      "elapsed_seconds": 597.5713495829987,
+      "initial_checkpoint_sha256": "d697dbaa741dc3fa7c0b124e1d583367dc0a2846386b4d519c1f24da5e694c14",
+      "final_checkpoint_sha256": "548638d705119e95de5c0ac8c6461889fa8c2c6d0f35a40662e2b2126dabdc92",
+      "training_examples_seen": 383712,
+      "training_order_sha256": "4c21daffb317e0c2d8c6dc867059817acc5b92e8e849f6a484ca60f99db58623",
+      "training_order_verified": true,
+      "final_condition_scores": {
+        "dropped_grounding": {
+          "correct": 973,
+          "episodes": 2000,
+          "success": 0.4865
+        },
+        "new_reference": {
+          "correct": 790,
+          "episodes": 2000,
+          "success": 0.395
+        },
+        "valid_repeat": {
+          "correct": 4360,
+          "episodes": 6000,
+          "success": 0.7266666666666667
+        }
+      },
+      "curves": [
+        {
+          "step": 0,
+          "success": 0.2521,
+          "task_loss": 1.3933280265808106,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 3.962347887802124,
+          "hard_marginal_entropy_bits": 0.22411575324580602,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 5.387803083009203
+        },
+        {
+          "step": 250,
+          "success": 0.4322,
+          "task_loss": 0.9853215989112853,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0033168875236064196,
+          "hard_marginal_entropy_bits": 0.9923037805683845,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 53.7348695420078
+        },
+        {
+          "step": 500,
+          "success": 0.4635,
+          "task_loss": 0.8411419067382813,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0012783416338264942,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 102.27860291700927
+        },
+        {
+          "step": 750,
+          "success": 0.4581,
+          "task_loss": 0.8408964004516601,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0006105837630107999,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 150.29123620800965
+        },
+        {
+          "step": 1000,
+          "success": 0.4687,
+          "task_loss": 0.8407883005142212,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00038957799449563027,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 201.84327183300047
+        },
+        {
+          "step": 1250,
+          "success": 0.5048,
+          "task_loss": 0.8166771259307861,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0007834462799131871,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 252.29819675000908
+        },
+        {
+          "step": 1500,
+          "success": 0.4926,
+          "task_loss": 0.8250686483383178,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0006256043868139386,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 305.6401328750071
+        },
+        {
+          "step": 1750,
+          "success": 0.4863,
+          "task_loss": 0.8235380086898804,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00031088131414726375,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 355.4893975830055
+        },
+        {
+          "step": 2000,
+          "success": 0.5367,
+          "task_loss": 0.8013811215400696,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00020846121362410485,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 402.8807078329992
+        },
+        {
+          "step": 2250,
+          "success": 0.5832,
+          "task_loss": 0.7663615668296814,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0007088515046052634,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 452.5805255000014
+        },
+        {
+          "step": 2500,
+          "success": 0.5806,
+          "task_loss": 0.767554811000824,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0005549230151809752,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 500.9543136669963
+        },
+        {
+          "step": 2750,
+          "success": 0.5916,
+          "task_loss": 0.7626150908470154,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.0002924038372933865,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 549.3609051670064
+        },
+        {
+          "step": 3000,
+          "success": 0.6123,
+          "task_loss": 0.7461470000267029,
+          "symbols_used": 2,
+          "conditional_entropy_nats": 0.00015625986098311841,
+          "hard_marginal_entropy_bits": 1,
+          "episodes": 10000,
+          "complete": true,
+          "elapsed_seconds": 597.5439246669994
+        }
+      ]
+    }
+  ],
+  "diagnostics": {
+    "baseline": {
+      "artifact": {
+        "bytes": 7998,
+        "path": "diagnostics/baseline-final.json",
+        "sha256": "3a6e40bd86476a6c7f3df36c3f12d9def5f0d78f7f6aceb402891ffc22c066ff"
+      },
+      "checkpoint_sha256": "72d4914b0b52c01dd53e3c3cf8caf4d70b526224a3bd88d32f95c91ec11bf001",
+      "status": "complete",
+      "evaluated_episodes": 10000,
+      "interventions": {
+        "constant_modal": {
+          "all": {
+            "correct_to_wrong": 3660,
+            "episodes": 10000,
+            "original_success": 0.7399,
+            "prediction_changes": 4895,
+            "success": 0.3787,
+            "success_delta": -0.3612,
+            "wrong_to_correct": 48
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 444,
+            "episodes": 2000,
+            "original_success": 0.477,
+            "prediction_changes": 907,
+            "success": 0.2595,
+            "success_delta": -0.21749999999999997,
+            "wrong_to_correct": 9
+          },
+          "new_reference": {
+            "correct_to_wrong": 327,
+            "episodes": 2000,
+            "original_success": 0.3235,
+            "prediction_changes": 1000,
+            "success": 0.1795,
+            "success_delta": -0.14400000000000002,
+            "wrong_to_correct": 39
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2889,
+            "episodes": 6000,
+            "original_success": 0.9663333333333334,
+            "prediction_changes": 2988,
+            "success": 0.48483333333333334,
+            "success_delta": -0.48150000000000004,
+            "wrong_to_correct": 0
+          }
+        },
+        "original": {
+          "all": {
+            "correct_to_wrong": 0,
+            "episodes": 10000,
+            "original_success": 0.7399,
+            "prediction_changes": 0,
+            "success": 0.7399,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 0,
+            "episodes": 2000,
+            "original_success": 0.477,
+            "prediction_changes": 0,
+            "success": 0.477,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "new_reference": {
+            "correct_to_wrong": 0,
+            "episodes": 2000,
+            "original_success": 0.3235,
+            "prediction_changes": 0,
+            "success": 0.3235,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 0,
+            "episodes": 6000,
+            "original_success": 0.9663333333333334,
+            "prediction_changes": 0,
+            "success": 0.9663333333333334,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          }
+        },
+        "shuffled_global": {
+          "all": {
+            "correct_to_wrong": 3558,
+            "episodes": 10000,
+            "original_success": 0.7399,
+            "prediction_changes": 4742,
+            "success": 0.3868,
+            "success_delta": -0.3531,
+            "wrong_to_correct": 27
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 432,
+            "episodes": 2000,
+            "original_success": 0.477,
+            "prediction_changes": 853,
+            "success": 0.263,
+            "success_delta": -0.21399999999999997,
+            "wrong_to_correct": 4
+          },
+          "new_reference": {
+            "correct_to_wrong": 308,
+            "episodes": 2000,
+            "original_success": 0.3235,
+            "prediction_changes": 966,
+            "success": 0.181,
+            "success_delta": -0.14250000000000002,
+            "wrong_to_correct": 23
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2818,
+            "episodes": 6000,
+            "original_success": 0.9663333333333334,
+            "prediction_changes": 2923,
+            "success": 0.49666666666666665,
+            "success_delta": -0.46966666666666673,
+            "wrong_to_correct": 0
+          }
+        },
+        "shuffled_within_condition": {
+          "all": {
+            "correct_to_wrong": 3606,
+            "episodes": 10000,
+            "original_success": 0.7399,
+            "prediction_changes": 4820,
+            "success": 0.3835,
+            "success_delta": -0.3564,
+            "wrong_to_correct": 42
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 454,
+            "episodes": 2000,
+            "original_success": 0.477,
+            "prediction_changes": 894,
+            "success": 0.2525,
+            "success_delta": -0.22449999999999998,
+            "wrong_to_correct": 5
+          },
+          "new_reference": {
+            "correct_to_wrong": 325,
+            "episodes": 2000,
+            "original_success": 0.3235,
+            "prediction_changes": 999,
+            "success": 0.1795,
+            "success_delta": -0.14400000000000002,
+            "wrong_to_correct": 37
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2827,
+            "episodes": 6000,
+            "original_success": 0.9663333333333334,
+            "prediction_changes": 2927,
+            "success": 0.49516666666666664,
+            "success_delta": -0.47116666666666673,
+            "wrong_to_correct": 0
+          }
+        },
+        "uniform_symbols_ood": {
+          "all": {
+            "correct_to_wrong": 3323,
+            "episodes": 10000,
+            "original_success": 0.7399,
+            "prediction_changes": 4655,
+            "success": 0.4289,
+            "success_delta": -0.311,
+            "wrong_to_correct": 213
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 564,
+            "episodes": 2000,
+            "original_success": 0.477,
+            "prediction_changes": 1193,
+            "success": 0.257,
+            "success_delta": -0.21999999999999997,
+            "wrong_to_correct": 124
+          },
+          "new_reference": {
+            "correct_to_wrong": 418,
+            "episodes": 2000,
+            "original_success": 0.3235,
+            "prediction_changes": 1025,
+            "success": 0.144,
+            "success_delta": -0.17950000000000002,
+            "wrong_to_correct": 59
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2341,
+            "episodes": 6000,
+            "original_success": 0.9663333333333334,
+            "prediction_changes": 2437,
+            "success": 0.5811666666666667,
+            "success_delta": -0.38516666666666666,
+            "wrong_to_correct": 30
+          }
+        }
+      },
+      "limitations": [
+        "Single-checkpoint descriptive validation interventions, not five-seed inference.",
+        "Constant and shuffled messages do not remove receiver history.",
+        "Uniform replacement includes out-of-support symbols.",
+        "Global and condition-stratified shuffles use only sent symbols and condition strata."
+      ]
+    },
+    "entropy_annealed": {
+      "artifact": {
+        "bytes": 7946,
+        "path": "diagnostics/entropy-annealed-final.json",
+        "sha256": "1337d98ac318b8c466baeec4b353d863c6bf748345f4d406bc48217131d20bcd"
+      },
+      "checkpoint_sha256": "c0e6e68847127d6409dffbff8ebfa9f5449ff68d1ed8ea11c7be4953c3d7ca08",
+      "status": "complete",
+      "evaluated_episodes": 10000,
+      "interventions": {
+        "constant_modal": {
+          "all": {
+            "correct_to_wrong": 4755,
+            "episodes": 10000,
+            "original_success": 0.8527,
+            "prediction_changes": 5683,
+            "success": 0.3857,
+            "success_delta": -0.467,
+            "wrong_to_correct": 85
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 954,
+            "episodes": 2000,
+            "original_success": 0.694,
+            "prediction_changes": 1377,
+            "success": 0.2465,
+            "success_delta": -0.44749999999999995,
+            "wrong_to_correct": 59
+          },
+          "new_reference": {
+            "correct_to_wrong": 1217,
+            "episodes": 2000,
+            "original_success": 0.764,
+            "prediction_changes": 1562,
+            "success": 0.164,
+            "success_delta": -0.6,
+            "wrong_to_correct": 17
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2584,
+            "episodes": 6000,
+            "original_success": 0.9351666666666667,
+            "prediction_changes": 2744,
+            "success": 0.506,
+            "success_delta": -0.4291666666666667,
+            "wrong_to_correct": 9
+          }
+        },
+        "original": {
+          "all": {
+            "correct_to_wrong": 0,
+            "episodes": 10000,
+            "original_success": 0.8527,
+            "prediction_changes": 0,
+            "success": 0.8527,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 0,
+            "episodes": 2000,
+            "original_success": 0.694,
+            "prediction_changes": 0,
+            "success": 0.694,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "new_reference": {
+            "correct_to_wrong": 0,
+            "episodes": 2000,
+            "original_success": 0.764,
+            "prediction_changes": 0,
+            "success": 0.764,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 0,
+            "episodes": 6000,
+            "original_success": 0.9351666666666667,
+            "prediction_changes": 0,
+            "success": 0.9351666666666667,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          }
+        },
+        "shuffled_global": {
+          "all": {
+            "correct_to_wrong": 5297,
+            "episodes": 10000,
+            "original_success": 0.8527,
+            "prediction_changes": 6284,
+            "success": 0.3378,
+            "success_delta": -0.5149,
+            "wrong_to_correct": 148
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 947,
+            "episodes": 2000,
+            "original_success": 0.694,
+            "prediction_changes": 1363,
+            "success": 0.251,
+            "success_delta": -0.44299999999999995,
+            "wrong_to_correct": 61
+          },
+          "new_reference": {
+            "correct_to_wrong": 1163,
+            "episodes": 2000,
+            "original_success": 0.764,
+            "prediction_changes": 1514,
+            "success": 0.2115,
+            "success_delta": -0.5525,
+            "wrong_to_correct": 58
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 3187,
+            "episodes": 6000,
+            "original_success": 0.9351666666666667,
+            "prediction_changes": 3407,
+            "success": 0.4088333333333333,
+            "success_delta": -0.5263333333333333,
+            "wrong_to_correct": 29
+          }
+        },
+        "shuffled_within_condition": {
+          "all": {
+            "correct_to_wrong": 4642,
+            "episodes": 10000,
+            "original_success": 0.8527,
+            "prediction_changes": 5572,
+            "success": 0.4004,
+            "success_delta": -0.45230000000000004,
+            "wrong_to_correct": 119
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 931,
+            "episodes": 2000,
+            "original_success": 0.694,
+            "prediction_changes": 1325,
+            "success": 0.2495,
+            "success_delta": -0.44449999999999995,
+            "wrong_to_correct": 42
+          },
+          "new_reference": {
+            "correct_to_wrong": 1037,
+            "episodes": 2000,
+            "original_success": 0.764,
+            "prediction_changes": 1384,
+            "success": 0.276,
+            "success_delta": -0.488,
+            "wrong_to_correct": 61
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2674,
+            "episodes": 6000,
+            "original_success": 0.9351666666666667,
+            "prediction_changes": 2863,
+            "success": 0.49216666666666664,
+            "success_delta": -0.44300000000000006,
+            "wrong_to_correct": 16
+          }
+        },
+        "uniform_symbols_ood": {
+          "all": {
+            "correct_to_wrong": 5041,
+            "episodes": 10000,
+            "original_success": 0.8527,
+            "prediction_changes": 6085,
+            "success": 0.3664,
+            "success_delta": -0.4863,
+            "wrong_to_correct": 178
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 937,
+            "episodes": 2000,
+            "original_success": 0.694,
+            "prediction_changes": 1391,
+            "success": 0.2615,
+            "success_delta": -0.43249999999999994,
+            "wrong_to_correct": 72
+          },
+          "new_reference": {
+            "correct_to_wrong": 1228,
+            "episodes": 2000,
+            "original_success": 0.764,
+            "prediction_changes": 1586,
+            "success": 0.1755,
+            "success_delta": -0.5885,
+            "wrong_to_correct": 51
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2876,
+            "episodes": 6000,
+            "original_success": 0.9351666666666667,
+            "prediction_changes": 3108,
+            "success": 0.465,
+            "success_delta": -0.4701666666666667,
+            "wrong_to_correct": 55
+          }
+        }
+      },
+      "limitations": [
+        "Single-checkpoint descriptive validation interventions, not five-seed inference.",
+        "Constant and shuffled messages do not remove receiver history.",
+        "Uniform replacement includes out-of-support symbols.",
+        "Global and condition-stratified shuffles use only sent symbols and condition strata."
+      ]
+    },
+    "information_bonus": {
+      "artifact": {
+        "bytes": 7972,
+        "path": "diagnostics/information-bonus-final.json",
+        "sha256": "dcb1ba030cef01a3f0ef35a3ddcaa9f052678d9d5895bb3872b959ae987478da"
+      },
+      "checkpoint_sha256": "548638d705119e95de5c0ac8c6461889fa8c2c6d0f35a40662e2b2126dabdc92",
+      "status": "complete",
+      "evaluated_episodes": 10000,
+      "interventions": {
+        "constant_modal": {
+          "all": {
+            "correct_to_wrong": 2912,
+            "episodes": 10000,
+            "original_success": 0.6123,
+            "prediction_changes": 4795,
+            "success": 0.3277,
+            "success_delta": -0.28459999999999996,
+            "wrong_to_correct": 66
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 465,
+            "episodes": 2000,
+            "original_success": 0.4865,
+            "prediction_changes": 973,
+            "success": 0.263,
+            "success_delta": -0.22349999999999998,
+            "wrong_to_correct": 18
+          },
+          "new_reference": {
+            "correct_to_wrong": 408,
+            "episodes": 2000,
+            "original_success": 0.395,
+            "prediction_changes": 982,
+            "success": 0.204,
+            "success_delta": -0.19100000000000003,
+            "wrong_to_correct": 26
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2039,
+            "episodes": 6000,
+            "original_success": 0.7266666666666667,
+            "prediction_changes": 2840,
+            "success": 0.3905,
+            "success_delta": -0.33616666666666667,
+            "wrong_to_correct": 22
+          }
+        },
+        "original": {
+          "all": {
+            "correct_to_wrong": 0,
+            "episodes": 10000,
+            "original_success": 0.6123,
+            "prediction_changes": 0,
+            "success": 0.6123,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 0,
+            "episodes": 2000,
+            "original_success": 0.4865,
+            "prediction_changes": 0,
+            "success": 0.4865,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "new_reference": {
+            "correct_to_wrong": 0,
+            "episodes": 2000,
+            "original_success": 0.395,
+            "prediction_changes": 0,
+            "success": 0.395,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 0,
+            "episodes": 6000,
+            "original_success": 0.7266666666666667,
+            "prediction_changes": 0,
+            "success": 0.7266666666666667,
+            "success_delta": 0,
+            "wrong_to_correct": 0
+          }
+        },
+        "shuffled_global": {
+          "all": {
+            "correct_to_wrong": 2861,
+            "episodes": 10000,
+            "original_success": 0.6123,
+            "prediction_changes": 4632,
+            "success": 0.3325,
+            "success_delta": -0.27979999999999994,
+            "wrong_to_correct": 63
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 469,
+            "episodes": 2000,
+            "original_success": 0.4865,
+            "prediction_changes": 949,
+            "success": 0.259,
+            "success_delta": -0.22749999999999998,
+            "wrong_to_correct": 14
+          },
+          "new_reference": {
+            "correct_to_wrong": 383,
+            "episodes": 2000,
+            "original_success": 0.395,
+            "prediction_changes": 924,
+            "success": 0.211,
+            "success_delta": -0.18400000000000002,
+            "wrong_to_correct": 15
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2009,
+            "episodes": 6000,
+            "original_success": 0.7266666666666667,
+            "prediction_changes": 2759,
+            "success": 0.3975,
+            "success_delta": -0.32916666666666666,
+            "wrong_to_correct": 34
+          }
+        },
+        "shuffled_within_condition": {
+          "all": {
+            "correct_to_wrong": 3000,
+            "episodes": 10000,
+            "original_success": 0.6123,
+            "prediction_changes": 4745,
+            "success": 0.3183,
+            "success_delta": -0.29399999999999993,
+            "wrong_to_correct": 60
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 494,
+            "episodes": 2000,
+            "original_success": 0.4865,
+            "prediction_changes": 970,
+            "success": 0.244,
+            "success_delta": -0.2425,
+            "wrong_to_correct": 9
+          },
+          "new_reference": {
+            "correct_to_wrong": 419,
+            "episodes": 2000,
+            "original_success": 0.395,
+            "prediction_changes": 979,
+            "success": 0.196,
+            "success_delta": -0.199,
+            "wrong_to_correct": 21
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 2087,
+            "episodes": 6000,
+            "original_success": 0.7266666666666667,
+            "prediction_changes": 2796,
+            "success": 0.38383333333333336,
+            "success_delta": -0.3428333333333333,
+            "wrong_to_correct": 30
+          }
+        },
+        "uniform_symbols_ood": {
+          "all": {
+            "correct_to_wrong": 2987,
+            "episodes": 10000,
+            "original_success": 0.6123,
+            "prediction_changes": 5173,
+            "success": 0.3619,
+            "success_delta": -0.25039999999999996,
+            "wrong_to_correct": 483
+          },
+          "dropped_grounding": {
+            "correct_to_wrong": 655,
+            "episodes": 2000,
+            "original_success": 0.4865,
+            "prediction_changes": 1345,
+            "success": 0.24,
+            "success_delta": -0.2465,
+            "wrong_to_correct": 162
+          },
+          "new_reference": {
+            "correct_to_wrong": 519,
+            "episodes": 2000,
+            "original_success": 0.395,
+            "prediction_changes": 1143,
+            "success": 0.1815,
+            "success_delta": -0.21350000000000002,
+            "wrong_to_correct": 92
+          },
+          "valid_repeat": {
+            "correct_to_wrong": 1813,
+            "episodes": 6000,
+            "original_success": 0.7266666666666667,
+            "prediction_changes": 2685,
+            "success": 0.46266666666666667,
+            "success_delta": -0.264,
+            "wrong_to_correct": 229
+          }
+        }
+      },
+      "limitations": [
+        "Single-checkpoint descriptive validation interventions, not five-seed inference.",
+        "Constant and shuffled messages do not remove receiver history.",
+        "Uniform replacement includes out-of-support symbols.",
+        "Global and condition-stratified shuffles use only sent symbols and condition strata."
+      ]
+    }
+  },
+  "full_publication_extract_sha256": "defbfd541fa5b8248fe5623f0baa3770c9aff1bef903a5f98879a2fa9ba07277"
+}

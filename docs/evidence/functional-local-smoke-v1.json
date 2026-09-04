@@ -1,0 +1,1865 @@
+{
+  "format": "drummer-functional-decoder-measurement-extract/1",
+  "status": "transport_stopped",
+  "created_at_utc": "2026-09-04T23:03:41.469199+00:00",
+  "config": {
+    "case_limit": 1,
+    "conditions": [
+      "packet-context",
+      "context-only",
+      "foil-context",
+      "packet-only"
+    ],
+    "max_calls": 16,
+    "max_seconds": 600,
+    "max_tokens": 512,
+    "model": "qwen2.5:1.5b",
+    "order_seed": 20260904,
+    "repair_limit": 0,
+    "representations": [
+      "full-english",
+      "terse-english",
+      "functional-compact",
+      "functional-expanded"
+    ],
+    "schema_guided": true,
+    "timeout_seconds": 90
+  },
+  "source": {
+    "dirty": false,
+    "revision": "505377bae2a6c0821b0d7490fea249224dc3b921",
+    "revision_source": "git",
+    "tree_sha256": "935ad5638a14845e5517819f73d10083f2e01e776fc8689134224c7c5638e6fe"
+  },
+  "source_unchanged": true,
+  "module_sha256": "21ee520e5fce8d86ceb26e9563075dceefe52c3059a1bf4c55b1052467ecd72a",
+  "lock_sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd",
+  "runtime": {
+    "architecture": "arm64",
+    "packages": {
+      "huggingface-hub": "1.30.0",
+      "jsonschema": "4.26.0",
+      "numpy": "2.5.2",
+      "safetensors": "0.8.0",
+      "torch": "2.14.0"
+    },
+    "platform": "Darwin",
+    "python": "3.12.12"
+  },
+  "backend": {
+    "artifact_digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+    "details": {
+      "context_length": 32768,
+      "embedding_length": 1536,
+      "families": [
+        "qwen2"
+      ],
+      "family": "qwen2",
+      "format": "gguf",
+      "parameter_size": "1.5B",
+      "parent_model": "",
+      "quantization_level": "Q4_K_M"
+    },
+    "model": "qwen2.5:1.5b",
+    "ollama_version": "0.32.3",
+    "resident_before": true
+  },
+  "response_schema_sha256": "f9193761151b22a34e7a936269767237f241f37fbb4eba3f04b3441b356a026e",
+  "corpus_sha256": "88d806f19cad852c63d76c95063c4af3f6295a590dbdf5e910627ef18f814dd3",
+  "requested_items": 16,
+  "unique_prompt_count": 11,
+  "calls": 14,
+  "elapsed_seconds": 600.010892374994,
+  "preparation_seconds": 0.0008904170099413022,
+  "response_schema_request_bytes": 1215,
+  "usage_all_attempts": {
+    "cached_input_tokens": null,
+    "input_tokens": null,
+    "output_tokens": null,
+    "total_tokens": null
+  },
+  "limitations": [
+    "Local receiver comprehension only; no sender-model generation cost measured.",
+    "Functional fixtures are synthetic, not original 24-case promotion data.",
+    "Explicit affect preservation is not learned emotion or psychological validation.",
+    "Schema-guided output is distinct from unaided output-contract adherence.",
+    "Repeated identical prompts are not independent semantic cases.",
+    "Prompt and schema request bytes are recorded; grammar setup token/compute costs may not be reported by the endpoint.",
+    "Generation-loop deadline excludes bounded metadata preflight and prompt preparation, which are separate setup work.",
+    "No backend unload occurs here; operator unloads only a task-loaded model."
+  ],
+  "records": [
+    {
+      "item_index": 11,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-expanded",
+      "condition": "foil-context",
+      "source_packet_bytes": 35,
+      "delivered_packet_bytes": 291,
+      "decoder_bytes": 2103,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "db90eae5a4e053901d73105f3830fc3c2f1f813f51d83922bc06616215f0d285",
+          "prompt_bytes": 4045,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"negative\",\n  \"move\": \"reported_completion\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"unacknowledged\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 852,
+            "output_tokens": 90,
+            "total_tokens": 942,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 75.70459787499567,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": false,
+              "process": false,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 852,
+        "output_tokens": 90,
+        "total_tokens": 942
+      }
+    },
+    {
+      "item_index": 3,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-expanded",
+      "condition": "packet-context",
+      "source_packet_bytes": 35,
+      "delivered_packet_bytes": 294,
+      "decoder_bytes": 2103,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "5d068ab27bf398d5a2cb466f5e8d35c2b8e99258ea46e87f3064247e40f8c66a",
+          "prompt_bytes": 4048,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"negative\",\n  \"move\": \"reported_completion\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"missing_reference\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": \"src/Cafe/Session.py\",\n  \"target_symbol\": \"refreshÉtat\"\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 852,
+            "output_tokens": 96,
+            "total_tokens": 948,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 35.654762583988486,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": true
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 852,
+        "output_tokens": 96,
+        "total_tokens": 948
+      }
+    },
+    {
+      "item_index": 2,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-compact",
+      "condition": "packet-context",
+      "source_packet_bytes": 35,
+      "delivered_packet_bytes": 35,
+      "decoder_bytes": 2739,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "6fadda34a9a9c6744e6f0ebd216d7346329569ed42a6339e14daa44b160877cf",
+          "prompt_bytes": 4437,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"positive\",\n  \"move\": \"request\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"current_ack\",\n  \"completion_status\": \"unknown\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 964,
+            "output_tokens": 85,
+            "total_tokens": 1049,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 51.972217917005764,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": false,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": false,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": false,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": false,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 964,
+        "output_tokens": 85,
+        "total_tokens": 1049
+      }
+    },
+    {
+      "item_index": 15,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-expanded",
+      "condition": "packet-only",
+      "source_packet_bytes": 35,
+      "delivered_packet_bytes": 294,
+      "decoder_bytes": 2103,
+      "context_sha256": null,
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "9417dc8e2d5a20bf0147e048198629f18d35ede6c4dc9c6003d9c5b761046190",
+          "prompt_bytes": 3797,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"negative\",\n  \"move\": \"reported_completion\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"unacknowledged\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": \"r7\",\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 784,
+            "output_tokens": 92,
+            "total_tokens": 876,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 31.94063266599551,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 784,
+        "output_tokens": 92,
+        "total_tokens": 876
+      }
+    },
+    {
+      "item_index": 8,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "full-english",
+      "condition": "foil-context",
+      "source_packet_bytes": 291,
+      "delivered_packet_bytes": 291,
+      "decoder_bytes": 2103,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "db90eae5a4e053901d73105f3830fc3c2f1f813f51d83922bc06616215f0d285",
+          "prompt_bytes": 4045,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"negative\",\n  \"move\": \"reported_completion\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"missing_reference\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": \"/src/Cafe/session.py\",\n  \"target_symbol\": \"refreshÉtat\"\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 852,
+            "output_tokens": 95,
+            "total_tokens": 947,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 35.63308645800862,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": false,
+              "process": false,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": true
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 852,
+        "output_tokens": 95,
+        "total_tokens": 947
+      }
+    },
+    {
+      "item_index": 12,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "full-english",
+      "condition": "packet-only",
+      "source_packet_bytes": 294,
+      "delivered_packet_bytes": 294,
+      "decoder_bytes": 2103,
+      "context_sha256": null,
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "9417dc8e2d5a20bf0147e048198629f18d35ede6c4dc9c6003d9c5b761046190",
+          "prompt_bytes": 3797,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"negative\",\n  \"move\": \"reported_completion\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"unacknowledged\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": \"r7\",\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 784,
+            "output_tokens": 92,
+            "total_tokens": 876,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 50.526074499997776,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": false,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 784,
+        "output_tokens": 92,
+        "total_tokens": 876
+      }
+    },
+    {
+      "item_index": 9,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "terse-english",
+      "condition": "foil-context",
+      "source_packet_bytes": 132,
+      "delivered_packet_bytes": 132,
+      "decoder_bytes": 2103,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "b44ba9a40c6f6706cfc3ef02f0287d4e54c862ba42a5792b89b39c52958aee0d",
+          "prompt_bytes": 3886,
+          "response_text": "{\n  \"process\": \"edit\",\n  \"polarity\": \"positive\",\n  \"move\": \"request\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"current_ack\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 834,
+            "output_tokens": 87,
+            "total_tokens": 921,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 72.88433037498908,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": false,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": false,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": false,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 834,
+        "output_tokens": 87,
+        "total_tokens": 921
+      }
+    },
+    {
+      "item_index": 6,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-compact",
+      "condition": "context-only",
+      "source_packet_bytes": 0,
+      "delivered_packet_bytes": 0,
+      "decoder_bytes": 2739,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "169caef59635e53c9129e40dc12e687a00ba84107366b97f8ede33047a511d9f",
+          "prompt_bytes": 4390,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"positive\",\n  \"move\": \"request\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"current_ack\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 942,
+            "output_tokens": 87,
+            "total_tokens": 1029,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 37.683239707999746,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": false,
+              "expressed_affect": false,
+              "move": false,
+              "next_step": true,
+              "permitted_action": false,
+              "polarity": false,
+              "process": false,
+              "reference_status": false,
+              "target_path": true,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": true,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": true,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 942,
+        "output_tokens": 87,
+        "total_tokens": 1029
+      }
+    },
+    {
+      "item_index": 5,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "terse-english",
+      "condition": "context-only",
+      "source_packet_bytes": 0,
+      "delivered_packet_bytes": 0,
+      "decoder_bytes": 2103,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "8c173502ffee588a7fe3d7913597ac618278bb31563abd3401c61aa77430b14b",
+          "prompt_bytes": 3754,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"negative\",\n  \"move\": \"reported_completion\",\n  \"expressed_affect\": \"concern\",\n  \"reference_status\": \"missing_reference\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 800,
+            "output_tokens": 89,
+            "total_tokens": 889,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 36.85668195800099,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": false,
+              "expressed_affect": false,
+              "move": false,
+              "next_step": true,
+              "permitted_action": false,
+              "polarity": false,
+              "process": false,
+              "reference_status": false,
+              "target_path": true,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": false,
+              "move": false,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": false,
+              "process": true,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": true,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": true,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": false,
+          "process": true,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 800,
+        "output_tokens": 89,
+        "total_tokens": 889
+      }
+    },
+    {
+      "item_index": 10,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-compact",
+      "condition": "foil-context",
+      "source_packet_bytes": 35,
+      "delivered_packet_bytes": 35,
+      "decoder_bytes": 2739,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "cd482928dcefaa26d192bf0c6ee71f1148199bd7dcd15e42f4c0528cff353449",
+          "prompt_bytes": 4437,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"positive\",\n  \"move\": \"request\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"current_ack\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 964,
+            "output_tokens": 87,
+            "total_tokens": 1051,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 37.621915541996714,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": true,
+              "process": false,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": false,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": false,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 964,
+        "output_tokens": 87,
+        "total_tokens": 1051
+      }
+    },
+    {
+      "item_index": 13,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "terse-english",
+      "condition": "packet-only",
+      "source_packet_bytes": 135,
+      "delivered_packet_bytes": 135,
+      "decoder_bytes": 2103,
+      "context_sha256": null,
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "9cb00a6bfd4b77799fd5ac57e2d0dfd44d0e0a9a43c401a0454c8b9b58560823",
+          "prompt_bytes": 3638,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"positive\",\n  \"move\": \"request\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"current_ack\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 766,
+            "output_tokens": 87,
+            "total_tokens": 853,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 35.5579524999921,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": true,
+              "process": true,
+              "reference_status": false,
+              "target_path": true,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": true,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": true,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 766,
+        "output_tokens": 87,
+        "total_tokens": 853
+      }
+    },
+    {
+      "item_index": 14,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-compact",
+      "condition": "packet-only",
+      "source_packet_bytes": 35,
+      "delivered_packet_bytes": 35,
+      "decoder_bytes": 2739,
+      "context_sha256": null,
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "5abc023012f8e78144cadfa256deaeeb44efe454b9b2dcec1be5df4f9e28d6b2",
+          "prompt_bytes": 4186,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"positive\",\n  \"move\": \"request\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"current_ack\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 896,
+            "output_tokens": 87,
+            "total_tokens": 983,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 34.76110858400352,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": true,
+              "process": true,
+              "reference_status": false,
+              "target_path": true,
+              "target_symbol": true
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": true,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": true,
+          "process": true,
+          "reference_status": false,
+          "target_path": true,
+          "target_symbol": true
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 896,
+        "output_tokens": 87,
+        "total_tokens": 983
+      }
+    },
+    {
+      "item_index": 1,
+      "status": "complete",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "terse-english",
+      "condition": "packet-context",
+      "source_packet_bytes": 135,
+      "delivered_packet_bytes": 135,
+      "decoder_bytes": 2103,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "c1cc428d8c56a0f90cec5311439e0cbb57adfb9c2be410d28bc9b5cb922764d2",
+          "prompt_bytes": 3889,
+          "response_text": "{\n  \"process\": \"inspect\",\n  \"polarity\": \"positive\",\n  \"move\": \"request\",\n  \"expressed_affect\": \"neutral\",\n  \"reference_status\": \"current_ack\",\n  \"completion_status\": \"not_asserted\",\n  \"permitted_action\": \"filesystem.read\",\n  \"next_step\": \"await_packet\",\n  \"target_path\": null,\n  \"target_symbol\": null\n}",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": 834,
+            "output_tokens": 87,
+            "total_tokens": 921,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 36.25637266700505,
+          "errors": [],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "error": null,
+            "original_fields": {
+              "completion_status": true,
+              "expressed_affect": true,
+              "move": true,
+              "next_step": false,
+              "permitted_action": true,
+              "polarity": true,
+              "process": true,
+              "reference_status": true,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": true
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": null,
+        "original_fields": {
+          "completion_status": true,
+          "expressed_affect": true,
+          "move": true,
+          "next_step": false,
+          "permitted_action": true,
+          "polarity": true,
+          "process": true,
+          "reference_status": true,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": true
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": 834,
+        "output_tokens": 87,
+        "total_tokens": 921
+      }
+    },
+    {
+      "item_index": 7,
+      "status": "transport_failed",
+      "case_id": "fh01a",
+      "pair_id": "fh01",
+      "representation": "functional-expanded",
+      "condition": "context-only",
+      "source_packet_bytes": 0,
+      "delivered_packet_bytes": 0,
+      "decoder_bytes": 2103,
+      "context_sha256": "af1d5ffe4e0050811beb3cd404ae36eff1c44f8f04474421d34b033627b8c512",
+      "attempts": [
+        {
+          "attempt": 0,
+          "prompt_sha256": "8c173502ffee588a7fe3d7913597ac618278bb31563abd3401c61aa77430b14b",
+          "prompt_bytes": 3754,
+          "response_text": "",
+          "usage": {
+            "cache_creation_input_tokens": null,
+            "cached_input_tokens": null,
+            "input_tokens": null,
+            "output_tokens": null,
+            "total_tokens": null,
+            "uncached_input_tokens": null
+          },
+          "elapsed_seconds": 26.928548167008557,
+          "errors": [
+            "TimeoutError: timed out"
+          ],
+          "score": {
+            "delivered_fidelity_exact": false,
+            "delivered_fields": {
+              "completion_status": false,
+              "expressed_affect": false,
+              "move": false,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": false,
+              "process": false,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "error": "invalid_json",
+            "original_fields": {
+              "completion_status": false,
+              "expressed_affect": false,
+              "move": false,
+              "next_step": false,
+              "permitted_action": false,
+              "polarity": false,
+              "process": false,
+              "reference_status": false,
+              "target_path": false,
+              "target_symbol": false
+            },
+            "original_intent_exact": false,
+            "schema_valid": false
+          }
+        }
+      ],
+      "first_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": "invalid_json",
+        "original_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": false
+      },
+      "final_pass": {
+        "delivered_fidelity_exact": false,
+        "delivered_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "error": "invalid_json",
+        "original_fields": {
+          "completion_status": false,
+          "expressed_affect": false,
+          "move": false,
+          "next_step": false,
+          "permitted_action": false,
+          "polarity": false,
+          "process": false,
+          "reference_status": false,
+          "target_path": false,
+          "target_symbol": false
+        },
+        "original_intent_exact": false,
+        "schema_valid": false
+      },
+      "usage_all_attempts": {
+        "cached_input_tokens": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null
+      }
+    }
+  ],
+  "author": "Luke Steuber",
+  "raw_study_sha256": "f41e1c5a2393ecfe0d7029d26de778fbf624529d7eadd365bf97e2732813bf39",
+  "completed_responses": 13,
+  "known_completed_token_subtotal": 12285,
+  "complete_schema_valid": 13,
+  "complete_delivered_exact": 0
+}

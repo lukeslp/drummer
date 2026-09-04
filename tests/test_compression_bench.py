@@ -291,7 +291,7 @@ def test_mock_local_receiver_reports_actual_usage_and_scores_actual_output() -> 
             return FakeHTTPResponse({"data": [{"id": "test-model"}]})
         payload = json.loads(request.data)
         received.append(payload["messages"][0]["content"])
-        assert timeout == 7.0
+        assert 0 < timeout <= 7.0
         return FakeHTTPResponse(
             {
                 "model": "test-model",

@@ -1,0 +1,14 @@
+{
+  "model": "qwen2.5:1.5b",
+  "endpoint": "http://192.168.0.100:11434/v1",
+  "representations": ["full-english", "terse-english", "functional-compact", "functional-expanded"],
+  "conditions": ["packet-context", "context-only", "foil-context", "packet-only"],
+  "case_limit": 1,
+  "max_calls": 16,
+  "max_seconds": 600,
+  "timeout_seconds": 90,
+  "max_tokens": 512,
+  "schema_guided": true,
+  "repair_limit": 0,
+  "order_seed": 20260904
+}

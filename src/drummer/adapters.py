@@ -592,6 +592,8 @@ class LocalOpenAIAdapter:
         max_retries: int = 0,
         max_tokens: int = 2048,
         temperature: float = 0.0,
+        response_schema: Mapping[str, object] | None = None,
+        reasoning_effort: str | None = None,
     ) -> None:
         if not model:
             raise ValueError("model must be explicit")
@@ -607,6 +609,16 @@ class LocalOpenAIAdapter:
             raise ValueError("generation settings exceed the bounded local experiment range")
         self.max_tokens = max_tokens
         self.temperature = temperature
+        if reasoning_effort not in {None, "none", "low", "medium", "high", "max"}:
+            raise ValueError("unsupported local reasoning effort")
+        self.reasoning_effort = reasoning_effort
+        # Copy the schema so later caller mutations cannot change this run.
+        self.response_schema = None
+        if response_schema is not None:
+            from jsonschema import Draft202012Validator
+
+            self.response_schema = json.loads(json.dumps(response_schema, allow_nan=False))
+            Draft202012Validator.check_schema(self.response_schema)
 
     def _require_live(self) -> None:
         if not self.allow_live:
@@ -703,12 +715,24 @@ class LocalOpenAIAdapter:
             "max_tokens": self.max_tokens,
             "temperature": self.temperature,
         }
+        if self.response_schema is not None:
+            payload["response_format"] = {
+                "type": "json_schema",
+                "json_schema": {"name": "drummer_response", "strict": True,
+                                "schema": self.response_schema},
+            }
+        if self.reasoning_effort is not None:
+            payload["reasoning_effort"] = self.reasoning_effort
         response: dict[str, object] | None = None
         retries = 0
         for attempt in range(self.max_retries + 1):
+            remaining = timeout_seconds - (self._clock() - started)
+            if remaining <= 0:
+                errors.append("local generation deadline exhausted during health check or retries")
+                break
             try:
                 response = self._request_json(
-                    "/chat/completions", timeout_seconds=timeout_seconds, payload=payload
+                    "/chat/completions", timeout_seconds=remaining, payload=payload
                 )
                 break
             except (OSError, RuntimeError, TypeError, ValueError, json.JSONDecodeError) as error:
@@ -778,6 +802,8 @@ class LocalOpenAIAdapter:
             "paid_api_fallback": "disabled",
             "max_tokens": self.max_tokens,
             "temperature": self.temperature,
+            "response_mode": "schema-guided" if self.response_schema is not None else "prompt-only",
+            "reasoning_effort": self.reasoning_effort,
         }
 
 

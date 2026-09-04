@@ -256,7 +256,7 @@ def test_local_openai_checks_health_uses_timeouts_and_reports_native_usage() -> 
     assert health_request.full_url == "http://127.0.0.1:1234/v1/models"
     assert generation_request.full_url == "http://127.0.0.1:1234/v1/chat/completions"
     assert health_timeout == 5
-    assert generation_timeout == 5
+    assert 0 < generation_timeout <= 5
     assert result.text == '{"status":"ok"}'
     assert result.usage.input_tokens == 23
     assert result.usage.output_tokens == 4
@@ -288,6 +288,46 @@ def test_local_openai_accepts_only_an_explicitly_allowlisted_pi() -> None:
     )
 
     assert adapter.endpoint_scope == "explicit-host:192.168.0.100"
+
+
+def test_local_schema_is_optional_copied_and_recorded():
+    schema = {"type": "object", "properties": {"value": {"type": "string"}},
+              "required": ["value"], "additionalProperties": False}
+    opener = RecordingURLopener([
+        FakeResponse({"data": [{"id": "qwen"}]}),
+        FakeResponse({"choices": [{"message": {"content": '{"value":"x"}'}}]})])
+    adapter = LocalOpenAIAdapter(model="qwen", allow_live=True, urlopen=opener,
+                                 response_schema=schema, reasoning_effort="none")
+    schema["properties"]["value"]["type"] = "integer"
+    result = adapter.generate("synthetic", timeout_seconds=5)
+    payload = json.loads(opener.calls[1][0].data)
+    assert payload["response_format"]["json_schema"]["schema"]["properties"]["value"]["type"] == "string"
+    assert payload["reasoning_effort"] == "none"
+    assert result.setup["response_mode"] == "schema-guided"
+    assert result.setup["reasoning_effort"] == "none"
+    assert "enum" not in json.dumps(payload["response_format"])
+
+
+def test_invalid_local_reasoning_effort():
+    with pytest.raises(ValueError, match="reasoning"):
+        LocalOpenAIAdapter(model="qwen", reasoning_effort="unbounded")
+
+
+def test_health_and_generation_share_one_deadline():
+    now = [0.0]
+    timeouts = []
+
+    def opener(request, *, timeout):
+        timeouts.append(timeout)
+        now[0] += timeout * 0.9
+        if request.full_url.endswith("/models"):
+            return FakeResponse({"data": [{"id": "qwen"}]})
+        return FakeResponse({"choices": [{"message": {"content": "{}"}}]})
+
+    adapter = LocalOpenAIAdapter(model="qwen", allow_live=True, urlopen=opener, clock=lambda: now[0])
+    result = adapter.generate("synthetic", timeout_seconds=10)
+    assert timeouts == [10, 1]
+    assert result.elapsed_seconds == pytest.approx(9.9)
 
 
 def test_allowlist_does_not_turn_local_adapter_into_public_provider():

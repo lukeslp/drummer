@@ -28,5 +28,8 @@ the learned signaling experiment, not behind its success gate.
 11. [Local experiments manual](local-experiments.md): artifact autopsy, bounded controls, and experimental dictionary.
 12. [Research write-up and SFL agenda](research-writeup.md): methods, results, functional interpretation, and prospective studies.
 13. [Local joint-optimization study](joint-study.md): prospective matched objectives after the failed calibration.
+14. [Functional handoffs](functional-handoffs.md): process, polarity, grounding, and expressed-affect contrasts.
+15. [Compact dictionary](compact-dictionary.md): exact jargon substitution with smaller framing.
+16. [Local decoder study](decoder-study.md): measured comprehension, schema guidance, and repair accounting.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

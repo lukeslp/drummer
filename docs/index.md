@@ -38,5 +38,6 @@ practical compression tests, and the unimplemented bridge between them.
 18. [Phrase induction](phrase-induction.md): training-only inventory selection and held-out complete-cost measurement.
 19. [Joint-training results](joint-evidence.md): three matched objectives, learning curves, and causal message interventions.
 20. [Phrase-induction results](phrase-evidence.md): selected English fallback and full setup accounting.
+21. [Paired client codec study](client-codec-study.md): actual sender messages, native receiver schemas, and complete versus partial usage.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

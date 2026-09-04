@@ -76,6 +76,17 @@ length-frames payloads, and transmits complete verification metadata. Its first
 measured complete prompts are larger than English. Preserve that negative result
 and keep byte roundtrip, model comprehension, and total token usage separate.
 
+## DR-011 — Practical capability is not bounded by the diagnostic model ladder
+
+Luke clarified that the intended result is a useful system on capable workstations,
+not an ultra-small-model demonstration. Retain 0.5B/1.5B tests as lower-bound
+diagnostics, add capable local partners, and treat 32 GB / 64+ GB as proposed
+deployment/development targets rather than measured requirements. Independent
+seeds need not run concurrently. Existing-model tests do not replace the original
+trained Drummer component. The bridge from restricted signals to learned practical
+conversation compression remains explicit uncompleted work. See the
+[roadmap](roadmap.md); the original omission gates and spending ceiling are unchanged.
+
 ## Historical input fingerprints
 
 Original historical files are preserved unchanged in the local research archive;

@@ -3,7 +3,7 @@
 Learning what conversations can leave unsaid.
 
 Drummer investigates language and jargon compression for Codex, Claude, and
-smaller local models: reusable phrases, compact notation, shared references, and
+capable local models: reusable phrases, compact notation, shared references, and
 context-sensitive omission that preserve what a message means and accomplishes.
 SFL guides the distinctions to preserve, including requests, evidence, negation,
 grounding, and expressed stance.
@@ -12,6 +12,12 @@ Two complementary tracks separate practical, inspectable compression from a
 randomly initialized communication model. The small model is a scientific
 instrument; practical language experiments proceed alongside it. Neither
 successful toy signaling nor a shorter string establishes end-to-end savings.
+
+Building an original trained communication component remains a core goal. The
+current small model learns restricted signals, not English compression. Existing
+models test practical conventions; they do not replace that research. Start with
+the [goal and current roadmap](docs/roadmap.md) to distinguish the two tracks and
+the still-unbuilt bridge between them.
 
 Author: Luke Steuber.
 
@@ -40,6 +46,7 @@ to any server with the same name.
 ## References
 
 - [Accepted plan and milestones](docs/plan.md)
+- [Goal and current roadmap](docs/roadmap.md): what is trained, what is tested, and what remains
 - [Protocol manual](docs/protocol.md): exact semantics, shared state, authority, and fallback
 - [Experiment specification](docs/experiment.md): task, controls, training, and evaluation
 - [Language atlas](docs/atlas.md): evidence and limits of learned conventions
@@ -49,6 +56,7 @@ to any server with the same name.
 - [Research write-up and SFL agenda](docs/research-writeup.md): living manuscript with evidence and hypotheses kept separate
 - [Language, function, and affect](docs/research-focus.md): central goal and implemented versus proposed emotion-related work
 - [Practical compression evidence](docs/practical-evidence.md): complete size measurements, exactness, and remaining overhead
+- [Joint-training results](docs/joint-evidence.md) and [phrase-induction results](docs/phrase-evidence.md): completed exploratory comparisons, including failed gates
 - [Compact dictionary](docs/compact-dictionary.md) and [functional handoffs](docs/functional-handoffs.md): experimental forms and decoder contracts
 - [Coding handoffs](docs/handoffs.md): adapters, synthetic fixtures, and token accounting
 - [Operations](docs/operations.md): reproducibility, bounded jobs, and funding

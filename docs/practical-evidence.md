@@ -43,14 +43,60 @@ comparison SHA-256:
 `7b2c25bba962a7b84d0012b747d94f838cb1dcadd88949ffe9c352b38415ea35`.
 Original artifact directory: `compact-comparison-v1` in the research run archive.
 
+## Functional 1.5B decoder smoke
+
+A separate frozen study at the same source revision used Qwen2.5 1.5B Q4_K_M
+through Ollama 0.32.3 on an already resident local-network runtime. It compared
+full English, terse English, functional compact form, and deterministic expansion
+on one functional case across packet+context, context-only, matched foil+context,
+and packet-only conditions. Sixteen requests were planned; they are not sixteen
+independent semantic cases.
+
+Thirteen responses completed. All thirteen passed the requested response schema;
+none exactly recovered the delivered meaning. The fourteenth call was interrupted
+at the 600-second whole-study limit, leaving two requests unstarted. The completed
+responses used 12,285 total input/output tokens, but complete study usage is
+unknown because usage for the failed call is unavailable. No application retry or
+repair occurred. The model artifact digest is
+`65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b`.
+
+The matrix is incomplete: full-English packet+context and context-only conditions
+were not reached. It must not be pooled into a balanced ranking of formats.
+Among conditions completed for all four forms:
+
+| Condition, one response per form | Full English tokens | Terse tokens | Compact tokens | Expanded tokens |
+| --- | ---: | ---: | ---: | ---: |
+| Matched foil with context | 947 | 921 | 1,051 | 942 |
+| Packet alone | 876 | 853 | 983 | 876 |
+
+All eight responses in this table failed exact semantic scoring. The result
+shows that schema validity is insufficient and that this local smoke did not
+establish useful comprehension or compression. It does not show that 1.5B models
+cannot understand compact forms generally, nor set the intended product's model
+size. Model output included process/move mistakes and changes to exact Unicode
+targets. No visible answer reached the 512-token output cap. Effective runtime
+context, chat template, and finish reasons were not captured, so backend effects
+are not definitively excluded.
+
+The [measurement extract](evidence/functional-local-smoke-v1.json) retains raw
+responses, exact prompt hashes, field scores, usage and errors. The raw study
+SHA-256 is `f41e1c5a2393ecfe0d7029d26de778fbf624529d7eadd365bf97e2732813bf39`.
+Frozen prompts can be regenerated from the recorded source and corpus. No private
+conversations were used.
+
 ## Interpretation and next comparison
 
 Smaller framing materially improves this candidate but has not established a
-benefit over competent terse English. The next distinct experiment learns an
-inventory of exact recurring phrases from synthetic training conversations,
-selects it on validation, and measures held-out dialogue after setup and full
-context resends are charged. That is data-derived phrase substitution, not proof
-of emergent grammar, contextual omission, or unfamiliar-model interoperability.
+benefit over competent terse English. The subsequent [phrase-induction study](phrase-evidence.md)
+selected an empty dictionary on validation: its learned inventory did not repay
+setup. Held-out use therefore fell back exactly to English. That is data-derived
+phrase selection with an unsuccessful compression candidate, not proof of emergent
+grammar, contextual omission, or unfamiliar-model interoperability.
+
+The next capable-client comparison must preserve identical actual sender content
+across terse and encoded delivery, use native structured receiver output without
+relaxing semantic scoring, and retain client-internal usage. A complete coding
+workflow remains a separate required milestone, not a claim from decoder tests.
 
 The [functional decoder procedure](decoder-study.md) separately measures whether
 local models preserve process, polarity, negotiation, grounding, and expressed

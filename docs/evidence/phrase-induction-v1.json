@@ -1,0 +1,558 @@
+{
+  "format": "drummer-phrase-evidence/1",
+  "author": "Luke Steuber",
+  "evidence_class": "Measured",
+  "study": {
+    "candidate_mining_seconds": 0.1445289999974193,
+    "codec": "DCD1",
+    "config": {
+      "heldout_conversations": 32,
+      "max_entries": 16,
+      "max_seconds": 1200,
+      "minimum_conversations": 4,
+      "seed": 20260904,
+      "shortlist": 64,
+      "train_conversations": 128,
+      "turns": 8,
+      "validation_conversations": 32
+    },
+    "created_at": "2026-09-04T23:27:52.553063+00:00",
+    "elapsed_seconds": 32.712750584003516,
+    "endpoint_tokens": null,
+    "exactness_passed": true,
+    "finished_at": "2026-09-04T23:28:25.268598+00:00",
+    "format": "drummer-phrase-induction/1",
+    "heldout_opened": true,
+    "induction_seconds": 31.95282025000779,
+    "inventory_sha256": "ee9b2fa929fc4fcb2481f205d618bfb1d2fde15af858df64283ee55732747d59",
+    "limitations": [
+      "Exact phrase selection is not contextual omission or compositional-language discovery.",
+      "Synthetic template recurrence does not demonstrate general conversational reuse.",
+      "One DCD1 frame encloses a joined conversation; earlier per-message framing is not matched.",
+      "Full-context resends and fresh-message restarts charge every complete setup again.",
+      "No inference, provider token usage, output tokens, repair success or net deployment savings measured.",
+      "The held-out paraphrase slice tests wording shift, not unseen semantic grammar.",
+      "Hashes and the one-shot marker are procedural guards, not adversarial access control."
+    ],
+    "runtime": {
+      "architecture": "arm64",
+      "packages": {
+        "huggingface-hub": "1.30.0",
+        "jsonschema": "4.26.0",
+        "numpy": "2.5.2",
+        "safetensors": "0.8.0",
+        "torch": "2.14.0"
+      },
+      "platform": "Darwin",
+      "python": "3.12.12"
+    },
+    "selected_entries": 0,
+    "source": {
+      "dirty": false,
+      "lock_sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd",
+      "module_sha256": "3db410295e1a1771c441fccf26bb1616496dfcd5eb89a272ed8dcb1e3b30b85c",
+      "revision": "95e8ec44332b805069d65c54c4599915d4e2abcf",
+      "tree": "6a3400b32b4b8ad01d851d81e736b30c29e4c971"
+    },
+    "source_unchanged": true,
+    "status": "complete"
+  },
+  "selection": {
+    "objective": "eight-turn complete joined validation bytes",
+    "prefix_results": [
+      {
+        "complete_validation_bytes": 97779,
+        "entries": 0
+      },
+      {
+        "complete_validation_bytes": 112531,
+        "entries": 2
+      }
+    ],
+    "selected_entries": 0,
+    "validation_sha256": "a6919cd4aa182fbe6f1f81d83be165ef6515f72a09d471530ef8123663b90551"
+  },
+  "inventory": {
+    "inventory": {
+      "codec": "DCD1",
+      "dictionary_sha256": null,
+      "entries": [],
+      "selection_sha256": "466b91a1ec5e057a6b1f06f0c5f4e7febf02de685dbfbdc5cf8351e2ba9a592a",
+      "training_sha256": "2b683bb9f60274b5dbf758b2fddc6292a62f4902749587e038266bc9e568b731",
+      "validation_sha256": "a6919cd4aa182fbe6f1f81d83be165ef6515f72a09d471530ef8123663b90551",
+      "version": "phrase-induction-1"
+    },
+    "sha256": "ee9b2fa929fc4fcb2481f205d618bfb1d2fde15af858df64283ee55732747d59"
+  },
+  "corpus": {
+    "corpus_version": "synthetic-phrase-conversations-1",
+    "generator_version": "phrase-generator-1",
+    "seed": 20260904,
+    "splits": {
+      "heldout": {
+        "conversations": 32,
+        "file_sha256": "91fa473bfd2f7876f1c90f42901d972f3694d30bd8ecaca3befcb49deeb453f2",
+        "logical_sha256": "3d54ef7f0e0f781955c66c0cab5e022130cc1180eb46180eb771831a5535a77a"
+      },
+      "train": {
+        "conversations": 128,
+        "file_sha256": "08b69eb6d0450b83c68075dc49c0582c22dc4f67ed1650b6470cdb11b00c3f67",
+        "logical_sha256": "2b683bb9f60274b5dbf758b2fddc6292a62f4902749587e038266bc9e568b731"
+      },
+      "validation": {
+        "conversations": 32,
+        "file_sha256": "11ccb834742d4f962a9cfade6f8b725986d7ffc8c24de0d1202f0c1e071847ec",
+        "logical_sha256": "a6919cd4aa182fbe6f1f81d83be165ef6515f72a09d471530ef8123663b90551"
+      }
+    }
+  },
+  "induction": {
+    "english_complete_bytes": 386050,
+    "entries": [
+      "modify the target. The speaker explicitly expresses",
+      "about the exchange"
+    ],
+    "rounds": [
+      {
+        "accepted": true,
+        "delta_against_english": 71680,
+        "previous_complete_bytes": 386050,
+        "selected_complete_bytes": 457730,
+        "selected_phrase": "modify the target. The speaker explicitly expresses",
+        "startup_seed": true,
+        "step": 1
+      },
+      {
+        "accepted": true,
+        "delta_against_english": 59008,
+        "previous_complete_bytes": 457730,
+        "selected_complete_bytes": 445058,
+        "selected_phrase": "about the exchange",
+        "startup_seed": false,
+        "step": 2
+      },
+      {
+        "accepted": false,
+        "delta_against_english": 61568,
+        "previous_complete_bytes": 445058,
+        "selected_complete_bytes": 447618,
+        "selected_phrase": "modify the target",
+        "startup_seed": false,
+        "step": 3
+      }
+    ],
+    "selection_rule": "best nonempty seed including startup; subsequent strict cost reductions",
+    "training_sha256": "2b683bb9f60274b5dbf758b2fddc6292a62f4902749587e038266bc9e568b731"
+  },
+  "heldout": {
+    "exactness_passed": true,
+    "inventory_sha256": "ee9b2fa929fc4fcb2481f205d618bfb1d2fde15af858df64283ee55732747d59",
+    "heldout_sha256": "3d54ef7f0e0f781955c66c0cab5e022130cc1180eb46180eb771831a5535a77a",
+    "summaries": [
+      {
+        "arm": "english",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 18839,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 54039,
+        "joined_delta_bytes": 35200,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 35200,
+        "restart_delta_bytes": 35200,
+        "slice": "all"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 18839,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "english",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 29882,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 65082,
+        "joined_delta_bytes": 35200,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 70400,
+        "restart_delta_bytes": 70400,
+        "slice": "all"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 29882,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "english",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 51547,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 86779,
+        "joined_delta_bytes": 35232,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 140862,
+        "restart_delta_bytes": 140800,
+        "slice": "all"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 51547,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "english",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 95482,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 130714,
+        "joined_delta_bytes": 35232,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 281790,
+        "restart_delta_bytes": 281600,
+        "slice": "all"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 32,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 95482,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "all"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 9457,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 27057,
+        "joined_delta_bytes": 17600,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 17600,
+        "restart_delta_bytes": 17600,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 9457,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 15154,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 32754,
+        "joined_delta_bytes": 17600,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 35200,
+        "restart_delta_bytes": 35200,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 15154,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 26090,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 43706,
+        "joined_delta_bytes": 17616,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 70432,
+        "restart_delta_bytes": 70400,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 26090,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 48530,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 66146,
+        "joined_delta_bytes": 17616,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 140896,
+        "restart_delta_bytes": 140800,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 48530,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "familiar-realizations"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 9382,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 26982,
+        "joined_delta_bytes": 17600,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 17600,
+        "restart_delta_bytes": 17600,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 9382,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 1,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 14728,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 32328,
+        "joined_delta_bytes": 17600,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 35200,
+        "restart_delta_bytes": 35200,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 14728,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 2,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 25457,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 43073,
+        "joined_delta_bytes": 17616,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 70430,
+        "restart_delta_bytes": 70400,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 25457,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 4,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "english",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 46952,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "fixed-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 64568,
+        "joined_delta_bytes": 17616,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 140894,
+        "restart_delta_bytes": 140800,
+        "slice": "heldout-paraphrases"
+      },
+      {
+        "arm": "induced-dictionary",
+        "conversations": 16,
+        "conversations_with_joined_savings": 0,
+        "joined_bytes": 46952,
+        "joined_delta_bytes": 0,
+        "prefix_turns": 8,
+        "resend_delta_bytes": 0,
+        "restart_delta_bytes": 0,
+        "slice": "heldout-paraphrases"
+      }
+    ],
+    "row_count": 384
+  },
+  "raw_artifact_sha256": {
+    "study.json": "6d3cf5f9011f4fc89c36c7a4f123b32e92e205c4ac9517a3e82eb35a2514f634",
+    "validation-selection.json": "0e08e458f57af74ceb55bf463e874c131d1b191819e5e8a14d3a7291fccb1410",
+    "inventory-frozen.json": "6bd721cf19279d3c8a18e58044dd27b2f77b3fa4b1f78f18a1ed7b97d7b638fe",
+    "heldout-evaluation.json": "9563367195bf74e3618cd161d41b7f87f62adce3280a1a0f969da8786e6fa0f1",
+    "induction.json": "12d0b3047d929a4c5b43ebec79e64de0f25fd1002a04b6c5d38cfaf8ccbc5496"
+  }
+}

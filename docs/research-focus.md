@@ -2,11 +2,17 @@
 
 Luke Steuber · Project direction and implementation status · 2026-09-04
 
-The primary practical goal is to let Codex, Claude, and smaller local models
+The primary practical goal is to let Codex, Claude, and capable local models
 communicate with fewer total tokens and less time while preserving the work a
 message accomplishes. Language, jargon, notation, and reusable references are
 central. The 64-identity signaling model is a supporting scientific instrument,
 not a replacement for that goal. Its success must not gate practical experiments.
+
+Building an original trained communication component remains a core goal. The
+present 3.43-million-parameter model learns restricted signals, not English
+compression; existing-model decoder tests do not train it or replace it. The
+[roadmap](roadmap.md) separates that model, practical validation, and the still
+unimplemented bridge to learned compression of richer exchanges.
 
 ## Two complementary kinds of compression
 
@@ -39,11 +45,13 @@ The reference can be short, but inspection must not turn into modification and
 the prohibition must not disappear. This is an illustrative meaning, not a
 currently negotiated new syntax.
 
-The next practical fixtures should vary process, polarity, request versus report,
-and acknowledged versus stale reference while holding other factors constant.
-Compare packet+context, context alone, a matched foil+context, and packet alone.
-Score intended-message recovery separately from faithful interpretation of a
-received foil. Explicitly unknown information is not an error to conceal.
+The implemented twelve [functional fixtures](functional-handoffs.md) vary process,
+polarity, request versus report, grounding, and expressed stance in matched
+contrasts. The receiver study compares packet+context, context alone, a matched
+foil+context, and packet alone. It scores intended-message recovery separately
+from faithful interpretation of a received foil. Explicitly unknown information
+is not an error to conceal. The first partial 1.5B smoke had no exact semantic
+success; implementation is not a demonstrated functional benefit.
 
 ## Emotion and appraisal: three separate questions
 

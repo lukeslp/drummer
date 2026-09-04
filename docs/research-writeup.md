@@ -25,6 +25,13 @@ establish instruments and partial signaling, not learned omission, broad transfe
 or net savings. Systemic functional linguistics (SFL) supplies a framework for
 asking which meanings survive changes in realization and shared context.
 
+Subsequent matched, one-seed joint training reached 85.27% with annealed policy
+entropy, versus 73.99% for task loss and 61.23% for a batch information bonus;
+all remained below the quality gate. A held-out phrase-selection experiment
+chose an empty dictionary on validation. A partial 1.5B functional decoder study
+returned thirteen schema-valid but semantically unsuccessful responses. These
+results refine the next experiments without establishing useful deployment.
+
 ## 1. Research question and contribution
 
 The target includes useful abbreviation and jargon inventories, compact notation,
@@ -137,6 +144,22 @@ messages and 5.4% larger in actual three-message batches. Roundtrip and protecte
 content checks passed. This comparison measured bytes without a tokenizer or
 model invocation; it does not establish token savings or native comprehension.
 
+The [joint-training comparison](joint-evidence.md) subsequently completed three
+matched 3,000-update runs from the same initialization. Annealed policy entropy
+reached 85.27% and seven emitted symbols; task loss alone reached 73.99%, and a
+batch information bonus reached 61.23%. Final-checkpoint shuffles reduced success
+in every arm. All 39 curve points and checkpoint identities are retained. These
+are one-seed validation diagnostics, not independent replications or gate-passing
+omission evidence.
+
+The [phrase-induction experiment](phrase-evidence.md) selected plain English over
+a training-derived dictionary on validation. Its held-out representation was
+therefore byte-identical to English. The [functional 1.5B smoke](practical-evidence.md)
+completed thirteen schema-valid responses with no exact semantic successes,
+then timed out on its fourteenth call. Its incomplete condition matrix prevents
+a balanced format ranking; the 12,285 known completed tokens are not a complete
+experiment total.
+
 ## 5. What the SFL angle changes
 
 The proposed organizing question is: **which functional distinctions must the
@@ -220,7 +243,8 @@ remain prospective; they need a frozen design before collection.
    endpoints, caching, acknowledgements, retries, and repairs. Plot costs against
    preserved function at equal task quality; charge training amortization
    separately. Do not attach deployment claims to 24 examples.
-6. Evaluate unfamiliar model partners and the 0.5B/1.5B/8B ladder. Distinguish
+6. Evaluate unfamiliar model partners, including capable local models; retain
+   the 0.5B/1.5B/8B ladder as diagnostics rather than the product ceiling. Distinguish
    direct compact-input performance from deterministic English expansion. A
    successful adapter bridge is not proof of native shared conventions.
 
@@ -230,7 +254,8 @@ they must not serve as a post hoc replacement objective that rescues failed runs
 
 ## 7. Limitations and publication path
 
-There is one failed calibration seed, not a five-seed learned-omission result.
+There is one failed calibration seed and a separate three-objective comparison
+sharing one seed, not a five-seed learned-omission result.
 The supervised controls alter the learning problem and are not frozen
 representation probes. Empirical mutual information is finite-sample and
 descriptive. CPU and CUDA original scores differ by one example; exact replay is

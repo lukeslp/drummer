@@ -15,6 +15,9 @@ the learned signaling experiment, not behind its success gate.
 
 ## Read in order
 
+Start with the [goal and current roadmap](roadmap.md): the original trained model,
+practical compression tests, and the unimplemented bridge between them.
+
 1. [Implementation plan](plan.md): scope, sequence, and promotion gates.
 2. [Experiment](experiment.md): observations, corpus, training, and baselines.
 3. [Protocol](protocol.md): the exact communication contract and state transitions.
@@ -33,5 +36,7 @@ the learned signaling experiment, not behind its success gate.
 16. [Local decoder study](decoder-study.md): measured comprehension, schema guidance, and repair accounting.
 17. [Practical compression evidence](practical-evidence.md): complete size comparisons and their limits.
 18. [Phrase induction](phrase-induction.md): training-only inventory selection and held-out complete-cost measurement.
+19. [Joint-training results](joint-evidence.md): three matched objectives, learning curves, and causal message interventions.
+20. [Phrase-induction results](phrase-evidence.md): selected English fallback and full setup accounting.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

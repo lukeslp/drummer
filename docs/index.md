@@ -8,6 +8,11 @@ The first experiment asks whether a model can learn when a previously establishe
 referent is still shared. It does not establish general language, compositionality,
 experienced emotion, or savings in real coding work.
 
+[Language compression, function, and affect](research-focus.md) explains the
+central practical goal, how SFL shapes it, and which emotion-related ideas are
+implemented versus still proposed. The language/jargon track proceeds alongside
+the learned signaling experiment, not behind its success gate.
+
 ## Read in order
 
 1. [Implementation plan](plan.md): scope, sequence, and promotion gates.
@@ -22,5 +27,6 @@ experienced emotion, or savings in real coding work.
 10. [Pilot outcome and local evidence](local-evidence.md): channel interventions and component controls.
 11. [Local experiments manual](local-experiments.md): artifact autopsy, bounded controls, and experimental dictionary.
 12. [Research write-up and SFL agenda](research-writeup.md): methods, results, functional interpretation, and prospective studies.
+13. [Local joint-optimization study](joint-study.md): prospective matched objectives after the failed calibration.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

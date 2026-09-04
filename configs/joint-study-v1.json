@@ -1,0 +1,12 @@
+{
+  "format": "drummer-joint-study/1",
+  "seeds": [101],
+  "arms": ["baseline", "entropy_annealed", "information_bonus"],
+  "steps": 3000,
+  "batch_size": 128,
+  "evaluate_every": 250,
+  "coefficient": 0.1,
+  "anneal_steps": 1500,
+  "max_seconds_per_arm": 900,
+  "threads": 2
+}

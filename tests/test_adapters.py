@@ -365,9 +365,12 @@ def test_failed_cli_run_preserves_reported_partial_usage() -> None:
 
     assert result.errors
     assert result.usage.input_tokens is None
-    assert result.usage.uncached_input_tokens == 19
-    assert result.usage.output_tokens == 2
+    assert result.usage.uncached_input_tokens is None
+    assert result.usage.output_tokens is None
     assert result.usage.total_tokens is None
+    assert result.setup["reported_usage_subtotal"]["uncached_input_tokens"] == 19
+    assert result.setup["reported_usage_subtotal"]["output_tokens"] == 2
+    assert result.setup["usage_coverage"] == "incomplete_or_unknown"
 
 
 def test_adapter_environment_does_not_mutate_parent_environment(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -434,3 +437,151 @@ def test_default_process_runner_kills_the_whole_child_group_on_timeout(
         )
 
     assert killed == [(4321, adapters_module.signal.SIGKILL)]
+
+
+def response_shape():
+    return {"type": "object", "additionalProperties": False,
+            "properties": {"value": {"type": "string"}}, "required": ["value"]}
+
+
+def claude_structured_payload(**changes):
+    return {"type": "result", "subtype": "success", "is_error": False,
+            "result": "Unstructured commentary is not the structured answer.",
+            "structured_output": {"value": "é e\u0301"}, "num_turns": 3,
+            "stop_reason": "end_turn", "terminal_reason": "completed",
+            "total_cost_usd": 0.012,
+            "usage": {"input_tokens": 7, "output_tokens": 5,
+                      "cache_read_input_tokens": 2, "cache_creation_input_tokens": 1},
+            "modelUsage": {"main-model": {"inputTokens": 7, "outputTokens": 5},
+                           "auxiliary-model": {"inputTokens": 2, "outputTokens": 1}}, **changes}
+
+
+def test_claude_native_schema_selects_validated_structured_field_and_retains_native_metadata():
+    schema = response_shape()
+    payload = claude_structured_payload()
+    runner = RecordingRunner(json.dumps(payload))
+    adapter = ClaudeCLIAdapter(runner=runner, allow_live=True, response_schema=schema)
+    schema["properties"]["value"]["type"] = "integer"
+    adapter.response_schema["properties"]["value"]["type"] = "boolean"
+    result = adapter.generate("synthetic", timeout_seconds=5)
+    args = runner.calls[0][0]
+    assert json.loads(args[args.index("--json-schema") + 1]) == response_shape()
+    assert json.loads(result.text) == payload["structured_output"]
+    assert not result.errors and result.usage.total_tokens == 15
+    assert result.setup["native_turns"] == 3
+    assert result.setup["native_repairs"] is None  # Turn count does not identify repairs.
+    assert result.setup["provider_model_usage"] == payload["modelUsage"]
+    assert result.setup["native_stop_reason"] == "end_turn"
+    assert result.setup["native_result_text"] == payload["result"]
+    assert result.setup["native_structured_output"] == payload["structured_output"]
+    assert result.setup["response_schema_utf8_bytes"] > 0
+    assert result.setup["response_schema_sha256"]
+    assert result.setup["tools"] == "disabled"
+
+
+@pytest.mark.parametrize("change", [{"structured_output": {"value": 3}},
+                                    {"structured_output": {"value": "x", "extra": "bad"}},
+                                    {"structured_output": None},
+                                    {"subtype": "error_max_structured_output_retries", "is_error": True}])
+def test_claude_schema_failure_preserves_usage_without_repair_or_prose_fallback(change):
+    runner = RecordingRunner(json.dumps(claude_structured_payload(**change)))
+    result = ClaudeCLIAdapter(runner=runner, allow_live=True, response_schema=response_shape()).generate(
+        "synthetic", timeout_seconds=5)
+    assert result.errors and result.text == "" and result.usage.total_tokens is None
+    assert result.setup["reported_usage_subtotal"]["total_tokens"] == 15
+    assert result.setup["native_turns"] == 3
+    assert len(runner.calls) == 1 and result.retries == 0
+
+
+def test_claude_schema_missing_structured_field_never_uses_even_valid_prose():
+    payload = claude_structured_payload(result='{"value":"looks valid"}')
+    del payload["structured_output"]
+    result = ClaudeCLIAdapter(runner=RecordingRunner(json.dumps(payload)), allow_live=True,
+                              response_schema=response_shape()).generate("synthetic", timeout_seconds=5)
+    assert result.text == "" and "missing" in result.errors[0]
+    assert result.usage.total_tokens is None
+    assert result.setup["reported_usage_subtotal"]["total_tokens"] == 15
+
+
+def test_codex_native_schema_file_exists_only_during_call_and_preserves_isolation():
+    observed = []
+
+    def runner(args, **kwargs):
+        path = Path(args[args.index("--output-schema") + 1])
+        assert path.parent == Path(kwargs["cwd"])
+        assert json.loads(path.read_text()) == response_shape()
+        observed.append(path)
+        return subprocess.CompletedProcess(args, 0, '\n'.join([
+            json.dumps({"type": "item.completed", "item": {"type": "agent_message", "text": '{"value":"ok"}'}}),
+            json.dumps({"type": "turn.completed", "usage": {"input_tokens": 10, "output_tokens": 5}}),
+        ]), "")
+
+    schema = response_shape()
+    adapter = CodexCLIAdapter(runner=runner, allow_live=True, response_schema=schema)
+    schema["properties"]["value"]["type"] = "integer"
+    result = adapter.generate("synthetic", timeout_seconds=5)
+    assert result.text == '{"value":"ok"}' and not result.errors
+    assert len(observed) == 1 and not observed[0].exists()
+    assert result.setup["native_completed_turns"] == 1
+
+
+@pytest.mark.parametrize("text", ['{"value":3}', '{"value":"a","value":"b"}',
+                                  '{"value":"a","extra":"b"}', '```json\n{"value":"a"}\n```'])
+def test_codex_native_schema_is_independently_validated_without_relaxation(text):
+    stdout = '\n'.join([
+        json.dumps({"type": "item.completed", "item": {"type": "agent_message", "text": text}}),
+        json.dumps({"type": "turn.completed", "usage": {"input_tokens": 10, "output_tokens": 5}}),
+    ])
+    result = CodexCLIAdapter(runner=RecordingRunner(stdout), allow_live=True,
+                             response_schema=response_shape()).generate("synthetic", timeout_seconds=5)
+    assert result.errors and result.text == "" and result.usage.total_tokens is None
+    assert result.setup["reported_usage_subtotal"]["total_tokens"] == 15
+    assert result.setup["native_agent_messages"] == [text]
+
+
+def test_codex_all_native_turn_usage_survives_later_failure_and_partial_timeout():
+    stdout = '\n'.join([
+        json.dumps({"type": "turn.completed", "usage": {"input_tokens": 10, "output_tokens": 5}}),
+        json.dumps({"type": "turn.failed", "usage": {"input_tokens": 3, "output_tokens": 2}}),
+    ])
+    result = CodexCLIAdapter(runner=RecordingRunner(stdout), allow_live=True).generate("synthetic", timeout_seconds=5)
+    assert result.errors and result.usage.total_tokens is None
+    assert result.setup["reported_usage_subtotal"]["total_tokens"] == 20
+    assert result.setup["native_terminal_events"] == ["turn.completed", "turn.failed"]
+
+    def runner(*args, **kwargs):
+        raise subprocess.TimeoutExpired(args[0], kwargs["timeout"], output=stdout.encode())
+
+    partial = CodexCLIAdapter(runner=runner, allow_live=True).generate("synthetic", timeout_seconds=5)
+    assert partial.errors and partial.usage.total_tokens is None
+    assert partial.setup["reported_usage_subtotal"]["total_tokens"] == 20
+    assert partial.setup["native_completed_turns"] == 1
+
+
+@pytest.mark.parametrize("timeout", [True, False])
+def test_completed_codex_turn_followed_by_unreported_turn_never_claims_complete_usage(timeout):
+    stdout = '\n'.join([
+        json.dumps({"type": "turn.started"}),
+        json.dumps({"type": "item.completed", "item": {"type": "agent_message", "text": "earlier answer"}}),
+        json.dumps({"type": "turn.completed", "usage": {"input_tokens": 10, "output_tokens": 5}}),
+        json.dumps({"type": "turn.started"}),
+        # The later turn has no terminal event and no reported token counts.
+    ])
+
+    def runner(args, **kwargs):
+        if timeout:
+            raise subprocess.TimeoutExpired(args, kwargs["timeout"], output=stdout)
+        return subprocess.CompletedProcess(args, 0, stdout, "")
+
+    result = CodexCLIAdapter(runner=runner, allow_live=True).generate("synthetic", timeout_seconds=5)
+    assert result.errors and result.text == ""
+    assert all(getattr(result.usage, key) is None for key in result.usage.__dataclass_fields__)
+    assert result.setup["usage_coverage"] == "incomplete_or_unknown"
+    assert result.setup["reported_usage_subtotal"]["total_tokens"] == 15
+    assert result.setup["native_completed_turns"] == 1
+
+
+@pytest.mark.parametrize("kind", [ClaudeCLIAdapter, CodexCLIAdapter])
+def test_cli_invalid_schema_is_rejected_before_execution(kind):
+    with pytest.raises(Exception, match="not valid"):
+        kind(response_schema={"type": "invented"})

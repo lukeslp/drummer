@@ -8,6 +8,7 @@ no external effect.
 from __future__ import annotations
 
 import ipaddress
+import hashlib
 import json
 import os
 import signal
@@ -17,7 +18,8 @@ import tempfile
 import time
 import urllib.error
 import urllib.request
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
 from typing import Callable, Mapping, Protocol, Sequence
 from urllib.parse import urlparse
 
@@ -168,6 +170,21 @@ def _error_text(returncode: int, stderr: str) -> str:
     return f"{prefix}: {detail}" if detail else prefix
 
 
+def _strict_json(text: str) -> object:
+    def unique(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate JSON key")
+            result[key] = value
+        return result
+
+    def invalid_constant(value):
+        raise ValueError("non-finite JSON constant")
+
+    return json.loads(text, object_pairs_hook=unique, parse_constant=invalid_constant)
+
+
 class _CLIAdapter:
     adapter_name = "cli"
     billing_environment: set[str] = set()
@@ -180,14 +197,30 @@ class _CLIAdapter:
         runner: ProcessRunner | None = None,
         clock: Callable[[], float] = time.perf_counter,
         allow_live: bool = False,
+        response_schema: Mapping[str, object] | None = None,
     ) -> None:
         self.executable = executable
         self.model = model
         self._runner = runner or run_process_group
         self._clock = clock
         self.allow_live = allow_live
+        self._schema_json: str | None = None
+        if response_schema is not None:
+            from jsonschema import Draft202012Validator
 
-    def build_command(self) -> list[str]:
+            if not isinstance(response_schema, Mapping):
+                raise ValueError("native CLI schema must be a JSON object")
+            serialized = json.dumps(response_schema, sort_keys=True, ensure_ascii=False,
+                                    separators=(",", ":"), allow_nan=False)
+            Draft202012Validator.check_schema(json.loads(serialized))
+            self._schema_json = serialized
+
+    @property
+    def response_schema(self) -> dict[str, object] | None:
+        # Returning a copy also protects against mutation through the adapter itself.
+        return json.loads(self._schema_json) if self._schema_json is not None else None
+
+    def build_command(self, *, schema_path: str | None = None) -> list[str]:
         raise NotImplementedError
 
     def _parse(self, stdout: str) -> tuple[str, TokenUsage]:
@@ -213,7 +246,31 @@ class _CLIAdapter:
             "project_context": "disabled",
             "cwd": "isolated-temporary-directory",
             "paid_api_environment": "removed",
+            "response_mode": "native-schema-guided" if self._schema_json else "prompt-only",
+            "response_schema_sha256": hashlib.sha256(self._schema_json.encode()).hexdigest()
+            if self._schema_json is not None else None,
+            "response_schema_utf8_bytes": len(self._schema_json.encode())
+            if self._schema_json is not None else 0,
+            "application_repairs": 0,
+            "native_repairs": None,
+            "usage_coverage": "not_established",
+            "structured_return_mechanism": "client-managed; not an action-tool grant"
+            if self._schema_json is not None else "not requested",
         }
+
+    def _usage_setup(self, stdout: str, *, complete: bool) -> dict[str, object]:
+        setup = self._setup()
+        setup.update(self._reported_setup(stdout))
+        setup.update(
+            usage_coverage="complete_client_report" if complete else "incomplete_or_unknown",
+            reported_usage_subtotal=asdict(self._partial_usage(stdout)),
+            reported_usage_subtotal_interpretation=(
+                "Successful terminal client report; individual unreported fields remain unknown."
+                if complete else
+                "Reported portions only, not the complete invocation; later or failed work may be unreported."
+            ),
+        )
+        return setup
 
     def generate(self, prompt: str, *, timeout_seconds: float) -> AdapterResult:
         if not self.allow_live:
@@ -223,10 +280,15 @@ class _CLIAdapter:
         if timeout_seconds <= 0:
             raise ValueError("timeout_seconds must be positive")
 
-        command = self.build_command()
         started = self._clock()
         try:
             with tempfile.TemporaryDirectory(prefix="drummer-handoff-") as temporary_cwd:
+                schema_path = None
+                if self._schema_json is not None:
+                    schema_file = Path(temporary_cwd) / "response.schema.json"
+                    schema_file.write_text(self._schema_json, encoding="utf-8")
+                    schema_path = str(schema_file)
+                command = self.build_command(schema_path=schema_path)
                 completed = self._runner(
                     command,
                     input=prompt,
@@ -238,14 +300,18 @@ class _CLIAdapter:
                     shell=False,
                     env=_isolated_environment(self.billing_environment),
                 )
-        except subprocess.TimeoutExpired:
+        except subprocess.TimeoutExpired as error:
             elapsed = self._clock() - started
+            partial = error.stdout or ""
+            if isinstance(partial, bytes):
+                partial = partial.decode("utf-8", errors="replace")
+            setup = self._usage_setup(partial, complete=False)
             return AdapterResult(
                 text="",
                 usage=TokenUsage(),
                 elapsed_seconds=elapsed,
                 errors=(f"process timed out after {timeout_seconds:g} seconds",),
-                setup=self._setup(),
+                setup=setup,
             )
         except FileNotFoundError:
             elapsed = self._clock() - started
@@ -259,28 +325,32 @@ class _CLIAdapter:
 
         elapsed = self._clock() - started
         if completed.returncode != 0:
-            partial_usage = self._partial_usage(completed.stdout)
-            setup = self._setup()
-            setup.update(self._reported_setup(completed.stdout))
+            setup = self._usage_setup(completed.stdout, complete=False)
             return AdapterResult(
                 text="",
-                usage=partial_usage,
+                usage=TokenUsage(),
                 elapsed_seconds=elapsed,
                 errors=(_error_text(completed.returncode, completed.stderr),),
                 setup=setup,
             )
         try:
             text, usage = self._parse(completed.stdout)
+            if self._schema_json is not None:
+                from jsonschema import Draft202012Validator
+
+                parsed = _strict_json(text)
+                if not Draft202012Validator(self.response_schema).is_valid(parsed):
+                    raise ValueError("native structured output failed independent schema validation")
         except (KeyError, TypeError, ValueError, json.JSONDecodeError) as error:
+            setup = self._usage_setup(completed.stdout, complete=False)
             return AdapterResult(
                 text="",
                 usage=TokenUsage(),
                 elapsed_seconds=elapsed,
                 errors=(f"invalid {self.adapter_name} output: {error}",),
-                setup=self._setup(),
+                setup=setup,
             )
-        setup = self._setup()
-        setup.update(self._reported_setup(completed.stdout))
+        setup = self._usage_setup(completed.stdout, complete=True)
         return AdapterResult(
             text=text,
             usage=usage,
@@ -303,6 +373,7 @@ class ClaudeCLIAdapter(_CLIAdapter):
         runner: ProcessRunner | None = None,
         clock: Callable[[], float] = time.perf_counter,
         allow_live: bool = False,
+        response_schema: Mapping[str, object] | None = None,
     ) -> None:
         super().__init__(
             executable=executable,
@@ -310,9 +381,10 @@ class ClaudeCLIAdapter(_CLIAdapter):
             runner=runner,
             clock=clock,
             allow_live=allow_live,
+            response_schema=response_schema,
         )
 
-    def build_command(self) -> list[str]:
+    def build_command(self, *, schema_path: str | None = None) -> list[str]:
         command = [
             self.executable,
             "--safe-mode",
@@ -334,6 +406,8 @@ class ClaudeCLIAdapter(_CLIAdapter):
         ]
         if self.model:
             command.extend(("--model", self.model))
+        if self._schema_json is not None:
+            command.extend(("--json-schema", self._schema_json))
         command.append("-p")
         return command
 
@@ -350,14 +424,20 @@ class ClaudeCLIAdapter(_CLIAdapter):
         return setup
 
     def _parse(self, stdout: str) -> tuple[str, TokenUsage]:
-        payload = json.loads(stdout)
+        payload = _strict_json(stdout)
         if not isinstance(payload, dict):
             raise TypeError("top-level result is not an object")
         if payload.get("is_error") is True or payload.get("subtype") not in (None, "success"):
             raise ValueError(str(payload.get("result") or "Claude reported an error"))
-        text = payload.get("result")
-        if not isinstance(text, str):
-            raise TypeError("result text is missing")
+        if self._schema_json is not None:
+            if "structured_output" not in payload:
+                raise ValueError("Claude structured_output is missing; no prose fallback")
+            text = json.dumps(payload["structured_output"], ensure_ascii=False,
+                              separators=(",", ":"), allow_nan=False)
+        else:
+            text = payload.get("result")
+            if not isinstance(text, str):
+                raise TypeError("result text is missing")
         raw_usage = payload.get("usage", {})
         if not isinstance(raw_usage, dict):
             raw_usage = {}
@@ -392,7 +472,17 @@ class ClaudeCLIAdapter(_CLIAdapter):
             "input_tokens", "output_tokens", "cache_read_input_tokens", "cache_creation_input_tokens"
         )} if isinstance(raw_usage, dict) else {}
         return {"provider_reported_models": tuple(dict.fromkeys(reported)),
-                "provider_usage": counts, "input_accounting": "uncached+cache_read+cache_creation"}
+                "provider_usage": counts, "input_accounting": "uncached+cache_read+cache_creation",
+                "provider_model_usage": model_usage if isinstance(model_usage, dict) else None,
+                "top_level_usage_auxiliary_coverage": "unverified; preserve modelUsage separately",
+                "native_turns": _integer(payload.get("num_turns")),
+                "native_subtype": payload.get("subtype"),
+                "native_stop_reason": payload.get("stop_reason"),
+                "native_terminal_reason": payload.get("terminal_reason"),
+                "provider_total_cost_usd": payload.get("total_cost_usd"),
+                "native_structured_output_present": "structured_output" in payload,
+                "native_result_text": payload.get("result"),
+                "native_structured_output": payload.get("structured_output")}
 
 
 _CODEX_DISABLED_FEATURES: tuple[str, ...] = (
@@ -441,6 +531,7 @@ class CodexCLIAdapter(_CLIAdapter):
         runner: ProcessRunner | None = None,
         clock: Callable[[], float] = time.perf_counter,
         allow_live: bool = False,
+        response_schema: Mapping[str, object] | None = None,
     ) -> None:
         super().__init__(
             executable=executable,
@@ -448,9 +539,10 @@ class CodexCLIAdapter(_CLIAdapter):
             runner=runner,
             clock=clock,
             allow_live=allow_live,
+            response_schema=response_schema,
         )
 
-    def build_command(self) -> list[str]:
+    def build_command(self, *, schema_path: str | None = None) -> list[str]:
         command = [
             self.executable,
             "exec",
@@ -474,6 +566,10 @@ class CodexCLIAdapter(_CLIAdapter):
             command.extend(("--disable", feature))
         if self.model:
             command.extend(("--model", self.model))
+        if self._schema_json is not None:
+            if schema_path is None:
+                raise ValueError("Codex native schema requires a temporary schema path")
+            command.extend(("--output-schema", schema_path))
         command.extend(("--json", "-"))
         return command
 
@@ -492,7 +588,8 @@ class CodexCLIAdapter(_CLIAdapter):
 
     def _parse(self, stdout: str) -> tuple[str, TokenUsage]:
         answer: str | None = None
-        raw_usage: dict[str, object] = {}
+        completed = False
+        open_turn = False
         for line in stdout.splitlines():
             if not line.strip():
                 continue
@@ -505,20 +602,49 @@ class CodexCLIAdapter(_CLIAdapter):
                     candidate = item.get("text")
                     if isinstance(candidate, str):
                         answer = candidate
-            if event.get("type") == "turn.completed" and isinstance(event.get("usage"), dict):
-                raw_usage = event["usage"]
+            if event.get("type") in {"turn.failed", "error"}:
+                raise ValueError("Codex reported a failed turn")
+            if event.get("type") == "turn.started":
+                open_turn = True
+            if event.get("type") == "turn.completed":
+                completed = True
+                open_turn = False
         if answer is None:
             raise ValueError("final agent message is missing")
-        usage = _usage(
-            input_tokens=raw_usage.get("input_tokens"),
-            output_tokens=raw_usage.get("output_tokens"),
-            total_tokens=raw_usage.get("total_tokens"),
-            cached_input_tokens=raw_usage.get("cached_input_tokens"),
-        )
-        return answer, usage
+        if not completed:
+            raise ValueError("Codex completed-turn event is missing")
+        if open_turn:
+            raise ValueError("Codex later turn has no terminal event")
+        return answer, self._partial_usage(stdout)
+
+    def _partial_usage(self, stdout: str) -> TokenUsage:
+        # Native turn reports are per-turn. Keep all of them, including usage
+        # preceding a terminal failure, instead of silently returning only the last.
+        reports = []
+        for line in stdout.splitlines():
+            try:
+                event = json.loads(line)
+            except (ValueError, TypeError):
+                continue
+            if not isinstance(event, dict) or event.get("type") not in {"turn.completed", "turn.failed"}:
+                continue
+            raw = event.get("usage")
+            if not isinstance(raw, dict):
+                raw = {}
+            reports.append(_usage(**{key: raw.get(key) for key in TokenUsage.__dataclass_fields__}))
+        if not reports:
+            return TokenUsage()
+        totals = {}
+        for key in TokenUsage.__dataclass_fields__:
+            values = [getattr(item, key) for item in reports]
+            totals[key] = sum(values) if all(value is not None for value in values) else None
+        return TokenUsage(**totals)
 
     def _reported_setup(self, stdout: str) -> dict[str, object]:
         reported: list[str] = []
+        turn_usages: list[dict[str, object]] = []
+        terminal_events: list[str] = []
+        messages: list[str] = []
         for line in stdout.splitlines():
             try:
                 event = json.loads(line)
@@ -526,9 +652,20 @@ class CodexCLIAdapter(_CLIAdapter):
                 continue
             if isinstance(event, dict) and isinstance(event.get("model"), str):
                 reported.append(event["model"])
-        if not reported:
-            return {}
-        return {"provider_reported_models": tuple(dict.fromkeys(reported))}
+            if isinstance(event, dict) and event.get("type") == "item.completed":
+                item = event.get("item")
+                if isinstance(item, dict) and item.get("type") == "agent_message" and isinstance(item.get("text"), str):
+                    messages.append(item["text"])
+            if isinstance(event, dict) and event.get("type") in {"turn.completed", "turn.failed", "error"}:
+                terminal_events.append(event["type"])
+                if isinstance(event.get("usage"), dict):
+                    turn_usages.append(event["usage"])
+        return {"provider_reported_models": tuple(dict.fromkeys(reported)),
+                "native_turn_usage_records": turn_usages,
+                "native_terminal_events": terminal_events,
+                "native_completed_turns": terminal_events.count("turn.completed"),
+                "native_agent_messages": messages,
+                "native_repairs": None}
 
 
 def _local_base_url(value: str, trusted_hosts: Sequence[str]) -> tuple[str, str]:

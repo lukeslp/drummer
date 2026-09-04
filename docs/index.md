@@ -31,5 +31,7 @@ the learned signaling experiment, not behind its success gate.
 14. [Functional handoffs](functional-handoffs.md): process, polarity, grounding, and expressed-affect contrasts.
 15. [Compact dictionary](compact-dictionary.md): exact jargon substitution with smaller framing.
 16. [Local decoder study](decoder-study.md): measured comprehension, schema guidance, and repair accounting.
+17. [Practical compression evidence](practical-evidence.md): complete size comparisons and their limits.
+18. [Phrase induction](phrase-induction.md): training-only inventory selection and held-out complete-cost measurement.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

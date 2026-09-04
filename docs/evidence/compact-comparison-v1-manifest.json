@@ -1,0 +1,53 @@
+{
+  "artifacts": {
+    "comparison.json": {
+      "bytes": 80401,
+      "sha256": "7b2c25bba962a7b84d0012b747d94f838cb1dcadd88949ffe9c352b38415ea35"
+    },
+    "summary.json": {
+      "bytes": 4006,
+      "sha256": "c5b0d2af5a830ce4e5f945c03f40e28bfedc6298a1c33bd37971b6a9e80799e3"
+    }
+  },
+  "author": "Luke Steuber",
+  "completed_at_utc": "2026-09-04T23:05:06.346010+00:00",
+  "elapsed_seconds": 0.5277145420113811,
+  "format": "drummer-offline-artifact-manifest/1",
+  "invocation": {
+    "call": "run_compact_comparison(case_limit=24, session_size=3)",
+    "inference_calls": 0,
+    "network_calls": 0,
+    "tokenizer": null,
+    "tokenizer_id": null
+  },
+  "module_sha256": {
+    "src/drummer/compact_dictionary.py": "20eef7ffadc19badb879c07d67b9429665c60b96ee3ffd5d9e3d7570877c6d25",
+    "src/drummer/compression_bench.py": "c95a3d8eae0dc81867c29e789c876c863663a023b76cb2d39fadf3b44d5dfc95",
+    "src/drummer/handoffs.py": "569bb374dcdf31f17688a8cfb2ca41393ac58ce26adbb772a61b4c784cbeb2aa",
+    "src/drummer/protocol.py": "ad3988a62fe1081bda625668380639a23f52f5c7ffe9a5ac18716b386076c99e"
+  },
+  "runtime": {
+    "architecture": "arm64",
+    "packages": {
+      "huggingface-hub": "1.30.0",
+      "jsonschema": "4.26.0",
+      "numpy": "2.5.2",
+      "safetensors": "0.8.0",
+      "torch": "2.14.0"
+    },
+    "platform": "Darwin",
+    "python": "3.12.12"
+  },
+  "runtime_hash_format": "SHA256 of sorted compact UTF-8 JSON",
+  "runtime_sha256": "5cb9b13dd05e5f00b42c1d1550145e638042b815aa58e39ad7292e37c61edcf0",
+  "source": {
+    "dirty": false,
+    "revision": "505377bae2a6c0821b0d7490fea249224dc3b921",
+    "revision_source": "git",
+    "tree_sha256": "935ad5638a14845e5517819f73d10083f2e01e776fc8689134224c7c5638e6fe"
+  },
+  "source_unchanged": true,
+  "started_at_utc": "2026-09-04T23:05:05.750827+00:00",
+  "status": "complete",
+  "uv_lock_sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd"
+}

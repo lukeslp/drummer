@@ -1,0 +1,134 @@
+{
+  "all_prepared_records_protected_exact": true,
+  "all_tokens_unavailable": true,
+  "author": "Luke Steuber",
+  "evidence_class": "Measured",
+  "format": "drummer-compact-comparison-summary/1",
+  "inference_performed": false,
+  "record_count": 128,
+  "scenario_totals": {
+    "first-message": {
+      "arms": {
+        "compact-dictionary-v1": {
+          "messages": 24,
+          "prompt_utf8_bytes": 104840,
+          "prompts": 24,
+          "protected_occurrences_checked": 922,
+          "protected_prompts_passed": 24,
+          "roundtrip_checks": 24,
+          "roundtrip_checks_passed": 24,
+          "setup_utf8_bytes": 18744
+        },
+        "dictionary-v1": {
+          "messages": 24,
+          "prompt_utf8_bytes": 191901,
+          "prompts": 24,
+          "protected_occurrences_checked": 922,
+          "protected_prompts_passed": 24,
+          "roundtrip_checks": 24,
+          "roundtrip_checks_passed": 24,
+          "setup_utf8_bytes": 26640
+        },
+        "full-english": {
+          "messages": 24,
+          "prompt_utf8_bytes": 97818,
+          "prompts": 24,
+          "protected_occurrences_checked": 0,
+          "protected_prompts_passed": 24,
+          "roundtrip_checks": 0,
+          "roundtrip_checks_passed": 0,
+          "setup_utf8_bytes": 0
+        },
+        "terse-english": {
+          "messages": 24,
+          "prompt_utf8_bytes": 87540,
+          "prompts": 24,
+          "protected_occurrences_checked": 0,
+          "protected_prompts_passed": 24,
+          "roundtrip_checks": 0,
+          "roundtrip_checks_passed": 0,
+          "setup_utf8_bytes": 0
+        }
+      },
+      "compact_delta_vs": {
+        "dictionary-v1": {
+          "byte_delta": -87061,
+          "compact_smaller_prompts": 24,
+          "percent_delta": -45.36766353484348
+        },
+        "full-english": {
+          "byte_delta": 7022,
+          "compact_smaller_prompts": 0,
+          "percent_delta": 7.178637878509075
+        },
+        "terse-english": {
+          "byte_delta": 17300,
+          "compact_smaller_prompts": 0,
+          "percent_delta": 19.76239433401874
+        }
+      }
+    },
+    "joined-session": {
+      "arms": {
+        "compact-dictionary-v1": {
+          "messages": 24,
+          "prompt_utf8_bytes": 93920,
+          "prompts": 8,
+          "protected_occurrences_checked": 922,
+          "protected_prompts_passed": 8,
+          "roundtrip_checks": 24,
+          "roundtrip_checks_passed": 24,
+          "setup_utf8_bytes": 6248
+        },
+        "dictionary-v1": {
+          "messages": 24,
+          "prompt_utf8_bytes": 175717,
+          "prompts": 8,
+          "protected_occurrences_checked": 922,
+          "protected_prompts_passed": 8,
+          "roundtrip_checks": 24,
+          "roundtrip_checks_passed": 24,
+          "setup_utf8_bytes": 8880
+        },
+        "full-english": {
+          "messages": 24,
+          "prompt_utf8_bytes": 99410,
+          "prompts": 8,
+          "protected_occurrences_checked": 0,
+          "protected_prompts_passed": 8,
+          "roundtrip_checks": 0,
+          "roundtrip_checks_passed": 0,
+          "setup_utf8_bytes": 0
+        },
+        "terse-english": {
+          "messages": 24,
+          "prompt_utf8_bytes": 89132,
+          "prompts": 8,
+          "protected_occurrences_checked": 0,
+          "protected_prompts_passed": 8,
+          "roundtrip_checks": 0,
+          "roundtrip_checks_passed": 0,
+          "setup_utf8_bytes": 0
+        }
+      },
+      "compact_delta_vs": {
+        "dictionary-v1": {
+          "byte_delta": -81797,
+          "compact_smaller_prompts": 8,
+          "percent_delta": -46.550419139866946
+        },
+        "full-english": {
+          "byte_delta": -5490,
+          "compact_smaller_prompts": 8,
+          "percent_delta": -5.522583241122625
+        },
+        "terse-english": {
+          "byte_delta": 4788,
+          "compact_smaller_prompts": 0,
+          "percent_delta": 5.371808104833287
+        }
+      }
+    }
+  },
+  "unique_cases": 24
+}

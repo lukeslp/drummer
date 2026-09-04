@@ -27,10 +27,11 @@ asking which meanings survive changes in realization and shared context.
 
 ## 1. Research question and contribution
 
-The target is not a universal abbreviation list. It is a context-sensitive
-communication practice that can make information explicit when needed, recover
-it from legitimately shared history when possible, and request repair when
-grounding is uncertain. Shorter characters, fewer tokenizer tokens, lower
+The target includes useful abbreviation and jargon inventories, compact notation,
+and a context-sensitive communication practice that can make information explicit
+when needed, recover it from legitimately shared history when possible, and
+request repair when grounding is uncertain. Practical language compression
+proceeds alongside the small signaling model. Shorter characters, fewer tokenizer tokens, lower
 forward-channel bits, and lower end-to-end cost are distinct outcomes.
 
 The present contribution is a reproducible separation of three questions:
@@ -129,6 +130,13 @@ the initial paired runs. One later 8B spot-check passed all three forms but used
 These observations are neither averaged into a broad savings estimate nor used
 to relax the original response contract.
 
+A subsequent [complete representation comparison](practical-evidence.md) tested
+lower-overhead exact framing on all 24 handoffs. It reduced the earlier codec's
+complete bytes by 45–47%, but remained 19.8% larger than terse English for first
+messages and 5.4% larger in actual three-message batches. Roundtrip and protected
+content checks passed. This comparison measured bytes without a tokenizer or
+model invocation; it does not establish token savings or native comprehension.
+
 ## 5. What the SFL angle changes
 
 The proposed organizing question is: **which functional distinctions must the
@@ -186,8 +194,13 @@ Conversely, a longer repair may lower total cost if it prevents a wrong action.
 
 ## 6. Prospective SFL evaluation agenda
 
-These studies are **specified next steps, not completed experiments or frozen
-preregistrations**. They require a separate versioned design before collection.
+This agenda is partially instrumented, not completed. The separately versioned
+[functional corpus](functional-handoffs.md) now provides twelve fixtures spanning
+six matched contrasts, a compact realization, context/foil controls, and separate
+field scores. Its [bounded local study](decoder-study.md) is receiver-only and
+does not implement every control below. In particular, matched surface-length
+controls, broad partner evaluation, and functional effects of expressed appraisal
+remain prospective; they need a frozen design before collection.
 
 1. Create matched synthetic pairs that vary one process/participant distinction,
    one dialogue move, or one grounding condition. Include matched surface-length

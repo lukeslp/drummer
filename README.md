@@ -2,9 +2,16 @@
 
 Learning what conversations can leave unsaid.
 
-Drummer has two deliberately separate tracks: a randomly initialized communication
-model and an exact, inspectable protocol for agent handoffs. Neither successful
-toy signaling nor a shorter string establishes end-to-end savings.
+Drummer investigates language and jargon compression for Codex, Claude, and
+smaller local models: reusable phrases, compact notation, shared references, and
+context-sensitive omission that preserve what a message means and accomplishes.
+SFL guides the distinctions to preserve, including requests, evidence, negation,
+grounding, and expressed stance.
+
+Two complementary tracks separate practical, inspectable compression from a
+randomly initialized communication model. The small model is a scientific
+instrument; practical language experiments proceed alongside it. Neither
+successful toy signaling nor a shorter string establishes end-to-end savings.
 
 Author: Luke Steuber.
 
@@ -40,6 +47,9 @@ to any server with the same name.
 - [Pilot outcome and local evidence](docs/local-evidence.md): limited causal signaling, supervised controls, and compression costs
 - [Local experiments](docs/local-experiments.md): reproducible diagnostics and experimental dictionary contract
 - [Research write-up and SFL agenda](docs/research-writeup.md): living manuscript with evidence and hypotheses kept separate
+- [Language, function, and affect](docs/research-focus.md): central goal and implemented versus proposed emotion-related work
+- [Practical compression evidence](docs/practical-evidence.md): complete size measurements, exactness, and remaining overhead
+- [Compact dictionary](docs/compact-dictionary.md) and [functional handoffs](docs/functional-handoffs.md): experimental forms and decoder contracts
 - [Coding handoffs](docs/handoffs.md): adapters, synthetic fixtures, and token accounting
 - [Operations](docs/operations.md): reproducibility, bounded jobs, and funding
 - [Decisions](docs/decisions.md), [model card](docs/model-card.md), and [data card](docs/dataset-card.md)

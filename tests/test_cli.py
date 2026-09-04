@@ -25,3 +25,20 @@ def test_budget_cli(tmp_path, capsys):
         main(["budget", "--ledger", str(tmp_path / "b.sqlite")])
     assert result.value.code == 0
     assert '"committed_micro_usd": 0' in capsys.readouterr().out
+
+
+def test_local_bench_is_offline_and_diagnostics_cannot_select_test():
+    args = parser().parse_args(["compression-bench"])
+    assert args.live is False and args.limit == 24
+    with pytest.raises(SystemExit):
+        parser().parse_args(["channel-diagnostics", "--checkpoint", "x", "--corpus", "x",
+                            "--output", "x", "--split", "test"])
+
+
+def test_autopsy_cannot_overwrite_input(tmp_path):
+    path = tmp_path / "evidence.json"
+    path.write_text("{}")
+    with pytest.raises(SystemExit) as result:
+        main(["autopsy", "--report", str(path), "--output", str(path)])
+    assert result.value.code != 0
+    assert path.read_text() == "{}"

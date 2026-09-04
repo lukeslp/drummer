@@ -33,6 +33,13 @@ def _config(path):
     return json.loads(Path(path).read_text()) if path else {}
 
 
+def _new_outputs(*paths):
+    """Experimental reports must never overwrite inputs or an earlier run."""
+    targets = [Path(path).resolve() for path in paths if path]
+    if len(set(targets)) != len(targets) or any(path.exists() for path in targets):
+        raise ValueError("use distinct, new output paths; existing experimental evidence is immutable")
+
+
 ADAPTER_NAMES = ["codex", "claude", "qwen-0.5b", "qwen-1.5b", "qwen-8b"]
 
 
@@ -148,11 +155,75 @@ def parser() -> argparse.ArgumentParser:
     gates.add_argument("--device", default="cpu")
     gates.add_argument("--output")
     gates.add_argument("--conformance-report", help="Independent source-matched diagnostic review required for eligibility")
+    autopsy = commands.add_parser("autopsy", help="Summarize existing pilot JSON without loading a model or labels")
+    autopsy.add_argument("--report", required=True)
+    autopsy.add_argument("--run-root")
+    autopsy.add_argument("--training-report", action="append", default=[])
+    autopsy.add_argument("--output")
+    autopsy.add_argument("--markdown")
+    diagnostic = commands.add_parser("channel-diagnostics", help="Bounded CPU-only frozen validation interventions")
+    diagnostic.add_argument("--checkpoint", required=True)
+    diagnostic.add_argument("--corpus", required=True)
+    diagnostic.add_argument("--limit", type=int, default=10000)
+    diagnostic.add_argument("--seconds", type=float, default=300)
+    diagnostic.add_argument("--threads", type=int, default=2)
+    diagnostic.add_argument("--seed", type=int, default=20260904)
+    diagnostic.add_argument("--output", required=True)
+    control = commands.add_parser("local-control", help="Fresh supervised component control, not pilot training")
+    control.add_argument("--kind", choices=["sender_identity", "fixed_code_receiver"], required=True)
+    control.add_argument("--corpus", required=True)
+    control.add_argument("--steps", type=int, default=200)
+    control.add_argument("--limit", type=int, default=1000)
+    control.add_argument("--seconds", type=float, default=120)
+    control.add_argument("--threads", type=int, default=2)
+    control.add_argument("--seed", type=int, default=101)
+    control.add_argument("--research-architecture", action="store_true")
+    control.add_argument("--output", required=True)
+    bench = commands.add_parser("compression-bench", help="Offline accounting by default; optional bounded loopback inference")
+    bench.add_argument("--limit", type=int, default=24)
+    bench.add_argument("--session-size", type=int, default=3)
+    bench.add_argument("--arm", action="append")
+    bench.add_argument("--live", action="store_true")
+    bench.add_argument("--model", choices=["qwen2.5:0.5b", "qwen2.5:1.5b", "qwen3:8b"], default="qwen3:8b")
+    bench.add_argument("--base-url", default="http://127.0.0.1:11434/v1")
+    bench.add_argument("--timeout", type=float, default=30)
+    bench.add_argument("--output")
     return p
 
 
 def _run(args):
     match args.command:
+        case "autopsy":
+            from drummer.pilot_autopsy import build_autopsy, render_autopsy_markdown
+            _new_outputs(args.output, args.markdown)
+            report = build_autopsy(args.report, run_root=args.run_root, training_reports=args.training_report)
+            if args.markdown:
+                target = Path(args.markdown)
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text(render_autopsy_markdown(report), encoding="utf-8")
+            emit(report, args.output)
+        case "channel-diagnostics":
+            from drummer.local_controls import diagnose_channel
+            _new_outputs(args.output)
+            emit(diagnose_channel(args.checkpoint, args.corpus, limit=args.limit,
+                                  max_seconds=args.seconds, threads=args.threads, seed=args.seed), args.output)
+        case "local-control":
+            from drummer.local_controls import run_component_control
+            _new_outputs(args.output)
+            emit(run_component_control(args.corpus, kind=args.kind, max_steps=args.steps,
+                                       limit=args.limit, max_seconds=args.seconds,
+                                       threads=args.threads, seed=args.seed,
+                                       research_architecture=args.research_architecture,
+                                       checkpoint_dir=Path(args.output).with_suffix("")), args.output)
+        case "compression-bench":
+            from drummer.compression_bench import ALL_ARMS, CompressionArm, run_compression_bench
+            from drummer.adapters import LocalOpenAIAdapter
+            _new_outputs(args.output)
+            adapter = (LocalOpenAIAdapter(model=args.model, base_url=args.base_url, allow_live=True,
+                                          max_retries=0) if args.live else None)
+            emit(run_compression_bench(case_limit=args.limit, session_size=args.session_size,
+                                       arms=tuple(CompressionArm(value) for value in args.arm) if args.arm else ALL_ARMS,
+                                       adapter=adapter, allow_live=args.live, timeout_seconds=args.timeout), args.output)
         case "doctor":
             import shutil
             import torch

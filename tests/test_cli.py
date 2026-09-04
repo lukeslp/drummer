@@ -42,3 +42,21 @@ def test_autopsy_cannot_overwrite_input(tmp_path):
         main(["autopsy", "--report", str(path), "--output", str(path)])
     assert result.value.code != 0
     assert path.read_text() == "{}"
+
+
+def test_extensionless_control_output_cannot_collide_with_checkpoint_directory(tmp_path, monkeypatch):
+    output = tmp_path / "run"
+
+    def fake_control(corpus, **kwargs):
+        checkpoint_dir = kwargs["checkpoint_dir"]
+        assert checkpoint_dir != output
+        checkpoint_dir.mkdir()
+        return {"status": "fixture"}
+
+    monkeypatch.setattr("drummer.local_controls.run_component_control", fake_control)
+    with pytest.raises(SystemExit) as result:
+        main(["local-control", "--kind", "sender_identity", "--corpus", "unused",
+              "--output", str(output)])
+    assert result.value.code == 0
+    assert output.is_file()
+    assert (tmp_path / "run.checkpoints").is_dir()

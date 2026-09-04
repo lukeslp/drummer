@@ -73,6 +73,10 @@ of the frozen pilot's representations. The default is a one-layer width-32 model
 Report the distinction. A failure after a short run does not establish incapacity.
 Each CLI run saves final safetensors weights, hashes, runtime/source/corpus
 identities, and validation curves in a new output directory.
+For report path `result.json`, weights now live in `result.json.checkpoints/`;
+an extensionless report path is also safe. Reports distinguish the corpus's
+observed seal-marker state (`test_unsealed`) from this invocation's behavior
+(`test_labels_loaded: false`). Neither control reads the test split.
 
 ```sh
 uv run drummer local-control --kind sender_identity --corpus /path/to/pilot-v3 \

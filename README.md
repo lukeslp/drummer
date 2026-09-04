@@ -39,6 +39,7 @@ to any server with the same name.
 - [Initial measured evidence](docs/initial-evidence.md): correctness, handoff failures, and local-model probes
 - [Pilot outcome and local evidence](docs/local-evidence.md): limited causal signaling, supervised controls, and compression costs
 - [Local experiments](docs/local-experiments.md): reproducible diagnostics and experimental dictionary contract
+- [Research write-up and SFL agenda](docs/research-writeup.md): living manuscript with evidence and hypotheses kept separate
 - [Coding handoffs](docs/handoffs.md): adapters, synthetic fixtures, and token accounting
 - [Operations](docs/operations.md): reproducibility, bounded jobs, and funding
 - [Decisions](docs/decisions.md), [model card](docs/model-card.md), and [data card](docs/dataset-card.md)

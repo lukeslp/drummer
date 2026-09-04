@@ -214,7 +214,8 @@ def _run(args):
                                        limit=args.limit, max_seconds=args.seconds,
                                        threads=args.threads, seed=args.seed,
                                        research_architecture=args.research_architecture,
-                                       checkpoint_dir=Path(args.output).with_suffix("")), args.output)
+                                       checkpoint_dir=Path(args.output).with_name(
+                                           Path(args.output).name + ".checkpoints")), args.output)
         case "compression-bench":
             from drummer.compression_bench import ALL_ARMS, CompressionArm, run_compression_bench
             from drummer.adapters import LocalOpenAIAdapter

@@ -29,6 +29,11 @@ Analyze ideational distinctions (processes and participants), interpersonal move
 cohesion). Track how a general possibility is instantiated in a particular task
 and exchange. Labels annotate evidence; they do not prove a learned function.
 
+The [research write-up](research-writeup.md) specifies the SFL-oriented questions
+and prospective matched contrasts. An SFL view may span several protocol fields;
+the three metafunctions are not independent JSON compartments. Record overlapping
+functions and unresolved interpretations rather than forcing one label per symbol.
+
 ## Promotion
 
 A candidate remains experimental until it survives frozen evaluation and causal

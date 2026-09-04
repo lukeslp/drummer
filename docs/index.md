@@ -21,5 +21,6 @@ experienced emotion, or savings in real coding work.
 9. [Initial measured evidence](initial-evidence.md): completed checks and exploratory failures.
 10. [Pilot outcome and local evidence](local-evidence.md): channel interventions and component controls.
 11. [Local experiments manual](local-experiments.md): artifact autopsy, bounded controls, and experimental dictionary.
+12. [Research write-up and SFL agenda](research-writeup.md): methods, results, functional interpretation, and prospective studies.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

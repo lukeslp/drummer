@@ -43,10 +43,11 @@ def _bounds(limit, batch_size, max_seconds):
         raise ValueError("max_seconds must be positive and at most 600")
 
 
-def _provenance():
+def _provenance(corpus):
     return {"source": _source_provenance(), "diagnostic_module_sha256": sha256(__file__),
             "runtime": runtime(), "device": "cpu", "split": "validation",
-            "test_unsealed": False, "promotion_evidence": False}
+            "test_unsealed": (Path(corpus) / "TEST_UNSEALED.json").exists(),
+            "test_labels_loaded": False, "promotion_evidence": False}
 
 
 def intervention_actions(actions: np.ndarray, conditions: np.ndarray, seed: int) -> dict:
@@ -102,7 +103,7 @@ def diagnose_channel(checkpoint: str | Path, corpus: str | Path, *, limit: int =
     """
     _bounds(limit, batch_size, max_seconds)
     started = time.monotonic()
-    report = {"format": "drummer-channel-diagnostics/1", **_provenance(),
+    report = {"format": "drummer-channel-diagnostics/1", **_provenance(corpus),
               "seed": seed, "max_seconds": max_seconds, "cpu_threads": threads,
               "status": "budget_exhausted", "interventions": {},
               "limitations": ["Single-checkpoint descriptive validation interventions, not five-seed inference.",
@@ -198,7 +199,7 @@ def run_component_control(corpus: str | Path, *, kind: str, max_steps: int = 200
             raise ValueError("component checkpoint directory already exists; use a new run path")
     started = time.monotonic()
     config = ModelConfig() if research_architecture else ModelConfig(layers=1, width=32, ffn=64)
-    report = {"format": "drummer-component-control/1", **_provenance(), "kind": kind,
+    report = {"format": "drummer-component-control/1", **_provenance(corpus), "kind": kind,
               "seed": seed, "max_steps": max_steps, "max_seconds": max_seconds,
               "cpu_threads": threads, "model": config.to_dict(), "learning_rate": 3e-4,
               "batch_size": batch_size, "optimizer": "AdamW", "weight_decay": 0.01,

@@ -95,3 +95,19 @@ def test_frozen_diagnostics_hash_binding_and_no_checkpoint_edits(corpus, tmp_pat
 def test_reject_unsafe_bounds(corpus, kwargs):
     with pytest.raises(ValueError):
         run_component_control(corpus, kind="sender_identity", **kwargs)
+
+
+def test_existing_unseal_is_reported_without_loading_test(corpus, monkeypatch):
+    (corpus / "TEST_UNSEALED.json").write_text("{}")
+    loaded = []
+
+    def read_allowed_split(root, split):
+        loaded.append(split)
+        assert split in {"train", "validation"}
+        return load_split(root, split)
+
+    monkeypatch.setattr("drummer.local_controls.load_split", read_allowed_split)
+    result = run_component_control(corpus, kind="sender_identity", max_steps=1, limit=10)
+    assert result["test_unsealed"] is True
+    assert result["test_labels_loaded"] is False
+    assert loaded == ["train", "validation"]

@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drummer.local/schema/packet-0.1.0.json",
+  "title": "Drummer canonical packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ir_version",
+    "packet_id",
+    "thread_id",
+    "sender",
+    "receivers",
+    "created_sequence",
+    "register",
+    "moves",
+    "evidence",
+    "state_proposals",
+    "extensions"
+  ],
+  "properties": {
+    "ir_version": {"const": "0.1.0"},
+    "packet_id": {"$ref": "#/$defs/id"},
+    "thread_id": {"$ref": "#/$defs/id"},
+    "parent_packet_id": {"$ref": "#/$defs/id"},
+    "sender": {"$ref": "#/$defs/agent"},
+    "receivers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/agent"}
+    },
+    "created_sequence": {"type": "integer", "minimum": 0},
+    "base_state": {"$ref": "#/$defs/baseState"},
+    "register": {"$ref": "#/$defs/register"},
+    "moves": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/move"}
+    },
+    "response_contract": {"$ref": "#/$defs/responseContract"},
+    "response": {"$ref": "#/$defs/response"},
+    "evidence": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidence"}
+    },
+    "state_proposals": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/stateProposalBatch"}
+    },
+    "extensions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/extension"}
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "semver": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "role"],
+      "properties": {
+        "agent_id": {"$ref": "#/$defs/id"},
+        "role": {"$ref": "#/$defs/identifier"}
+      }
+    },
+    "baseState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ledger_id", "revision", "canonical_sha256"],
+      "properties": {
+        "ledger_id": {"$ref": "#/$defs/id"},
+        "revision": {"type": "integer", "minimum": 0},
+        "canonical_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "register": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "tenor", "mode"],
+      "properties": {
+        "field": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["domain", "activity", "phase"],
+          "properties": {
+            "domain": {"$ref": "#/$defs/identifier"},
+            "activity": {"$ref": "#/$defs/identifier"},
+            "phase": {"$ref": "#/$defs/identifier"},
+            "artifacts": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/reference"}
+            }
+          }
+        },
+        "tenor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sender_role", "receiver_role", "relationship", "trust_claim", "accountability"],
+          "properties": {
+            "sender_role": {"$ref": "#/$defs/identifier"},
+            "receiver_role": {"$ref": "#/$defs/identifier"},
+            "relationship": {"enum": ["peer", "delegation", "review", "supervision", "service"]},
+            "trust_claim": {"enum": ["untrusted", "ordinary", "privileged-source-reference"]},
+            "accountability": {"$ref": "#/$defs/id"}
+          }
+        },
+        "mode": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["channel", "medium", "interaction", "language_role", "rhetorical_role"],
+          "properties": {
+            "channel": {"enum": ["agent-message", "tool-result", "artifact", "ledger-event"]},
+            "medium": {"enum": ["structured-text", "structured-data", "mixed"]},
+            "interaction": {"enum": ["dialogic-synchronous", "dialogic-asynchronous", "monologic"]},
+            "language_role": {"enum": ["constitutive", "ancillary"]},
+            "rhetorical_role": {"enum": ["initiate", "respond", "continue", "repair", "close"]}
+          }
+        }
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id"],
+      "properties": {
+        "kind": {
+          "enum": ["agent", "fact", "directive", "commitment", "artifact", "evidence", "target", "process", "participant", "circumstance", "contract", "packet", "move", "claim", "result", "decision", "definition", "alias"]
+        },
+        "id": {"$ref": "#/$defs/id"},
+        "version": {"type": "integer", "minimum": 1},
+        "content_sha256": {"$ref": "#/$defs/sha256"},
+        "fallback": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["media_type", "text", "sha256"],
+          "properties": {
+            "media_type": {"const": "text/plain"},
+            "text": {"type": "string", "minLength": 1, "maxLength": 16384},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      }
+    },
+    "semanticValue": {
+      "oneOf": [
+        {"type": ["string", "number", "boolean"]},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"$ref": "#/$defs/identifier"},
+            "value": {"type": ["string", "number", "boolean"]},
+            "unit": {"$ref": "#/$defs/identifier"}
+          }
+        }
+      ]
+    },
+    "participant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["participant_id", "role"],
+      "properties": {
+        "participant_id": {"$ref": "#/$defs/id"},
+        "role": {"$ref": "#/$defs/identifier"},
+        "ref": {"$ref": "#/$defs/reference"},
+        "value": {"$ref": "#/$defs/semanticValue"}
+      },
+      "oneOf": [
+        {"required": ["ref"]},
+        {"required": ["value"]}
+      ]
+    },
+    "process": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["process_id", "action", "process_type", "participants"],
+      "properties": {
+        "process_id": {"$ref": "#/$defs/id"},
+        "action": {"$ref": "#/$defs/identifier"},
+        "process_type": {"enum": ["material", "mental", "relational", "verbal", "existential"]},
+        "participants": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/participant"}
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_id", "kind"],
+      "properties": {
+        "target_id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["file", "symbol", "file_symbol", "directory", "test", "command", "service", "URL", "artifact", "literal"]},
+        "path": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "symbol": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "line": {"type": "integer", "minimum": 1},
+        "repository": {"type": "string", "minLength": 1, "maxLength": 4096},
+        "revision": {"type": "string", "minLength": 1, "maxLength": 256},
+        "literal": {"$ref": "#/$defs/semanticValue"}
+      },
+      "allOf": [
+        {"if": {"properties": {"kind": {"const": "file"}}}, "then": {"required": ["path"]}},
+        {"if": {"properties": {"kind": {"const": "directory"}}}, "then": {"required": ["path"]}},
+        {"if": {"properties": {"kind": {"const": "file_symbol"}}}, "then": {"required": ["path", "symbol"]}},
+        {"if": {"properties": {"kind": {"const": "symbol"}}}, "then": {"required": ["symbol"]}},
+        {"if": {"properties": {"kind": {"const": "literal"}}}, "then": {"required": ["literal"]}}
+      ]
+    },
+    "circumstance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["circumstance_id", "kind", "value"],
+      "properties": {
+        "circumstance_id": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["location", "time", "sequence", "manner", "means", "cause", "purpose", "accompaniment", "role", "condition", "scope", "exception", "concession"]},
+        "value": {"$ref": "#/$defs/semanticValue"},
+        "applies_to": {"$ref": "#/$defs/reference"}
+      }
+    },
+    "relation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relation_id", "family", "kind", "from_ref", "to_ref"],
+      "properties": {
+        "relation_id": {"$ref": "#/$defs/id"},
+        "family": {"enum": ["elaboration", "extension", "enhancement", "projection", "dependency", "cohesion"]},
+        "kind": {"$ref": "#/$defs/identifier"},
+        "from_ref": {"$ref": "#/$defs/reference"},
+        "to_ref": {"$ref": "#/$defs/reference"}
+      }
+    },
+    "ideational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["circumstances", "relations"],
+      "properties": {
+        "agent_process": {"$ref": "#/$defs/process"},
+        "domain_process": {"$ref": "#/$defs/process"},
+        "target": {"$ref": "#/$defs/target"},
+        "target_ref": {"$ref": "#/$defs/reference"},
+        "circumstances": {"type": "array", "items": {"$ref": "#/$defs/circumstance"}},
+        "relations": {"type": "array", "items": {"$ref": "#/$defs/relation"}}
+      },
+      "anyOf": [
+        {"required": ["agent_process"]},
+        {"required": ["domain_process"]}
+      ],
+      "not": {"required": ["target", "target_ref"]}
+    },
+    "requestedEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["action_class", "targets"],
+      "properties": {
+        "action_class": {"$ref": "#/$defs/identifier"},
+        "targets": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/reference"}},
+        "duration_or_scope": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "cited_grant_ref": {"$ref": "#/$defs/reference"}
+      }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "basis"],
+      "properties": {
+        "value": {"type": "number", "minimum": 0, "maximum": 1},
+        "basis": {"type": "string", "minLength": 1, "maxLength": 2048}
+      }
+    },
+    "interpersonal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["exchange", "commodity", "speech_function", "polarity"],
+      "properties": {
+        "exchange": {"enum": ["give", "demand"]},
+        "commodity": {"enum": ["information", "action"]},
+        "speech_function": {"enum": ["inform", "query", "offer", "request_action"]},
+        "polarity": {"enum": ["positive", "negative"]},
+        "probability": {"enum": ["certain", "probable", "possible", "unlikely", "unknown"]},
+        "usuality": {"enum": ["always", "usually", "sometimes", "rarely", "never", "unknown"]},
+        "obligation": {"enum": ["required", "expected", "advisable", "optional", "none", "unknown"]},
+        "inclination": {"enum": ["committed", "willing", "neutral", "reluctant", "unwilling", "unknown"]},
+        "permission_claim": {"enum": ["permitted", "forbidden", "unknown", "unspecified"]},
+        "requested_effect": {"$ref": "#/$defs/requestedEffect"},
+        "evidence_class": {"enum": ["Measured", "Observed", "Reported", "Inferred", "Planned", "Unavailable"]},
+        "verification_status": {"enum": ["unverified", "verified", "contradicted", "indeterminate"]},
+        "confidence": {"$ref": "#/$defs/confidence"}
+      }
+    },
+    "textual": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["structure_status", "element_order", "theme_count", "given_refs", "new_refs"],
+      "properties": {
+        "structure_status": {"enum": ["annotated", "unannotated"]},
+        "element_order": {"type": "array", "items": {"$ref": "#/$defs/reference"}},
+        "theme_count": {"type": "integer", "minimum": 0},
+        "given_refs": {"type": "array", "items": {"$ref": "#/$defs/reference"}},
+        "new_refs": {"type": "array", "items": {"$ref": "#/$defs/reference"}}
+      }
+    },
+    "move": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["move_id", "content_id", "content_kind", "dialogue_functions", "ideational", "interpersonal", "textual", "evidence_refs"],
+      "properties": {
+        "move_id": {"$ref": "#/$defs/id"},
+        "content_id": {"$ref": "#/$defs/id"},
+        "content_kind": {"enum": ["claim", "directive", "question", "offer", "acknowledgement"]},
+        "dialogue_functions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["acknowledge", "accept", "reject", "answer", "report", "challenge", "clarify", "commit", "retract", "correct", "warn", "verify", "repair", "handoff", "close"]}
+        },
+        "ideational": {"$ref": "#/$defs/ideational"},
+        "interpersonal": {"$ref": "#/$defs/interpersonal"},
+        "textual": {"$ref": "#/$defs/textual"},
+        "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"content_kind": {"const": "claim"}}},
+          "then": {"properties": {"interpersonal": {"required": ["probability", "evidence_class", "verification_status"]}}}
+        },
+        {
+          "if": {"properties": {"content_kind": {"const": "directive"}}},
+          "then": {
+            "properties": {
+              "ideational": {"required": ["agent_process"]},
+              "interpersonal": {"required": ["obligation", "permission_claim", "requested_effect"]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"content_kind": {"const": "offer"}}},
+          "then": {"properties": {"interpersonal": {"required": ["inclination", "permission_claim", "requested_effect"]}}}
+        },
+        {
+          "if": {"properties": {"content_kind": {"const": "acknowledgement"}}},
+          "then": {"properties": {"dialogue_functions": {"contains": {"const": "acknowledge"}}}}
+        }
+      ]
+    },
+    "deliverable": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deliverable_id", "kind", "requested_disposition"],
+      "properties": {
+        "deliverable_id": {"$ref": "#/$defs/id"},
+        "kind": {"$ref": "#/$defs/identifier"},
+        "requested_disposition": {"enum": ["report", "propose", "create", "modify", "execute"]},
+        "scope": {"type": "string", "minLength": 1, "maxLength": 2048}
+      }
+    },
+    "evidenceRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requirement_id", "kind", "applies_to"],
+      "properties": {
+        "requirement_id": {"$ref": "#/$defs/id"},
+        "kind": {"$ref": "#/$defs/identifier"},
+        "applies_to": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/id"}}
+      }
+    },
+    "responseContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_id", "required_deliverables", "evidence_requirements", "expected_success_statuses", "validation_requirements", "stop_conditions", "clarification_policy", "fallback_profile"],
+      "properties": {
+        "contract_id": {"$ref": "#/$defs/id"},
+        "required_deliverables": {"type": "array", "items": {"$ref": "#/$defs/deliverable"}},
+        "evidence_requirements": {"type": "array", "items": {"$ref": "#/$defs/evidenceRequirement"}},
+        "expected_success_statuses": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["accepted", "running", "complete", "partial"]}},
+        "validation_requirements": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 2048}},
+        "stop_conditions": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 2048}},
+        "clarification_policy": {"enum": ["clarify_before_action", "choose_lowest_effect_safe_reading", "return_candidate_readings", "fail_closed"]},
+        "fallback_profile": {"enum": ["sfl-text", "ir-json"]}
+      }
+    },
+    "deliverableResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deliverable_ref", "status", "content_refs", "evidence_refs"],
+      "properties": {
+        "deliverable_ref": {"$ref": "#/$defs/id"},
+        "status": {"enum": ["complete", "partial", "blocked", "refused", "policy_denied", "failed", "cancelled"]},
+        "content_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}},
+        "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/id"}}
+      }
+    },
+    "response": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["response_id", "contract_ref", "status", "deliverable_results", "validation_results", "blocking_conditions"],
+      "properties": {
+        "response_id": {"$ref": "#/$defs/id"},
+        "contract_ref": {"$ref": "#/$defs/reference"},
+        "status": {"enum": ["accepted", "running", "complete", "partial", "blocked", "refused", "policy_denied", "failed", "cancelled"]},
+        "deliverable_results": {"type": "array", "items": {"$ref": "#/$defs/deliverableResult"}},
+        "validation_results": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 4096}},
+        "blocking_conditions": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 4096}}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_id", "class", "source_kind", "source_ref", "collection_method", "transformations", "verification_status", "sensitivity"],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/id"},
+        "class": {"enum": ["Measured", "Observed", "Reported", "Inferred", "Planned", "Unavailable"]},
+        "source_kind": {"enum": ["file", "command", "test", "tool", "message", "artifact", "external-document", "unavailable"]},
+        "source_ref": {"$ref": "#/$defs/reference"},
+        "source_hash": {"$ref": "#/$defs/sha256"},
+        "locator": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "collection_method": {"type": "string", "minLength": 1, "maxLength": 2048},
+        "transformations": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 2048}},
+        "observed_sequence": {"type": "integer", "minimum": 0},
+        "verification_status": {"enum": ["unverified", "verified", "contradicted", "indeterminate"]},
+        "sensitivity": {"enum": ["public", "repository", "private", "secret", "unknown"]}
+      }
+    },
+    "proposalChange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operation", "entry_id", "evidence_refs"],
+      "properties": {
+        "operation": {"enum": ["add", "acknowledge", "reject", "retract", "supersede", "expire", "conflict", "satisfy", "violate"]},
+        "entry_id": {"$ref": "#/$defs/id"},
+        "content_ref": {"$ref": "#/$defs/id"},
+        "target_version": {"type": "integer", "minimum": 1},
+        "recipient_id": {"$ref": "#/$defs/id"},
+        "response_ref": {"$ref": "#/$defs/id"},
+        "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      },
+      "allOf": [
+        {"if": {"properties": {"operation": {"const": "add"}}}, "then": {"required": ["content_ref"]}},
+        {"if": {"properties": {"operation": {"const": "acknowledge"}}}, "then": {"required": ["target_version", "recipient_id"]}},
+        {"if": {"properties": {"operation": {"enum": ["reject", "retract", "expire"]}}}, "then": {"required": ["target_version"]}},
+        {"if": {"properties": {"operation": {"enum": ["supersede", "conflict"]}}}, "then": {"required": ["target_version", "content_ref"]}},
+        {"if": {"properties": {"operation": {"enum": ["satisfy", "violate"]}}}, "then": {"required": ["target_version", "response_ref"], "properties": {"evidence_refs": {"minItems": 1}}}}
+      ]
+    },
+    "stateProposalBatch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proposal_id", "base_revision", "atomic", "changes"],
+      "properties": {
+        "proposal_id": {"$ref": "#/$defs/id"},
+        "base_revision": {"type": "integer", "minimum": 0},
+        "atomic": {"type": "boolean"},
+        "changes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/proposalChange"}}
+      }
+    },
+    "extension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["extension_id", "version", "critical", "registry_digest", "payload"],
+      "properties": {
+        "extension_id": {"$ref": "#/$defs/id"},
+        "version": {"$ref": "#/$defs/semver"},
+        "critical": {"type": "boolean"},
+        "registry_digest": {"$ref": "#/$defs/sha256"},
+        "payload": {}
+      }
+    }
+  }
+}

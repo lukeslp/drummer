@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drummer.local/schema/policy-envelope-0.1.0.json",
+  "title": "Drummer external policy envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["policy_version", "policy_id", "issued_by_orchestrator", "allowed_action_classes", "denied_action_classes", "target_constraints", "network_policy", "credential_policy"],
+  "properties": {
+    "policy_version": {"const": "0.1.0"},
+    "policy_id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"},
+    "issued_by_orchestrator": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"},
+    "allowed_action_classes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"}
+    },
+    "denied_action_classes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"}
+    },
+    "target_constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action_class", "target_kind", "operator", "value"],
+        "properties": {
+          "action_class": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"},
+          "target_kind": {"enum": ["path", "symbol", "service", "URL", "artifact", "literal"]},
+          "operator": {"enum": ["exact", "prefix"]},
+          "value": {"type": "string", "minLength": 1, "maxLength": 8192}
+        }
+      }
+    },
+    "network_policy": {"enum": ["allow", "deny", "restricted"]},
+    "credential_policy": {"enum": ["allow", "deny", "restricted"]},
+    "expires_at_sequence": {"type": "integer", "minimum": 0}
+  }
+}

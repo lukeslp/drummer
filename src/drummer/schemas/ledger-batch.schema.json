@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drummer.local/schema/ledger-batch-0.1.0.json",
+  "title": "Drummer coordinator-owned ledger batch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ledger_version", "ledger_id", "batch_id", "coordinator_id", "base_revision", "resulting_revision", "events", "rejections", "canonical_sha256"],
+  "properties": {
+    "ledger_version": {"const": "0.1.0"},
+    "ledger_id": {"$ref": "#/$defs/id"},
+    "batch_id": {"$ref": "#/$defs/id"},
+    "coordinator_id": {"$ref": "#/$defs/id"},
+    "base_revision": {"type": "integer", "minimum": 0},
+    "resulting_revision": {"type": "integer", "minimum": 1},
+    "events": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/event"}},
+    "rejections": {"type": "array", "items": {"$ref": "#/$defs/rejection"}},
+    "canonical_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "operation", "entry_id", "entry_version", "actor", "source_packet_id", "evidence_refs"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/id"},
+        "operation": {"enum": ["add", "acknowledge", "reject", "retract", "supersede", "expire", "conflict", "satisfy", "violate"]},
+        "entry_id": {"$ref": "#/$defs/id"},
+        "entry_version": {"type": "integer", "minimum": 1},
+        "actor": {"$ref": "#/$defs/id"},
+        "recipient_id": {"$ref": "#/$defs/id"},
+        "source_packet_id": {"$ref": "#/$defs/id"},
+        "source_proposal_ref": {"$ref": "#/$defs/id"},
+        "payload_hash": {"$ref": "#/$defs/sha256"},
+        "target_version": {"type": "integer", "minimum": 1},
+        "response_ref": {"$ref": "#/$defs/id"},
+        "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}
+      }
+    },
+    "rejection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["change_index", "code", "message"],
+      "properties": {
+        "change_index": {"type": "integer", "minimum": 0},
+        "code": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+        "message": {"type": "string", "minLength": 1, "maxLength": 4096}
+      }
+    }
+  }
+}

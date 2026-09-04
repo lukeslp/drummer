@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://drummer.local/schema/capability-card-0.1.0.json",
+  "title": "Drummer protocol capability card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["card_version", "agent_id", "supported_ir_versions", "supported_ledger_versions", "profiles", "fallback_profiles", "supports_ledger", "critical_extensions", "limits"],
+  "properties": {
+    "card_version": {"const": "0.1.0"},
+    "agent_id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"},
+    "supported_ir_versions": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"}
+    },
+    "supported_ledger_versions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"}
+    },
+    "profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["profile_id", "version", "registry_digest", "can_encode", "can_consume", "direct_consumption", "supports_references"],
+        "properties": {
+          "profile_id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"},
+          "version": {"type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"},
+          "registry_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "can_encode": {"type": "boolean"},
+          "can_consume": {"type": "boolean"},
+          "direct_consumption": {"type": "boolean"},
+          "supports_references": {"type": "boolean"}
+        }
+      }
+    },
+    "fallback_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["sfl-text", "ir-json"]}
+    },
+    "supports_ledger": {"type": "boolean"},
+    "ledger_id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"},
+    "ledger_revision": {"type": "integer", "minimum": 0},
+    "ledger_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "critical_extensions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,127}$"}
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_packet_bytes", "max_depth"],
+      "properties": {
+        "max_packet_bytes": {"type": "integer", "minimum": 1024},
+        "max_depth": {"type": "integer", "minimum": 1, "maximum": 256}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"supports_ledger": {"const": true}}},
+      "then": {"properties": {"supported_ledger_versions": {"minItems": 1}}}
+    }
+  ]
+}

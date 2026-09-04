@@ -37,6 +37,8 @@ to any server with the same name.
 - [Experiment specification](docs/experiment.md): task, controls, training, and evaluation
 - [Language atlas](docs/atlas.md): evidence and limits of learned conventions
 - [Initial measured evidence](docs/initial-evidence.md): correctness, handoff failures, and local-model probes
+- [Pilot outcome and local evidence](docs/local-evidence.md): limited causal signaling, supervised controls, and compression costs
+- [Local experiments](docs/local-experiments.md): reproducible diagnostics and experimental dictionary contract
 - [Coding handoffs](docs/handoffs.md): adapters, synthetic fixtures, and token accounting
 - [Operations](docs/operations.md): reproducibility, bounded jobs, and funding
 - [Decisions](docs/decisions.md), [model card](docs/model-card.md), and [data card](docs/dataset-card.md)

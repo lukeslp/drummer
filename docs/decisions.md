@@ -60,6 +60,22 @@ instrumentation evidence, not used to score that semantic distinction. The v2
 fixture contract distinguishes process from effect and represents ordered steps
 structurally. This is a prospective benchmark correction, not a relaxed score.
 
+## DR-009 — Diagnose the failed calibration without moving its gates
+
+The first compulsory calibration scored 66.89%, below 95%. Retain this failed
+run and keep test labels sealed. Subsequent validation interventions and fresh
+supervised component controls are exploratory; they do not replace confirmatory
+seeds. Conditional policy entropy and marginal symbol information must be
+distinguished: a deterministic policy can transmit a useful distinction.
+
+## DR-010 — Audit-heavy dictionary as a separate experimental transform
+
+`experimental-dictionary-1` is a deterministic reversible text experiment, not a
+Protocol 0.1 capability or discovered language. It protects exact occurrences,
+length-frames payloads, and transmits complete verification metadata. Its first
+measured complete prompts are larger than English. Preserve that negative result
+and keep byte roundtrip, model comprehension, and total token usage separate.
+
 ## Historical input fingerprints
 
 Original historical files are preserved unchanged in the local research archive;

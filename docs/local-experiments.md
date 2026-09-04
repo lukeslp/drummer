@@ -135,7 +135,14 @@ encoding fails. Meaningful negation, constraints, paths, and symbols are not
 dispensable merely because a shorter form exists.
 
 Version, dictionary digest, original-source digest, and envelope digest identify
-the transform. Hashes detect mismatch, not authenticity or permission. Unknown
+the transform. The canonical JSON wire header carries the protected-span map
+(zero-based Unicode code-point offsets) and exact encoded-body UTF-8 byte length.
+The receiver locates the closing delimiter by that length, so delimiter-looking
+payload remains data. All envelope fields can be reconstructed from transmitted
+bytes and verified. The following response instructions are returned unchanged;
+their integrity is covered by the benchmark's complete-prompt hash, not the
+dictionary envelope. This intentionally audit-heavy candidate is not a minimum
+overhead representation. Hashes detect mismatch, not authenticity or permission. Unknown
 versions, stale dictionaries, malformed/out-of-range references, changed
 envelopes, or changed protected occurrences fail closed. A coordinator must then
 use the complete original message, accounting for its retry cost; the benchmark

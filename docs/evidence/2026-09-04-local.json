@@ -1,0 +1,1643 @@
+{
+  "format": "drummer-local-evidence/1",
+  "author": "Luke Steuber",
+  "date": "2026-09-04",
+  "diagnostic_source": {
+    "revision": "487b58c60e97d2f3f0bb81363b42d9ab9cc31c7c",
+    "dirty": false,
+    "tree_sha256": "81003ba4fc352f152ef062c316bb639ec58abe6a0640741ae98527e1f066946e",
+    "revision_source": "git"
+  },
+  "sources": {
+    "autopsy.json": {
+      "sha256": "4447d768c7fe099a8b128ed68fcbd3b0b10d0995b85693709759d8a24a657cd7",
+      "bytes": 18371
+    },
+    "channel-diagnostics.json": {
+      "sha256": "b0c94aa3418fb22f7d9a368d83c059fb3ac51f8b84dd543048f49a470463c31c",
+      "bytes": 7949
+    },
+    "sender-control.json": {
+      "sha256": "a1ef86162970f532aef21e1c42f18b9f5d83bf8e05b46cad8b08f2e2f2f59828",
+      "bytes": 5800
+    },
+    "receiver-control.json": {
+      "sha256": "89248f593c1ec3ee89bf665590d3a451b6f3e751d0247b4e3ee74651ed55c7ae",
+      "bytes": 5801
+    },
+    "compression-offline.json": {
+      "sha256": "cedf1c1890f3ab25ac05613200dcbdf32fc4324c054b0db9a0325b4168f6d02a",
+      "bytes": 271890
+    },
+    "compression-8b-spotcheck.json": {
+      "sha256": "17d822d8224f0c7877075f0a2d1c93c70b912a6aad009d804cb2ea4c398c1af3",
+      "bytes": 8692
+    }
+  },
+  "pilot": {
+    "status": {
+      "status": "stopped_quality_gate",
+      "stage": "calibration_compulsory",
+      "reason": "Compulsory validation success is below 95%; no automatic scale-up",
+      "test_unsealed": false,
+      "selected_pressure": null
+    },
+    "gate": {
+      "name": "compulsory_validation_success",
+      "threshold": 0.95,
+      "observed": 0.6689,
+      "passed": false
+    },
+    "validation": {
+      "split": "validation",
+      "logical_sha256": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5",
+      "examples": 10000,
+      "success": 0.6689,
+      "by_condition": {
+        "valid_repeat": {
+          "count": 6000,
+          "success": 0.8486666666666667,
+          "omission_rate": 0.0,
+          "probe_bits": 6.0
+        },
+        "dropped_grounding": {
+          "count": 2000,
+          "success": 0.468,
+          "omission_rate": 0.0,
+          "probe_bits": 6.0
+        },
+        "new_reference": {
+          "count": 2000,
+          "success": 0.3305,
+          "omission_rate": 0.0,
+          "probe_bits": 6.0
+        }
+      }
+    },
+    "symbol_information": {
+      "sample_count": 4000,
+      "active_symbols": 2,
+      "identities_with_evidence": 64,
+      "symbol_entropy_bits": 0.9999935078625779,
+      "identity_entropy_bits": 5.994043456929305,
+      "mutual_information_bits": 0.9999935078625779,
+      "symbol_counts": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1994,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2006,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "identity_counts": [
+        61,
+        52,
+        72,
+        64,
+        68,
+        61,
+        75,
+        48,
+        62,
+        65,
+        59,
+        60,
+        56,
+        70,
+        66,
+        57,
+        60,
+        68,
+        67,
+        68,
+        60,
+        60,
+        67,
+        60,
+        62,
+        55,
+        65,
+        67,
+        60,
+        59,
+        52,
+        55,
+        62,
+        69,
+        58,
+        65,
+        65,
+        63,
+        55,
+        53,
+        67,
+        65,
+        61,
+        66,
+        64,
+        58,
+        61,
+        66,
+        69,
+        68,
+        74,
+        62,
+        65,
+        61,
+        59,
+        67,
+        69,
+        53,
+        64,
+        65,
+        67,
+        50,
+        63,
+        65
+      ],
+      "scope": "Validation nonrepeat sends: dropped_grounding and new_reference, excluding omission. Dropped grounding repeats the intended identity but lacks shared grounding.",
+      "count_orientation": "symbol,identity",
+      "estimator": "empirical plug-in",
+      "sampling_caveat": "Empirical mutual information is a plug-in estimate from the observed count matrix. Finite samples can bias it upward, especially with sparse cells. It is descriptive, not a significance test or evidence that the receiver causally uses the packet.",
+      "aligned_exact_match": 0.03725,
+      "causal_redirection": 0.219,
+      "causal_swap_examples": 4000,
+      "nonrepeat_examples": 4000,
+      "nonrepeat_sent": 4000
+    },
+    "sender_policy": {
+      "conditional_entropy_nats": 4.174566275196412e-07,
+      "scope": "all validation conditions",
+      "explanation": "Marginal symbol entropy describes variation across observed hard sends. Conditional policy entropy is the mean entropy of sender action probabilities given each observation, in nats, over all validation conditions. A confident deterministic policy can still use many symbols; near-zero conditional entropy alone does not establish vocabulary collapse."
+    },
+    "training_curves": [
+      {
+        "run": "calibration-compulsory",
+        "source": {
+          "dirty": false,
+          "revision": "949d5be04729b9aa2e5e93ea5e9fa7a90370d155",
+          "revision_source": "DRUMMER_REVISION",
+          "tree_sha256": "d5c64af9d1b353b092c4241e8fee8f698ea0956dd03190dc05ce87d1d3fced3b"
+        },
+        "curves": [
+          {
+            "epoch": 1,
+            "global_step": 782,
+            "elapsed_seconds": 69.60759426700002,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6419483236885071,
+              "task_loss": 0.6419483236885071,
+              "expected_bits": 6.0,
+              "entropy": 1.2312864829782484e-05
+            },
+            "validation": {
+              "success": 0.668,
+              "objective": 0.6630454990386963,
+              "task_loss": 0.6630454990386963,
+              "expected_bits": 6.0,
+              "entropy": 1.943510558703565e-06
+            }
+          },
+          {
+            "epoch": 2,
+            "global_step": 1564,
+            "elapsed_seconds": 141.02445818100006,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6470034603977204,
+              "task_loss": 0.6470034603977204,
+              "expected_bits": 6.0,
+              "entropy": 6.918293529938637e-06
+            },
+            "validation": {
+              "success": 0.6711,
+              "objective": 0.6417848872184754,
+              "task_loss": 0.6417848872184754,
+              "expected_bits": 6.0,
+              "entropy": 1.5446852910827146e-06
+            }
+          },
+          {
+            "epoch": 3,
+            "global_step": 2346,
+            "elapsed_seconds": 212.88398832800004,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6379770316791534,
+              "task_loss": 0.6379770316791534,
+              "expected_bits": 6.0,
+              "entropy": 1.4699638963884353e-06
+            },
+            "validation": {
+              "success": 0.6696,
+              "objective": 0.6408215744018555,
+              "task_loss": 0.6408215744018555,
+              "expected_bits": 6.0,
+              "entropy": 4.1483875556878046e-07
+            }
+          },
+          {
+            "epoch": 4,
+            "global_step": 3128,
+            "elapsed_seconds": 284.08292288499996,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6600994437885285,
+              "task_loss": 0.6600994437885285,
+              "expected_bits": 6.0,
+              "entropy": 9.539725999184157e-07
+            },
+            "validation": {
+              "success": 0.647,
+              "objective": 0.6632814695358277,
+              "task_loss": 0.6632814695358277,
+              "expected_bits": 6.0,
+              "entropy": 1.6164466385816923e-06
+            }
+          },
+          {
+            "epoch": 5,
+            "global_step": 3910,
+            "elapsed_seconds": 355.332373864,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6581379714488983,
+              "task_loss": 0.6581379714488983,
+              "expected_bits": 6.0,
+              "entropy": 3.0685438697173595e-06
+            },
+            "validation": {
+              "success": 0.6711,
+              "objective": 0.6469469904899597,
+              "task_loss": 0.6469469904899597,
+              "expected_bits": 6.0,
+              "entropy": 2.1471032573572302e-08
+            }
+          }
+        ]
+      },
+      {
+        "run": "calibration-warmup",
+        "source": {
+          "dirty": false,
+          "revision": "949d5be04729b9aa2e5e93ea5e9fa7a90370d155",
+          "revision_source": "DRUMMER_REVISION",
+          "tree_sha256": "d5c64af9d1b353b092c4241e8fee8f698ea0956dd03190dc05ce87d1d3fced3b"
+        },
+        "curves": [
+          {
+            "epoch": 1,
+            "global_step": 782,
+            "elapsed_seconds": 70.64437085400002,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.9369369184017181,
+              "task_loss": 0.9369369184017181,
+              "expected_bits": 6.0,
+              "entropy": 1.1749186439697026
+            },
+            "validation": {
+              "success": 0.6363,
+              "objective": 0.6999768342018128,
+              "task_loss": 0.6999768342018128,
+              "expected_bits": 6.0,
+              "entropy": 0.00047324172258377076
+            }
+          },
+          {
+            "epoch": 2,
+            "global_step": 1564,
+            "elapsed_seconds": 143.78770479099998,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6593129468441009,
+              "task_loss": 0.6593129468441009,
+              "expected_bits": 6.0,
+              "entropy": 0.00034843575685983524
+            },
+            "validation": {
+              "success": 0.6652,
+              "objective": 0.6478203958511353,
+              "task_loss": 0.6478203958511353,
+              "expected_bits": 6.0,
+              "entropy": 0.0006465761663392186
+            }
+          },
+          {
+            "epoch": 3,
+            "global_step": 2346,
+            "elapsed_seconds": 217.14640284100003,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6416004125213624,
+              "task_loss": 0.6416004125213624,
+              "expected_bits": 6.0,
+              "entropy": 9.485761072312016e-05
+            },
+            "validation": {
+              "success": 0.6678,
+              "objective": 0.6414307661056519,
+              "task_loss": 0.6414307661056519,
+              "expected_bits": 6.0,
+              "entropy": 4.0555511543061586e-05
+            }
+          },
+          {
+            "epoch": 4,
+            "global_step": 3128,
+            "elapsed_seconds": 288.858464335,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6454867001819611,
+              "task_loss": 0.6454867001819611,
+              "expected_bits": 6.0,
+              "entropy": 0.00014050965603033548
+            },
+            "validation": {
+              "success": 0.6655,
+              "objective": 0.6434599467277526,
+              "task_loss": 0.6434599467277526,
+              "expected_bits": 6.0,
+              "entropy": 0.00011592232040129602
+            }
+          },
+          {
+            "epoch": 5,
+            "global_step": 3910,
+            "elapsed_seconds": 360.665635253,
+            "partial": false,
+            "train": {
+              "success": null,
+              "objective": 0.6440565877819061,
+              "task_loss": 0.6440565877819061,
+              "expected_bits": 6.0,
+              "entropy": 5.931717848230619e-05
+            },
+            "validation": {
+              "success": 0.6716,
+              "objective": 0.6506044442653656,
+              "task_loss": 0.6506044442653656,
+              "expected_bits": 6.0,
+              "entropy": 3.7786036581383085e-05
+            }
+          }
+        ]
+      }
+    ],
+    "hf_dataset_revision": "792b744f41f78d161b327049b5918236a8a1955a"
+  },
+  "channel_interventions": {
+    "format": "drummer-channel-diagnostics/1",
+    "source": {
+      "revision": "487b58c60e97d2f3f0bb81363b42d9ab9cc31c7c",
+      "dirty": false,
+      "tree_sha256": "81003ba4fc352f152ef062c316bb639ec58abe6a0640741ae98527e1f066946e",
+      "revision_source": "git"
+    },
+    "diagnostic_module_sha256": "7f53c6dd4950497eb92cd091668e60f787e84a6319d807711705ba5af7cf966f",
+    "runtime": {
+      "python": "3.12.12",
+      "platform": "Darwin",
+      "architecture": "arm64",
+      "packages": {
+        "torch": "2.14.0",
+        "numpy": "2.5.2",
+        "safetensors": "0.8.0",
+        "huggingface-hub": "1.30.0",
+        "jsonschema": "4.26.0"
+      }
+    },
+    "device": "cpu",
+    "split": "validation",
+    "test_unsealed": false,
+    "promotion_evidence": false,
+    "seed": 20260904,
+    "max_seconds": 300.0,
+    "cpu_threads": 2,
+    "status": "complete",
+    "interventions": {
+      "original": {
+        "all": {
+          "episodes": 10000,
+          "success": 0.669,
+          "original_success": 0.669,
+          "success_delta": 0.0,
+          "prediction_changes": 0,
+          "correct_to_wrong": 0,
+          "wrong_to_correct": 0
+        },
+        "valid_repeat": {
+          "episodes": 6000,
+          "success": 0.8486666666666667,
+          "original_success": 0.8486666666666667,
+          "success_delta": 0.0,
+          "prediction_changes": 0,
+          "correct_to_wrong": 0,
+          "wrong_to_correct": 0
+        },
+        "dropped_grounding": {
+          "episodes": 2000,
+          "success": 0.4685,
+          "original_success": 0.4685,
+          "success_delta": 0.0,
+          "prediction_changes": 0,
+          "correct_to_wrong": 0,
+          "wrong_to_correct": 0
+        },
+        "new_reference": {
+          "episodes": 2000,
+          "success": 0.3305,
+          "original_success": 0.3305,
+          "success_delta": 0.0,
+          "prediction_changes": 0,
+          "correct_to_wrong": 0,
+          "wrong_to_correct": 0
+        }
+      },
+      "constant_modal": {
+        "all": {
+          "episodes": 10000,
+          "success": 0.3647,
+          "original_success": 0.669,
+          "success_delta": -0.3043,
+          "prediction_changes": 4571,
+          "correct_to_wrong": 3083,
+          "wrong_to_correct": 40
+        },
+        "valid_repeat": {
+          "episodes": 6000,
+          "success": 0.4663333333333333,
+          "original_success": 0.8486666666666667,
+          "success_delta": -0.38233333333333336,
+          "prediction_changes": 2684,
+          "correct_to_wrong": 2302,
+          "wrong_to_correct": 8
+        },
+        "dropped_grounding": {
+          "episodes": 2000,
+          "success": 0.262,
+          "original_success": 0.4685,
+          "success_delta": -0.20650000000000002,
+          "prediction_changes": 992,
+          "correct_to_wrong": 445,
+          "wrong_to_correct": 32
+        },
+        "new_reference": {
+          "episodes": 2000,
+          "success": 0.1625,
+          "original_success": 0.3305,
+          "success_delta": -0.168,
+          "prediction_changes": 895,
+          "correct_to_wrong": 336,
+          "wrong_to_correct": 0
+        }
+      },
+      "shuffled_global": {
+        "all": {
+          "episodes": 10000,
+          "success": 0.3666,
+          "original_success": 0.669,
+          "success_delta": -0.30240000000000006,
+          "prediction_changes": 4536,
+          "correct_to_wrong": 3068,
+          "wrong_to_correct": 44
+        },
+        "valid_repeat": {
+          "episodes": 6000,
+          "success": 0.462,
+          "original_success": 0.8486666666666667,
+          "success_delta": -0.38666666666666666,
+          "prediction_changes": 2701,
+          "correct_to_wrong": 2333,
+          "wrong_to_correct": 13
+        },
+        "dropped_grounding": {
+          "episodes": 2000,
+          "success": 0.267,
+          "original_success": 0.4685,
+          "success_delta": -0.2015,
+          "prediction_changes": 939,
+          "correct_to_wrong": 428,
+          "wrong_to_correct": 25
+        },
+        "new_reference": {
+          "episodes": 2000,
+          "success": 0.18,
+          "original_success": 0.3305,
+          "success_delta": -0.15050000000000002,
+          "prediction_changes": 896,
+          "correct_to_wrong": 307,
+          "wrong_to_correct": 6
+        }
+      },
+      "shuffled_within_condition": {
+        "all": {
+          "episodes": 10000,
+          "success": 0.3595,
+          "original_success": 0.669,
+          "success_delta": -0.30950000000000005,
+          "prediction_changes": 4623,
+          "correct_to_wrong": 3140,
+          "wrong_to_correct": 45
+        },
+        "valid_repeat": {
+          "episodes": 6000,
+          "success": 0.4608333333333333,
+          "original_success": 0.8486666666666667,
+          "success_delta": -0.38783333333333336,
+          "prediction_changes": 2728,
+          "correct_to_wrong": 2341,
+          "wrong_to_correct": 14
+        },
+        "dropped_grounding": {
+          "episodes": 2000,
+          "success": 0.2505,
+          "original_success": 0.4685,
+          "success_delta": -0.21800000000000003,
+          "prediction_changes": 976,
+          "correct_to_wrong": 460,
+          "wrong_to_correct": 24
+        },
+        "new_reference": {
+          "episodes": 2000,
+          "success": 0.1645,
+          "original_success": 0.3305,
+          "success_delta": -0.166,
+          "prediction_changes": 919,
+          "correct_to_wrong": 339,
+          "wrong_to_correct": 7
+        }
+      },
+      "uniform_symbols_ood": {
+        "all": {
+          "episodes": 10000,
+          "success": 0.408,
+          "original_success": 0.669,
+          "success_delta": -0.26100000000000007,
+          "prediction_changes": 4918,
+          "correct_to_wrong": 3049,
+          "wrong_to_correct": 439
+        },
+        "valid_repeat": {
+          "episodes": 6000,
+          "success": 0.5495,
+          "original_success": 0.8486666666666667,
+          "success_delta": -0.2991666666666667,
+          "prediction_changes": 2155,
+          "correct_to_wrong": 1868,
+          "wrong_to_correct": 73
+        },
+        "dropped_grounding": {
+          "episodes": 2000,
+          "success": 0.247,
+          "original_success": 0.4685,
+          "success_delta": -0.22150000000000003,
+          "prediction_changes": 1678,
+          "correct_to_wrong": 726,
+          "wrong_to_correct": 283
+        },
+        "new_reference": {
+          "episodes": 2000,
+          "success": 0.1445,
+          "original_success": 0.3305,
+          "success_delta": -0.18600000000000003,
+          "prediction_changes": 1085,
+          "correct_to_wrong": 455,
+          "wrong_to_correct": 83
+        }
+      }
+    },
+    "limitations": [
+      "Single-checkpoint descriptive validation interventions, not five-seed inference.",
+      "Constant and shuffled messages do not remove receiver history.",
+      "Uniform replacement includes out-of-support symbols.",
+      "Global and condition-stratified shuffles use only sent symbols and condition strata."
+    ],
+    "checkpoint_sha256": "16e26553515d03880cb8164e573b6fa506e405a50027104eb0669230f3406265",
+    "checkpoint_source": {
+      "dirty": false,
+      "revision": "949d5be04729b9aa2e5e93ea5e9fa7a90370d155",
+      "revision_source": "DRUMMER_REVISION",
+      "tree_sha256": "d5c64af9d1b353b092c4241e8fee8f698ea0956dd03190dc05ce87d1d3fced3b"
+    },
+    "corpus_logical_sha256": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5",
+    "requested_episodes": 10000,
+    "selection": "first N in frozen corpus order",
+    "training_mode": "compulsory",
+    "model": {
+      "context": 128,
+      "dropout": 0.0,
+      "ffn": 1024,
+      "heads": 4,
+      "layers": 4,
+      "private_residual": 8,
+      "width": 256
+    },
+    "phase": "receiver",
+    "evaluated_episodes": 10000,
+    "checkpoint_unchanged": true,
+    "sent_symbol_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      4992,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      5008,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "elapsed_seconds": 4.648901250002382
+  },
+  "supervised_controls": [
+    {
+      "format": "drummer-component-control/1",
+      "source": {
+        "revision": "487b58c60e97d2f3f0bb81363b42d9ab9cc31c7c",
+        "dirty": false,
+        "tree_sha256": "81003ba4fc352f152ef062c316bb639ec58abe6a0640741ae98527e1f066946e",
+        "revision_source": "git"
+      },
+      "diagnostic_module_sha256": "7f53c6dd4950497eb92cd091668e60f787e84a6319d807711705ba5af7cf966f",
+      "runtime": {
+        "python": "3.12.12",
+        "platform": "Darwin",
+        "architecture": "arm64",
+        "packages": {
+          "torch": "2.14.0",
+          "numpy": "2.5.2",
+          "safetensors": "0.8.0",
+          "huggingface-hub": "1.30.0",
+          "jsonschema": "4.26.0"
+        }
+      },
+      "device": "cpu",
+      "split": "validation",
+      "test_unsealed": false,
+      "promotion_evidence": false,
+      "kind": "sender_identity",
+      "seed": 101,
+      "max_steps": 1000,
+      "max_seconds": 120.0,
+      "cpu_threads": 2,
+      "model": {
+        "layers": 4,
+        "width": 256,
+        "heads": 4,
+        "ffn": 1024,
+        "context": 128,
+        "private_residual": 8,
+        "dropout": 0.0
+      },
+      "learning_rate": 0.0003,
+      "batch_size": 64,
+      "optimizer": "AdamW",
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "initialization": "fresh random; not pilot checkpoint",
+      "history": "removed from both roles",
+      "curves": [
+        {
+          "step": 0,
+          "episodes": 1000,
+          "success": 0.018,
+          "loss": 4.33671109008789,
+          "complete": true,
+          "elapsed_seconds": 0.844695125000726
+        },
+        {
+          "step": 50,
+          "episodes": 1000,
+          "success": 0.915,
+          "loss": 0.9449072303771973,
+          "complete": true,
+          "elapsed_seconds": 2.8751747090063873
+        },
+        {
+          "step": 100,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.02958732211589813,
+          "complete": true,
+          "elapsed_seconds": 4.805659208999714
+        },
+        {
+          "step": 150,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.009448604047298432,
+          "complete": true,
+          "elapsed_seconds": 6.667249959005858
+        },
+        {
+          "step": 200,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.005585906788706779,
+          "complete": true,
+          "elapsed_seconds": 8.605217084004835
+        },
+        {
+          "step": 250,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0038829884380102157,
+          "complete": true,
+          "elapsed_seconds": 10.552310250001028
+        },
+        {
+          "step": 300,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.002938757427036762,
+          "complete": true,
+          "elapsed_seconds": 12.522643042000709
+        },
+        {
+          "step": 350,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0023473579660058023,
+          "complete": true,
+          "elapsed_seconds": 14.778234417004569
+        },
+        {
+          "step": 400,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0019516585618257524,
+          "complete": true,
+          "elapsed_seconds": 16.770293917004892
+        },
+        {
+          "step": 450,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0016736475825309754,
+          "complete": true,
+          "elapsed_seconds": 18.97291275000316
+        },
+        {
+          "step": 500,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0014635832346975802,
+          "complete": true,
+          "elapsed_seconds": 21.253495334000036
+        },
+        {
+          "step": 550,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0013003359399735928,
+          "complete": true,
+          "elapsed_seconds": 23.387788125000952
+        },
+        {
+          "step": 600,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.001170786950737238,
+          "complete": true,
+          "elapsed_seconds": 25.517804542003432
+        },
+        {
+          "step": 650,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.001064197588711977,
+          "complete": true,
+          "elapsed_seconds": 27.63698391700018
+        },
+        {
+          "step": 700,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.000975271724164486,
+          "complete": true,
+          "elapsed_seconds": 29.62888091700006
+        },
+        {
+          "step": 750,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0009005676656961441,
+          "complete": true,
+          "elapsed_seconds": 31.941439250003896
+        },
+        {
+          "step": 800,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0008359613306820392,
+          "complete": true,
+          "elapsed_seconds": 34.14516420900327
+        },
+        {
+          "step": 850,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0007801173143088817,
+          "complete": true,
+          "elapsed_seconds": 36.296094125005766
+        },
+        {
+          "step": 900,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0007304651401937007,
+          "complete": true,
+          "elapsed_seconds": 38.45752000000357
+        },
+        {
+          "step": 950,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0006865085531026125,
+          "complete": true,
+          "elapsed_seconds": 40.70109458400111
+        },
+        {
+          "step": 1000,
+          "episodes": 1000,
+          "success": 1.0,
+          "loss": 0.0006470151990652085,
+          "complete": true,
+          "elapsed_seconds": 42.899951167004474
+        }
+      ],
+      "limitations": [
+        "Supervised control, not emergent communication or a frozen representation probe.",
+        "Tiny default differs from the research architecture.",
+        "One seed, bounded optimization, validation only; failure is not incapacity."
+      ],
+      "corpus_logical_sha256": {
+        "train": "876aca0c257bfd445a21a4b2fde06179b6dc9b9014ce65232d6d6715f1b51bb1",
+        "validation": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5"
+      },
+      "parameters": 3430977,
+      "steps": 1000,
+      "status": "complete",
+      "elapsed_seconds": 42.899964750002255,
+      "checkpoint_sha256": "74891b336b418d9baf2a61a5fec7c7d1a6b5ff9015a6f0fed99847003a0d8a41"
+    },
+    {
+      "format": "drummer-component-control/1",
+      "source": {
+        "revision": "487b58c60e97d2f3f0bb81363b42d9ab9cc31c7c",
+        "dirty": false,
+        "tree_sha256": "81003ba4fc352f152ef062c316bb639ec58abe6a0640741ae98527e1f066946e",
+        "revision_source": "git"
+      },
+      "diagnostic_module_sha256": "7f53c6dd4950497eb92cd091668e60f787e84a6319d807711705ba5af7cf966f",
+      "runtime": {
+        "python": "3.12.12",
+        "platform": "Darwin",
+        "architecture": "arm64",
+        "packages": {
+          "torch": "2.14.0",
+          "numpy": "2.5.2",
+          "safetensors": "0.8.0",
+          "huggingface-hub": "1.30.0",
+          "jsonschema": "4.26.0"
+        }
+      },
+      "device": "cpu",
+      "split": "validation",
+      "test_unsealed": false,
+      "promotion_evidence": false,
+      "kind": "fixed_code_receiver",
+      "seed": 101,
+      "max_steps": 1000,
+      "max_seconds": 120.0,
+      "cpu_threads": 2,
+      "model": {
+        "layers": 4,
+        "width": 256,
+        "heads": 4,
+        "ffn": 1024,
+        "context": 128,
+        "private_residual": 8,
+        "dropout": 0.0
+      },
+      "learning_rate": 0.0003,
+      "batch_size": 64,
+      "optimizer": "AdamW",
+      "weight_decay": 0.01,
+      "gradient_clip": 1.0,
+      "initialization": "fresh random; not pilot checkpoint",
+      "history": "removed from both roles",
+      "curves": [
+        {
+          "step": 0,
+          "episodes": 1000,
+          "success": 0.232,
+          "loss": 1.400159065246582,
+          "complete": true,
+          "elapsed_seconds": 1.0146478339956957
+        },
+        {
+          "step": 50,
+          "episodes": 1000,
+          "success": 0.252,
+          "loss": 1.387498805999756,
+          "complete": true,
+          "elapsed_seconds": 4.603941249995842
+        },
+        {
+          "step": 100,
+          "episodes": 1000,
+          "success": 0.279,
+          "loss": 1.3863991165161134,
+          "complete": true,
+          "elapsed_seconds": 7.731693417001225
+        },
+        {
+          "step": 150,
+          "episodes": 1000,
+          "success": 0.503,
+          "loss": 1.0436580200195313,
+          "complete": true,
+          "elapsed_seconds": 11.309407749999082
+        },
+        {
+          "step": 200,
+          "episodes": 1000,
+          "success": 0.768,
+          "loss": 0.6967060985565185,
+          "complete": true,
+          "elapsed_seconds": 15.103350208999473
+        },
+        {
+          "step": 250,
+          "episodes": 1000,
+          "success": 0.906,
+          "loss": 0.3129206018447876,
+          "complete": true,
+          "elapsed_seconds": 19.00467487500282
+        },
+        {
+          "step": 300,
+          "episodes": 1000,
+          "success": 0.928,
+          "loss": 0.17210992908477782,
+          "complete": true,
+          "elapsed_seconds": 22.691582624996954
+        },
+        {
+          "step": 350,
+          "episodes": 1000,
+          "success": 0.936,
+          "loss": 0.12494683241844178,
+          "complete": true,
+          "elapsed_seconds": 26.982174374999886
+        },
+        {
+          "step": 400,
+          "episodes": 1000,
+          "success": 0.929,
+          "loss": 0.11322812414169312,
+          "complete": true,
+          "elapsed_seconds": 30.79711145899637
+        },
+        {
+          "step": 450,
+          "episodes": 1000,
+          "success": 0.941,
+          "loss": 0.10642578387260437,
+          "complete": true,
+          "elapsed_seconds": 34.80959779200202
+        },
+        {
+          "step": 500,
+          "episodes": 1000,
+          "success": 0.929,
+          "loss": 0.10435884594917297,
+          "complete": true,
+          "elapsed_seconds": 38.57058170899836
+        },
+        {
+          "step": 550,
+          "episodes": 1000,
+          "success": 0.942,
+          "loss": 0.10054672932624817,
+          "complete": true,
+          "elapsed_seconds": 41.57535787500092
+        },
+        {
+          "step": 600,
+          "episodes": 1000,
+          "success": 0.943,
+          "loss": 0.09822815120220184,
+          "complete": true,
+          "elapsed_seconds": 44.60391033400083
+        },
+        {
+          "step": 650,
+          "episodes": 1000,
+          "success": 0.949,
+          "loss": 0.09303954911231994,
+          "complete": true,
+          "elapsed_seconds": 47.58712604200264
+        },
+        {
+          "step": 700,
+          "episodes": 1000,
+          "success": 0.955,
+          "loss": 0.09119128131866455,
+          "complete": true,
+          "elapsed_seconds": 50.52746104200196
+        },
+        {
+          "step": 750,
+          "episodes": 1000,
+          "success": 0.963,
+          "loss": 0.08523477649688721,
+          "complete": true,
+          "elapsed_seconds": 53.50618879200192
+        },
+        {
+          "step": 800,
+          "episodes": 1000,
+          "success": 0.958,
+          "loss": 0.08738905191421509,
+          "complete": true,
+          "elapsed_seconds": 56.55632558400248
+        },
+        {
+          "step": 850,
+          "episodes": 1000,
+          "success": 0.962,
+          "loss": 0.07999407553672791,
+          "complete": true,
+          "elapsed_seconds": 59.66446787500172
+        },
+        {
+          "step": 900,
+          "episodes": 1000,
+          "success": 0.969,
+          "loss": 0.06802637863159179,
+          "complete": true,
+          "elapsed_seconds": 62.637575583998114
+        },
+        {
+          "step": 950,
+          "episodes": 1000,
+          "success": 0.977,
+          "loss": 0.0583196519613266,
+          "complete": true,
+          "elapsed_seconds": 65.80959058400185
+        },
+        {
+          "step": 1000,
+          "episodes": 1000,
+          "success": 0.982,
+          "loss": 0.0436223920583725,
+          "complete": true,
+          "elapsed_seconds": 68.8568825839975
+        }
+      ],
+      "limitations": [
+        "Supervised control, not emergent communication or a frozen representation probe.",
+        "Tiny default differs from the research architecture.",
+        "One seed, bounded optimization, validation only; failure is not incapacity."
+      ],
+      "corpus_logical_sha256": {
+        "train": "876aca0c257bfd445a21a4b2fde06179b6dc9b9014ce65232d6d6715f1b51bb1",
+        "validation": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5"
+      },
+      "parameters": 3430977,
+      "steps": 1000,
+      "status": "complete",
+      "elapsed_seconds": 68.85690687500028,
+      "checkpoint_sha256": "db5f8629679cc38b1d51511661e5296876eea23ca890e73fcc8ff74b5e32321c"
+    }
+  ],
+  "compression": {
+    "corpus": "synthetic-24-v2",
+    "response_contract": "ordered-process-steps-v2",
+    "dictionary": {
+      "version": "experimental-dictionary-1",
+      "sha256": "feb5a3a722d95e744b3ec48123496ccf7ceaaacfc700c861ec347382e1ba5a4b",
+      "entries": [
+        "semantic_inventory=",
+        "external_policy=",
+        "requested_action_class",
+        "process_action",
+        "verification_status",
+        "permission_claim",
+        "counterfactual",
+        "participant",
+        "interpersonal",
+        "ideational",
+        "textual",
+        "evidence"
+      ]
+    },
+    "offline_totals": [
+      {
+        "scenario": "first-message",
+        "arm": "full-english",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 24
+        },
+        "prepared_prompt_utf8_bytes": 97818,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "first-message",
+        "arm": "terse-english",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 24
+        },
+        "prepared_prompt_utf8_bytes": 87540,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "first-message",
+        "arm": "native-protocol",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 22,
+          "preparation-rejected": 2
+        },
+        "prepared_prompt_utf8_bytes": 79595,
+        "prepared_cases": 22,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "first-message",
+        "arm": "ablation-vowel-drop",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 24
+        },
+        "prepared_prompt_utf8_bytes": 78164,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "first-message",
+        "arm": "ablation-math-notation",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 24
+        },
+        "prepared_prompt_utf8_bytes": 97770,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "first-message",
+        "arm": "ablation-abbreviation",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 24
+        },
+        "prepared_prompt_utf8_bytes": 96632,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "first-message",
+        "arm": "ablation-reference",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 24
+        },
+        "prepared_prompt_utf8_bytes": 97460,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "first-message",
+        "arm": "dictionary-v1",
+        "records": 24,
+        "statuses": {
+          "offline-measured": 24
+        },
+        "prepared_prompt_utf8_bytes": 191901,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "full-english",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 8
+        },
+        "prepared_prompt_utf8_bytes": 99410,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "terse-english",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 8
+        },
+        "prepared_prompt_utf8_bytes": 89132,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "native-protocol",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 7,
+          "preparation-rejected": 1
+        },
+        "prepared_prompt_utf8_bytes": 78037,
+        "prepared_cases": 21,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "ablation-vowel-drop",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 8
+        },
+        "prepared_prompt_utf8_bytes": 79756,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "ablation-math-notation",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 8
+        },
+        "prepared_prompt_utf8_bytes": 99362,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "ablation-abbreviation",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 8
+        },
+        "prepared_prompt_utf8_bytes": 98224,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "ablation-reference",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 8
+        },
+        "prepared_prompt_utf8_bytes": 99052,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      },
+      {
+        "scenario": "joined-session",
+        "arm": "dictionary-v1",
+        "records": 8,
+        "statuses": {
+          "offline-measured": 8
+        },
+        "prepared_prompt_utf8_bytes": 175717,
+        "prepared_cases": 24,
+        "tokens": null,
+        "all_prepared_protected_exact": true
+      }
+    ],
+    "live_records": [
+      {
+        "scenario": "first-message",
+        "case_ids": [
+          "process_ambiguity-1"
+        ],
+        "arm": "full-english",
+        "status": "receiver-measured",
+        "errors": [],
+        "prompt_utf8_bytes": 3731,
+        "prompt_sha256": "a7759eaa73455bee1695fb5bce5585ff17a3e71e51eeafade06055b26a674fb8",
+        "provider_usage": {
+          "input_tokens": 819,
+          "output_tokens": 397,
+          "total_tokens": 1216,
+          "cached_input_tokens": 0,
+          "cache_creation_input_tokens": null,
+          "uncached_input_tokens": null
+        },
+        "receiver_scores": [
+          {
+            "exact": true,
+            "field_results": {
+              "case_id": true,
+              "steps.length": true,
+              "steps[0].process_action": true,
+              "steps[0].requested_action_class": true,
+              "steps[0].target": true,
+              "steps[0].polarity": true,
+              "steps[0].constraint": true
+            },
+            "error": null
+          }
+        ],
+        "receiver_elapsed_seconds": 26.57049287499831,
+        "retries": 0,
+        "roundtrip_exact": [
+          null
+        ],
+        "protected_payload_exact": true,
+        "adapter_setup": {
+          "adapter": "local-openai-compatible",
+          "model": "qwen3:8b",
+          "health": "passed",
+          "endpoint_scope": "loopback-only",
+          "tools": "not-applicable",
+          "paid_api_fallback": "disabled",
+          "max_tokens": 2048,
+          "temperature": 0.0,
+          "provider_reported_model": "qwen3:8b"
+        },
+        "deltas_vs_full": {
+          "prompt_utf8_bytes": 0,
+          "offline_prompt_tokens": null,
+          "provider_total_tokens": 0
+        }
+      },
+      {
+        "scenario": "first-message",
+        "case_ids": [
+          "process_ambiguity-1"
+        ],
+        "arm": "terse-english",
+        "status": "receiver-measured",
+        "errors": [],
+        "prompt_utf8_bytes": 3308,
+        "prompt_sha256": "b5d00c5d13c40d53b04984d910711a9fde504137baf80784708cbdef17b0edfd",
+        "provider_usage": {
+          "input_tokens": 757,
+          "output_tokens": 648,
+          "total_tokens": 1405,
+          "cached_input_tokens": 20,
+          "cache_creation_input_tokens": null,
+          "uncached_input_tokens": null
+        },
+        "receiver_scores": [
+          {
+            "exact": true,
+            "field_results": {
+              "case_id": true,
+              "steps.length": true,
+              "steps[0].process_action": true,
+              "steps[0].requested_action_class": true,
+              "steps[0].target": true,
+              "steps[0].polarity": true,
+              "steps[0].constraint": true
+            },
+            "error": null
+          }
+        ],
+        "receiver_elapsed_seconds": 20.015894500000286,
+        "retries": 0,
+        "roundtrip_exact": [
+          null
+        ],
+        "protected_payload_exact": true,
+        "adapter_setup": {
+          "adapter": "local-openai-compatible",
+          "model": "qwen3:8b",
+          "health": "passed",
+          "endpoint_scope": "loopback-only",
+          "tools": "not-applicable",
+          "paid_api_fallback": "disabled",
+          "max_tokens": 2048,
+          "temperature": 0.0,
+          "provider_reported_model": "qwen3:8b"
+        },
+        "deltas_vs_full": {
+          "prompt_utf8_bytes": -423,
+          "offline_prompt_tokens": null,
+          "provider_total_tokens": 189
+        }
+      },
+      {
+        "scenario": "first-message",
+        "case_ids": [
+          "process_ambiguity-1"
+        ],
+        "arm": "dictionary-v1",
+        "status": "receiver-measured",
+        "errors": [],
+        "prompt_utf8_bytes": 7558,
+        "prompt_sha256": "fe0f6f54fb404c1c26454b56a0257ddc82e29cdd3ac649f1be4464b060833ff7",
+        "provider_usage": {
+          "input_tokens": 2345,
+          "output_tokens": 927,
+          "total_tokens": 3272,
+          "cached_input_tokens": 17,
+          "cache_creation_input_tokens": null,
+          "uncached_input_tokens": null
+        },
+        "receiver_scores": [
+          {
+            "exact": true,
+            "field_results": {
+              "case_id": true,
+              "steps.length": true,
+              "steps[0].process_action": true,
+              "steps[0].requested_action_class": true,
+              "steps[0].target": true,
+              "steps[0].polarity": true,
+              "steps[0].constraint": true
+            },
+            "error": null
+          }
+        ],
+        "receiver_elapsed_seconds": 34.76501324999845,
+        "retries": 0,
+        "roundtrip_exact": [
+          true
+        ],
+        "protected_payload_exact": true,
+        "adapter_setup": {
+          "adapter": "local-openai-compatible",
+          "model": "qwen3:8b",
+          "health": "passed",
+          "endpoint_scope": "loopback-only",
+          "tools": "not-applicable",
+          "paid_api_fallback": "disabled",
+          "max_tokens": 2048,
+          "temperature": 0.0,
+          "provider_reported_model": "qwen3:8b"
+        },
+        "deltas_vs_full": {
+          "prompt_utf8_bytes": 3827,
+          "offline_prompt_tokens": null,
+          "provider_total_tokens": 2056
+        }
+      }
+    ],
+    "limitations": [
+      "Exact inversion and literal checks do not establish receiver comprehension.",
+      "Offline byte counts are not token counts; absent tokenizer/provider counts stay null.",
+      "Joined-session batches do not measure persistent conversation or cache reuse.",
+      "The dictionary is experimental and not a negotiated Protocol 0.1 profile.",
+      "Synthetic decoder smoke results do not establish end-to-end coding-agent savings.",
+      "Native protocol labels reflect synthetic harness capabilities, not model advertisements."
+    ]
+  },
+  "limits": [
+    "Validation-only diagnostics, not promotion evidence.",
+    "One independently initialized seed per supervised component control.",
+    "Offline bytes are not tokens; native negotiation failures are not free savings.",
+    "Local receiver results are one case per representation, not a broad transfer estimate.",
+    "Reported training and inference elapsed times overlap concurrent workloads."
+  ]
+}

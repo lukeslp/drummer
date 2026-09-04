@@ -19,5 +19,7 @@ experienced emotion, or savings in real coding work.
 7. [Decisions](decisions.md): differences from earlier proposals.
 8. [Model card](model-card.md) and [dataset card](dataset-card.md).
 9. [Initial measured evidence](initial-evidence.md): completed checks and exploratory failures.
+10. [Pilot outcome and local evidence](local-evidence.md): channel interventions and component controls.
+11. [Local experiments manual](local-experiments.md): artifact autopsy, bounded controls, and experimental dictionary.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

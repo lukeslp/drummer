@@ -114,6 +114,11 @@ was 2,048 tokens. No model was downloaded for the experiment.
 
 ## Interpretation and next decision
 
+This initial report is retained as a dated snapshot. The later same-day
+[pilot outcome and local follow-up](local-evidence.md) records terminal
+calibration failure, message interventions, component controls, and a new
+compression spot-check. The next-run wording below describes the earlier state.
+
 The useful result is a working, instrumented experiment with visible failure
 boundaries. The initial evidence does not support claiming that canonical JSON
 is already an efficient language, that these local models understand Drummer

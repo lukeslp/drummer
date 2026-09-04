@@ -1,0 +1,1380 @@
+{
+  "format": "drummer-initial-evidence/1",
+  "author": "Luke Steuber",
+  "date": "2026-09-04",
+  "source_revision": "949d5be04729b9aa2e5e93ea5e9fa7a90370d155",
+  "lock_sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd",
+  "corpus": "synthetic-24-v2",
+  "response_contract": "ordered-process-steps-v2",
+  "status": "exploratory_not_promoted",
+  "scope": "96 paired prose attempts, four rejected packet sender attempts, nine one-receiver local attempts",
+  "token_accounting": "Both endpoint input and output where present; cache creation and cache reads included in Claude input; missing values remain null.",
+  "latency_caveat": "Live concurrent client work, not isolated randomized latency benchmarking.",
+  "raw_artifact_policy": "Raw synthetic records remain in the research archive; hashes bind these public measurement extracts.",
+  "columns": [
+    "case_id",
+    "delivery_mode",
+    "sender_valid",
+    "response_exact",
+    "input_tokens",
+    "output_tokens",
+    "total_tokens",
+    "elapsed_seconds",
+    "response_error"
+  ],
+  "artifacts": [
+    {
+      "artifact": "codex-claude-full-v2-24.json",
+      "raw_sha256": "03b25e4a5235d25eeba7c2d7ff314eebff7427e02b3ccbf9084a5447e1cdc1b0",
+      "cases_or_deliveries": 24,
+      "exact_responses": 4,
+      "complete_token_total": 473003,
+      "mean_elapsed_seconds": 23.729830343627327,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          true,
+          false,
+          18941,
+          681,
+          19622,
+          24.070072666007036,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "process_ambiguity-2",
+          "not-applicable",
+          true,
+          false,
+          18937,
+          681,
+          19618,
+          23.911093542003073,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "path_symbol-1",
+          "not-applicable",
+          true,
+          false,
+          18664,
+          531,
+          19195,
+          20.434205041005043,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "path_symbol-2",
+          "not-applicable",
+          true,
+          false,
+          18683,
+          538,
+          19221,
+          20.69770595800219,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "negation-1",
+          "not-applicable",
+          true,
+          false,
+          18880,
+          657,
+          19537,
+          23.071500416001072,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "negation-2",
+          "not-applicable",
+          true,
+          false,
+          18834,
+          622,
+          19456,
+          23.02440195800591,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "stale_references-1",
+          "not-applicable",
+          true,
+          false,
+          19190,
+          776,
+          19966,
+          25.485712125002465,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "stale_references-2",
+          "not-applicable",
+          true,
+          false,
+          18987,
+          648,
+          19635,
+          23.046105665998766,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "restart-1",
+          "not-applicable",
+          true,
+          false,
+          19135,
+          745,
+          19880,
+          24.35168654100562,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "restart-2",
+          "not-applicable",
+          true,
+          true,
+          19149,
+          643,
+          19792,
+          23.62457962500048,
+          null
+        ],
+        [
+          "missing_ack-1",
+          "not-applicable",
+          true,
+          false,
+          19130,
+          657,
+          19787,
+          24.361473334007314,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "missing_ack-2",
+          "not-applicable",
+          true,
+          false,
+          19226,
+          815,
+          20041,
+          27.05821083400224,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "uncertainty-1",
+          "not-applicable",
+          true,
+          false,
+          18890,
+          696,
+          19586,
+          22.480547291997937,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "uncertainty-2",
+          "not-applicable",
+          true,
+          false,
+          18864,
+          648,
+          19512,
+          23.47431129200413,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "evidence_conflict-1",
+          "not-applicable",
+          true,
+          true,
+          19563,
+          823,
+          20386,
+          29.772093249004683,
+          null
+        ],
+        [
+          "evidence_conflict-2",
+          "not-applicable",
+          true,
+          false,
+          19418,
+          838,
+          20256,
+          30.2365375829977,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "authority-1",
+          "not-applicable",
+          true,
+          false,
+          18731,
+          615,
+          19346,
+          21.922698916991067,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "authority-2",
+          "not-applicable",
+          true,
+          false,
+          18792,
+          591,
+          19383,
+          19.796226582999225,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "capability_mismatch-1",
+          "not-applicable",
+          true,
+          true,
+          18976,
+          592,
+          19568,
+          22.54603437500191,
+          null
+        ],
+        [
+          "capability_mismatch-2",
+          "not-applicable",
+          true,
+          false,
+          18973,
+          649,
+          19622,
+          22.562390251005127,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "new_given-1",
+          "not-applicable",
+          true,
+          false,
+          19020,
+          688,
+          19708,
+          22.341806832999282,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "new_given-2",
+          "not-applicable",
+          true,
+          false,
+          19127,
+          750,
+          19877,
+          23.647761374006222,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "multistep_scope-1",
+          "not-applicable",
+          true,
+          false,
+          19323,
+          706,
+          20029,
+          22.965350209007738,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "multistep_scope-2",
+          "not-applicable",
+          true,
+          true,
+          19313,
+          667,
+          19980,
+          24.63342258299963,
+          null
+        ]
+      ]
+    },
+    {
+      "artifact": "codex-claude-terse-v2-24.json",
+      "raw_sha256": "d014531e74a9ac6490046ec17420c1db49119e04b6799757f4e3470f32f0f4f3",
+      "cases_or_deliveries": 24,
+      "exact_responses": 5,
+      "complete_token_total": 451803,
+      "mean_elapsed_seconds": 16.05976605054123,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          true,
+          false,
+          18477,
+          418,
+          18895,
+          13.999601166011416,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "process_ambiguity-2",
+          "not-applicable",
+          true,
+          false,
+          18464,
+          391,
+          18855,
+          13.558363541997096,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "path_symbol-1",
+          "not-applicable",
+          true,
+          false,
+          18471,
+          427,
+          18898,
+          16.418582374994003,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "path_symbol-2",
+          "not-applicable",
+          false,
+          false,
+          15184,
+          115,
+          15299,
+          9.193165917000442,
+          "sender handoff was rejected"
+        ],
+        [
+          "negation-1",
+          "not-applicable",
+          true,
+          false,
+          18422,
+          457,
+          18879,
+          14.13724350099801,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "negation-2",
+          "not-applicable",
+          true,
+          false,
+          18396,
+          407,
+          18803,
+          13.469929541002784,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "stale_references-1",
+          "not-applicable",
+          true,
+          true,
+          18776,
+          385,
+          19161,
+          15.894660042002215,
+          null
+        ],
+        [
+          "stale_references-2",
+          "not-applicable",
+          true,
+          false,
+          18844,
+          559,
+          19403,
+          21.33482804200321,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "restart-1",
+          "not-applicable",
+          true,
+          true,
+          18776,
+          384,
+          19160,
+          15.731302542000776,
+          null
+        ],
+        [
+          "restart-2",
+          "not-applicable",
+          true,
+          false,
+          18950,
+          649,
+          19599,
+          22.911708791994897,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "missing_ack-1",
+          "not-applicable",
+          true,
+          true,
+          18760,
+          403,
+          19163,
+          16.343260832996748,
+          null
+        ],
+        [
+          "missing_ack-2",
+          "not-applicable",
+          true,
+          false,
+          18768,
+          502,
+          19270,
+          19.6839378759978,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "uncertainty-1",
+          "not-applicable",
+          true,
+          false,
+          18640,
+          490,
+          19130,
+          17.710867500994937,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "uncertainty-2",
+          "not-applicable",
+          true,
+          false,
+          18499,
+          529,
+          19028,
+          15.59383429200534,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "evidence_conflict-1",
+          "not-applicable",
+          true,
+          false,
+          18886,
+          1011,
+          19897,
+          24.577928541999427,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "evidence_conflict-2",
+          "not-applicable",
+          true,
+          true,
+          18879,
+          401,
+          19280,
+          16.477297082994482,
+          null
+        ],
+        [
+          "authority-1",
+          "not-applicable",
+          true,
+          true,
+          18531,
+          316,
+          18847,
+          14.096649541999795,
+          null
+        ],
+        [
+          "authority-2",
+          "not-applicable",
+          true,
+          false,
+          18448,
+          379,
+          18827,
+          14.577929249993758,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "capability_mismatch-1",
+          "not-applicable",
+          true,
+          false,
+          18504,
+          425,
+          18929,
+          14.480211125002825,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "capability_mismatch-2",
+          "not-applicable",
+          true,
+          false,
+          18494,
+          422,
+          18916,
+          14.83282129199506,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "new_given-1",
+          "not-applicable",
+          true,
+          false,
+          18873,
+          470,
+          19343,
+          18.32328962500469,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "new_given-2",
+          "not-applicable",
+          false,
+          false,
+          15346,
+          232,
+          15578,
+          11.913223124996875,
+          "sender handoff was rejected"
+        ],
+        [
+          "multistep_scope-1",
+          "not-applicable",
+          true,
+          false,
+          18880,
+          473,
+          19353,
+          15.517052084003808,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "multistep_scope-2",
+          "not-applicable",
+          true,
+          false,
+          18843,
+          447,
+          19290,
+          14.656697582999186,
+          "invalid JSON: Expecting value"
+        ]
+      ]
+    },
+    {
+      "artifact": "claude-codex-full-v2-24.json",
+      "raw_sha256": "38f27e7935fd5c5e0a9299110efd85b0de1685c31047b5dd60e9aae90ebe7165",
+      "cases_or_deliveries": 24,
+      "exact_responses": 21,
+      "complete_token_total": 507132,
+      "mean_elapsed_seconds": 24.487364724165673,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          true,
+          true,
+          19574,
+          1471,
+          21045,
+          25.285351082995476,
+          null
+        ],
+        [
+          "process_ambiguity-2",
+          "not-applicable",
+          true,
+          true,
+          19533,
+          1406,
+          20939,
+          24.979893042000185,
+          null
+        ],
+        [
+          "path_symbol-1",
+          "not-applicable",
+          true,
+          true,
+          19604,
+          1470,
+          21074,
+          25.121634333998372,
+          null
+        ],
+        [
+          "path_symbol-2",
+          "not-applicable",
+          true,
+          true,
+          19351,
+          1102,
+          20453,
+          21.609635541004536,
+          null
+        ],
+        [
+          "negation-1",
+          "not-applicable",
+          true,
+          true,
+          19471,
+          1465,
+          20936,
+          26.34502562499256,
+          null
+        ],
+        [
+          "negation-2",
+          "not-applicable",
+          true,
+          false,
+          19341,
+          1174,
+          20515,
+          21.39893391800433,
+          "one or more ordered step values changed"
+        ],
+        [
+          "stale_references-1",
+          "not-applicable",
+          true,
+          true,
+          19746,
+          1378,
+          21124,
+          23.321370083998772,
+          null
+        ],
+        [
+          "stale_references-2",
+          "not-applicable",
+          true,
+          true,
+          19866,
+          1526,
+          21392,
+          24.44079070800217,
+          null
+        ],
+        [
+          "restart-1",
+          "not-applicable",
+          true,
+          true,
+          19558,
+          1083,
+          20641,
+          20.45414212600008,
+          null
+        ],
+        [
+          "restart-2",
+          "not-applicable",
+          true,
+          true,
+          19687,
+          1250,
+          20937,
+          22.710634833994845,
+          null
+        ],
+        [
+          "missing_ack-1",
+          "not-applicable",
+          true,
+          true,
+          19789,
+          1426,
+          21215,
+          24.89661616700323,
+          null
+        ],
+        [
+          "missing_ack-2",
+          "not-applicable",
+          true,
+          true,
+          19913,
+          1585,
+          21498,
+          27.272523374995217,
+          null
+        ],
+        [
+          "uncertainty-1",
+          "not-applicable",
+          true,
+          false,
+          19550,
+          1435,
+          20985,
+          25.406327916993177,
+          "one or more ordered step values changed"
+        ],
+        [
+          "uncertainty-2",
+          "not-applicable",
+          true,
+          true,
+          19536,
+          1440,
+          20976,
+          24.358258291998936,
+          null
+        ],
+        [
+          "evidence_conflict-1",
+          "not-applicable",
+          true,
+          true,
+          20182,
+          1732,
+          21914,
+          27.30926199899841,
+          null
+        ],
+        [
+          "evidence_conflict-2",
+          "not-applicable",
+          true,
+          true,
+          20251,
+          1797,
+          22048,
+          29.73348212500423,
+          null
+        ],
+        [
+          "authority-1",
+          "not-applicable",
+          true,
+          true,
+          19854,
+          1989,
+          21843,
+          32.32649154200044,
+          null
+        ],
+        [
+          "authority-2",
+          "not-applicable",
+          true,
+          true,
+          19391,
+          1295,
+          20686,
+          21.245725041997503,
+          null
+        ],
+        [
+          "capability_mismatch-1",
+          "not-applicable",
+          true,
+          true,
+          19443,
+          1337,
+          20780,
+          24.350087583996356,
+          null
+        ],
+        [
+          "capability_mismatch-2",
+          "not-applicable",
+          true,
+          false,
+          19545,
+          1562,
+          21107,
+          26.54866054100421,
+          "one or more ordered step values changed"
+        ],
+        [
+          "new_given-1",
+          "not-applicable",
+          true,
+          true,
+          19653,
+          1231,
+          20884,
+          21.155532167002093,
+          null
+        ],
+        [
+          "new_given-2",
+          "not-applicable",
+          true,
+          true,
+          19792,
+          1325,
+          21117,
+          22.782740291993832,
+          null
+        ],
+        [
+          "multistep_scope-1",
+          "not-applicable",
+          true,
+          true,
+          20254,
+          1505,
+          21759,
+          24.59621029200207,
+          null
+        ],
+        [
+          "multistep_scope-2",
+          "not-applicable",
+          true,
+          true,
+          20074,
+          1190,
+          21264,
+          20.047424749995116,
+          null
+        ]
+      ]
+    },
+    {
+      "artifact": "claude-codex-terse-v2-24.json",
+      "raw_sha256": "0a5768f30f28eaf790e916f0b5c801dc74953e30a619574cfe7e69169b557663",
+      "cases_or_deliveries": 24,
+      "exact_responses": 17,
+      "complete_token_total": 482559,
+      "mean_elapsed_seconds": 16.80938722045691,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          true,
+          false,
+          19146,
+          795,
+          19941,
+          16.228398208004364,
+          "one or more ordered step values changed"
+        ],
+        [
+          "process_ambiguity-2",
+          "not-applicable",
+          true,
+          true,
+          19053,
+          670,
+          19723,
+          15.107595375004166,
+          null
+        ],
+        [
+          "path_symbol-1",
+          "not-applicable",
+          true,
+          true,
+          19046,
+          662,
+          19708,
+          14.90465545799816,
+          null
+        ],
+        [
+          "path_symbol-2",
+          "not-applicable",
+          true,
+          false,
+          19054,
+          646,
+          19700,
+          14.53262641699257,
+          "one or more ordered step values changed"
+        ],
+        [
+          "negation-1",
+          "not-applicable",
+          true,
+          false,
+          19051,
+          797,
+          19848,
+          16.76464708299318,
+          "one or more ordered step values changed"
+        ],
+        [
+          "negation-2",
+          "not-applicable",
+          true,
+          true,
+          19029,
+          685,
+          19714,
+          15.195307166002749,
+          null
+        ],
+        [
+          "stale_references-1",
+          "not-applicable",
+          true,
+          true,
+          19444,
+          893,
+          20337,
+          18.813948417002393,
+          null
+        ],
+        [
+          "stale_references-2",
+          "not-applicable",
+          true,
+          true,
+          19439,
+          870,
+          20309,
+          18.802851542001008,
+          null
+        ],
+        [
+          "restart-1",
+          "not-applicable",
+          true,
+          true,
+          19352,
+          792,
+          20144,
+          16.360240916001203,
+          null
+        ],
+        [
+          "restart-2",
+          "not-applicable",
+          true,
+          true,
+          19463,
+          871,
+          20334,
+          17.17759683299664,
+          null
+        ],
+        [
+          "missing_ack-1",
+          "not-applicable",
+          true,
+          true,
+          19560,
+          1039,
+          20599,
+          18.343768582999473,
+          null
+        ],
+        [
+          "missing_ack-2",
+          "not-applicable",
+          true,
+          true,
+          19367,
+          701,
+          20068,
+          17.36053341699153,
+          null
+        ],
+        [
+          "uncertainty-1",
+          "not-applicable",
+          true,
+          false,
+          19062,
+          640,
+          19702,
+          15.775190123997163,
+          "one or more ordered step values changed"
+        ],
+        [
+          "uncertainty-2",
+          "not-applicable",
+          true,
+          false,
+          19130,
+          785,
+          19915,
+          16.90082245899248,
+          "one or more ordered step values changed"
+        ],
+        [
+          "evidence_conflict-1",
+          "not-applicable",
+          true,
+          true,
+          19646,
+          920,
+          20566,
+          17.091658499994082,
+          null
+        ],
+        [
+          "evidence_conflict-2",
+          "not-applicable",
+          true,
+          true,
+          19623,
+          936,
+          20559,
+          17.76289479200932,
+          null
+        ],
+        [
+          "authority-1",
+          "not-applicable",
+          true,
+          true,
+          19103,
+          861,
+          19964,
+          17.912907291996817,
+          null
+        ],
+        [
+          "authority-2",
+          "not-applicable",
+          true,
+          true,
+          19065,
+          889,
+          19954,
+          16.760782624995045,
+          null
+        ],
+        [
+          "capability_mismatch-1",
+          "not-applicable",
+          true,
+          false,
+          19108,
+          796,
+          19904,
+          16.107046457997058,
+          "one or more ordered step values changed"
+        ],
+        [
+          "capability_mismatch-2",
+          "not-applicable",
+          true,
+          false,
+          19028,
+          648,
+          19676,
+          14.83655799999542,
+          "one or more ordered step values changed"
+        ],
+        [
+          "new_given-1",
+          "not-applicable",
+          true,
+          true,
+          19457,
+          906,
+          20363,
+          18.492504000001645,
+          null
+        ],
+        [
+          "new_given-2",
+          "not-applicable",
+          true,
+          true,
+          19422,
+          852,
+          20274,
+          16.54853591700521,
+          null
+        ],
+        [
+          "multistep_scope-1",
+          "not-applicable",
+          true,
+          true,
+          19815,
+          819,
+          20634,
+          17.47935887499625,
+          null
+        ],
+        [
+          "multistep_scope-2",
+          "not-applicable",
+          true,
+          true,
+          19812,
+          811,
+          20623,
+          18.164864833997854,
+          null
+        ]
+      ]
+    },
+    {
+      "artifact": "codex-claude-protocol-v2-schema-smoke.json",
+      "raw_sha256": "a35b1fd6c488d148d5f320e7cc6f7542b1c5ba28881e6117e01ed5876c1c0f7e",
+      "cases_or_deliveries": 1,
+      "exact_responses": 0,
+      "complete_token_total": 22362,
+      "mean_elapsed_seconds": 46.765802791996975,
+      "protocol_contract_sha256": "0d58160eba85522993ac15ce0b5e97b9b2c3a9c3b709458d14bf97edb4d10582",
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          false,
+          false,
+          20981,
+          1381,
+          22362,
+          46.765802791996975,
+          "sender handoff was rejected"
+        ]
+      ]
+    },
+    {
+      "artifact": "codex-claude-protocol-v2-manual-smoke.json",
+      "raw_sha256": "d5cb12c6a9a82ddd5e69c6efc838bb1e8b60cb644efad6413acd667589c30daa",
+      "cases_or_deliveries": 1,
+      "exact_responses": 0,
+      "complete_token_total": 20035,
+      "mean_elapsed_seconds": 21.338707540999167,
+      "protocol_contract_sha256": "0d5a64c3ecffe68b1a7751df0212fd09c4e594a4bde05f5bca0f751124e243ff",
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          false,
+          false,
+          19454,
+          581,
+          20035,
+          21.338707540999167,
+          "sender handoff was rejected"
+        ]
+      ]
+    },
+    {
+      "artifact": "claude-codex-protocol-v2-schema-smoke.json",
+      "raw_sha256": "6dd7f6c5846d408b6369bea8a1d239e1495e26d9df3723c79b59b28f7a8bc814",
+      "cases_or_deliveries": 1,
+      "exact_responses": 0,
+      "complete_token_total": 17965,
+      "mean_elapsed_seconds": 51.33080808300292,
+      "protocol_contract_sha256": "0d58160eba85522993ac15ce0b5e97b9b2c3a9c3b709458d14bf97edb4d10582",
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          false,
+          false,
+          12817,
+          5148,
+          17965,
+          51.33080808300292,
+          "sender handoff was rejected"
+        ]
+      ]
+    },
+    {
+      "artifact": "claude-codex-protocol-v2-manual-smoke.json",
+      "raw_sha256": "fa7b200e6ae802d371fc9b866e1b431fa737013f49f96c8e70dfc8c974285a2a",
+      "cases_or_deliveries": 1,
+      "exact_responses": 0,
+      "complete_token_total": 13980,
+      "mean_elapsed_seconds": 31.31440358400141,
+      "protocol_contract_sha256": "0d5a64c3ecffe68b1a7751df0212fd09c4e594a4bde05f5bca0f751124e243ff",
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          false,
+          false,
+          11083,
+          2897,
+          13980,
+          31.31440358400141,
+          "sender handoff was rejected"
+        ]
+      ]
+    },
+    {
+      "artifact": "qwen05-full-v2-corrected-smoke.json",
+      "raw_sha256": "3b24b7f5665658a634c121e108645fd9ab056fa4b3904f4689633175d2fdcdc9",
+      "cases_or_deliveries": 1,
+      "exact_responses": 0,
+      "complete_token_total": 895,
+      "mean_elapsed_seconds": 29.136468374999822,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          null,
+          false,
+          824,
+          71,
+          895,
+          29.136468374999822,
+          "invalid JSON: Expecting value"
+        ]
+      ]
+    },
+    {
+      "artifact": "qwen05-protocol-v2-corrected-smoke.json",
+      "raw_sha256": "a17577d4aad2f35cb7ae636fbf018ebbcbd537953385b6fb1895be710363cbf3",
+      "cases_or_deliveries": 2,
+      "exact_responses": 0,
+      "complete_token_total": 1702,
+      "mean_elapsed_seconds": 63.79406364550232,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "native",
+          null,
+          false,
+          869,
+          120,
+          989,
+          94.3797906250038,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "process_ambiguity-1",
+          "deterministic-expanded",
+          null,
+          false,
+          633,
+          80,
+          713,
+          33.20833666600083,
+          "invalid JSON: Expecting value"
+        ]
+      ]
+    },
+    {
+      "artifact": "qwen15-full-v2-corrected-smoke.json",
+      "raw_sha256": "d9a09e0953a1a697a039e77ff6e89f46a5c687c6b00f19f72b86ebdf9e2926a8",
+      "cases_or_deliveries": 1,
+      "exact_responses": 0,
+      "complete_token_total": 891,
+      "mean_elapsed_seconds": 44.52309945799789,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          null,
+          false,
+          824,
+          67,
+          891,
+          44.52309945799789,
+          "invalid JSON: Expecting value"
+        ]
+      ]
+    },
+    {
+      "artifact": "qwen15-protocol-v2-corrected-smoke.json",
+      "raw_sha256": "95448c8f39cd20cde8cc6ef3659152fc4e651d626a1e1eb5ae408d20fa2a7e7b",
+      "cases_or_deliveries": 2,
+      "exact_responses": 0,
+      "complete_token_total": 1654,
+      "mean_elapsed_seconds": 50.52886052100439,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "native",
+          null,
+          false,
+          869,
+          69,
+          938,
+          58.626775417003955,
+          "invalid JSON: Expecting value"
+        ],
+        [
+          "process_ambiguity-1",
+          "deterministic-expanded",
+          null,
+          false,
+          633,
+          83,
+          716,
+          42.430945625004824,
+          "invalid JSON: Expecting value"
+        ]
+      ]
+    },
+    {
+      "artifact": "qwen8-full-v2-corrected-smoke.json",
+      "raw_sha256": "78d7e951b5f415381674783cc7368171777be8d6be759e79a3225644d8b4d501",
+      "cases_or_deliveries": 1,
+      "exact_responses": 1,
+      "complete_token_total": 1280,
+      "mean_elapsed_seconds": 13.334928249998484,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "not-applicable",
+          null,
+          true,
+          805,
+          475,
+          1280,
+          13.334928249998484,
+          null
+        ]
+      ]
+    },
+    {
+      "artifact": "qwen8-protocol-v2-corrected-smoke.json",
+      "raw_sha256": "78e07eda9994daf7f97dcde6314a107b1fa17a292112e873cad442faf3c0c60d",
+      "cases_or_deliveries": 2,
+      "exact_responses": 0,
+      "complete_token_total": 2925,
+      "mean_elapsed_seconds": 26.46280774999832,
+      "protocol_contract_sha256": null,
+      "rows": [
+        [
+          "process_ambiguity-1",
+          "native",
+          null,
+          false,
+          850,
+          738,
+          1588,
+          34.20731941599661,
+          "one or more ordered step values changed"
+        ],
+        [
+          "process_ambiguity-1",
+          "deterministic-expanded",
+          null,
+          false,
+          614,
+          723,
+          1337,
+          18.71829608400003,
+          "one or more ordered step values changed"
+        ]
+      ]
+    }
+  ]
+}

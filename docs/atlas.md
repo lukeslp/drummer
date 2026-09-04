@@ -3,6 +3,10 @@
 Status: no promoted learned conventions. An initial random model is not a
 discovered language, and a training smoke test is not evidence of useful omission.
 
+The [initial evidence report](initial-evidence.md) records implementation checks
+and failed handoff/local-model probes. Those observations constrain practical
+adoption; they are not entries claiming learned symbol meanings.
+
 ## Entry contract
 
 Each proposed convention needs a stable entry ID, model checkpoint digest, code

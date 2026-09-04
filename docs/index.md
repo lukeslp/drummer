@@ -18,5 +18,6 @@ experienced emotion, or savings in real coding work.
 6. [Operations](operations.md): reproducible commands and spending safeguards.
 7. [Decisions](decisions.md): differences from earlier proposals.
 8. [Model card](model-card.md) and [dataset card](dataset-card.md).
+9. [Initial measured evidence](initial-evidence.md): completed checks and exploratory failures.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

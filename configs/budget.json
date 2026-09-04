@@ -1,0 +1,11 @@
+{
+  "currency": "USD",
+  "ceiling": "250.00",
+  "tranches": {"smoke": "20.00", "training": "100.00", "evaluation": "40.00", "interop": "25.00", "reserve": "65.00"},
+  "hardware": "l4x1",
+  "first_timeout_minutes": 30,
+  "max_timeout_minutes": 240,
+  "max_concurrent_jobs": 1,
+  "checkpoint_interval_seconds": 900,
+  "auto_recharge": false
+}

@@ -1,0 +1,16 @@
+{
+  "hardware": "l4x1",
+  "namespace": "lukeslp",
+  "timeout_minutes": 30,
+  "image": "python:3.12-slim-bookworm@sha256:9c47360a2a0355e2da18516d0b1c2126ec22c195d2185e97347c9d98398c5bef",
+  "image_platform": "linux/amd64",
+  "image_verified_date": "2026-09-04",
+  "image_source": "https://hub.docker.com/v2/repositories/library/python/tags/3.12-slim-bookworm",
+  "uv_version": "0.12.1",
+  "source": "immutable Git commit, never a moving branch",
+  "artifact_destination": "private dataset lukeslp/drummer-runs",
+  "data_sizes": {"train": 320, "validation": 80, "test": 80},
+  "model": "default four-layer architecture",
+  "training": {"mode": "compulsory", "seed": 11, "max_epochs": 2, "max_steps": 16, "batch_size": 32, "microbatch_size": 16},
+  "research_gate_evidence": false
+}

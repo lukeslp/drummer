@@ -1,0 +1,17 @@
+{
+  "experiment_version": "drummer-contextual-omission-v1",
+  "corpus_seed": 20260904,
+  "sizes": {"train": 100000, "validation": 10000, "test": 10000},
+  "training_seeds": [11, 23, 37, 53, 71],
+  "conditions": ["compulsory", "optional", "receiver_blind"],
+  "pressure_candidates": [0.01, 0.03, 0.1],
+  "calibration_seed": 101,
+  "learning_rate": 0.0003,
+  "batch_size": 128,
+  "max_epochs": 10,
+  "patience": 3,
+  "gradient_clip": 1.0,
+  "model": {"layers": 4, "width": 256, "heads": 4, "ffn": 1024, "context": 128, "private_residual": 8},
+  "gate": {"forward_bit_reduction": 0.25, "stretch_reduction": 0.4, "max_compulsory_loss": 0.03, "max_full_loss": 0.05, "min_full_success": 0.95, "required_seeds": 4},
+  "milestone_2": {"status": "gated_not_run", "turns": 8, "training": "actor_critic_whole_episode_returns"}
+}

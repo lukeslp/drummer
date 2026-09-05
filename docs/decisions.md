@@ -116,6 +116,36 @@ partners remain in scope without expanding the budget or changing model weights
 through ordinary inference. New training and model calls remain paused at this
 checkpoint while the pre-training evaluation contract is reviewed.
 
+## DR-014 — Make the practical bootstrap independently scoreable before training
+
+Resume offline implementation after the checkpoint; training remains gated.
+Freeze the first controlled-English instrument around fifteen meaning fields,
+including separate requested and write-prohibited symbol/file pairs, modality,
+expressed affect and its holder. All four prohibition realizations have the same
+pair scope; a file-wide prohibition is not silently treated as a symbol-specific
+one. Functional words and ACK state stay outside opaque COPY spans.
+
+Split 54 underlying semantic bundles 43/5/6 before rendering. Thousands of
+conversations do not multiply this limited semantic coverage. Reserve separate
+source paraphrase families, counterbalance literal positions and event ordering,
+and check model-visible observations after tokenization. Teachers derive from
+independently parsed visible source, never scoring records. This is supervised
+imitation of an authored shortening rule, not discovered convention evidence.
+
+The independent parser consumes the complete candidate, not an expected-string
+match. The ledger records actual deliveries, including valid-but-wrong ones;
+only exact current recipient ACKs permit reference-only messages. The evaluator
+scores after state transitions. Fallback may respond to observable generation or
+parse failure/abstention, never a hidden semantic score. Report candidate fidelity,
+all-turn delivery success, fallback coverage and each charged boundary separately.
+One deliberately dropped payload per conversation limits perfect-control delivery
+success to 7/8; conditional fidelity must not conceal that loss.
+
+The [bootstrap manual](rewrite-bootstrap.md) is the versioned instrument contract.
+Corpus sealing/loading, input-intervention studies and a training runner remain
+open. No new training, model-call evidence or learned savings follows from the
+offline tests. Protocol 0.1 and historical experiment meanings remain unchanged.
+
 ## Historical input fingerprints
 
 Original historical files are preserved unchanged in the local research archive;

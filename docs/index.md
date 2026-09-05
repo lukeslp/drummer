@@ -44,6 +44,7 @@ practical compression tests, and the partially implemented, untrained bridge.
 24. [Actual coding-workflow results](workflow-evidence.md): two verified fixes, terminal refusal, exact transport overhead, and incomplete usage.
 25. [Frozen sender partitions](sender-partition.md): collision diagnosis and the completed, unsupported delayed-exploration hypothesis.
 26. [Role-scoped handoffs](handoff-contracts.md): prospective reference-identity and condition-scope checks without rewriting historical scores.
-27. [Rewrite-0](rewrite.md): tested original model components, exact-copy limits, and unfinished training/evaluation work.
+27. [Rewrite-0](rewrite.md): tested original model components, exact-copy limits, and unfinished training work.
+28. [Rewrite bootstrap](rewrite-bootstrap.md): complete controlled grammar, independent semantic scoring, corpus splits, actual-output state and cost accounting.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

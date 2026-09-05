@@ -28,8 +28,11 @@ evaluation, five-seed and cross-play reports, an exact protocol validator, and
 compression.** Measured results belong in versioned experiment reports.
 
 The separate [Rewrite-0 component](docs/rewrite.md) now has a tested
-4.38-million-parameter encoder–decoder and exact-copy channel. Its corpus,
-independent scorer, conversation coordinator and training remain unfinished.
+4.38-million-parameter encoder–decoder and exact-copy channel. Its
+[controlled-English bootstrap](docs/rewrite-bootstrap.md) now includes an in-memory
+corpus generator, independent semantic parser, acknowledgement ledger and
+closed-loop evaluator. Corpus sealing, the training runner and learned results
+remain unfinished.
 
 ## Start locally
 

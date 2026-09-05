@@ -1,6 +1,6 @@
 # Rewrite-0: original learned practical compression
 
-Luke Steuber · 2026-09-05 UTC · Component implementation; training not started
+Luke Steuber · 2026-09-05 UTC · Offline instruments implemented; training not started
 
 Rewrite-0 is the proposed bridge to useful language compression: an original
 model that receives source English and legitimate shared context and produces a
@@ -18,9 +18,10 @@ embedding and learned 2,048-position table are shared; the output head is untied
 Smaller test overrides are component-test configurations, not research results.
 
 The model receives source text and a recipient-specific context supplied by the
-caller. The codec cannot certify that context was acknowledged; the future
-coordinator must enforce this. Neither module reads files, loads scoring labels,
-performs an optimizer update, executes actions or contacts another model.
+caller. The codec cannot certify that context was acknowledged; the implemented
+bootstrap ledger enforces this separately. Neither model nor codec reads files,
+loads scoring labels, performs an optimizer update, executes actions or contacts
+another model.
 
 ### Exact-copy channel
 
@@ -67,8 +68,9 @@ elapsed seconds and an optional error. Status is `complete`,
 `decode_budget_exhausted`, `time_budget_exhausted`, `invalid_input`,
 `invalid_output` or `nonfinite_logits`. Complete means syntactically decoded,
 not semantically correct. Invalid API arguments raise before generation;
-unexpected runtime exceptions propagate. The future runner must preserve those
-exceptions and elapsed cost as failed attempts, not drop them from evaluation.
+unexpected runtime exceptions propagate. The closed-loop evaluator preserves
+callback exceptions and elapsed cost as failed attempts; binding generation to
+that callback contract remains a pre-training step.
 Timeouts are cooperative checks around expensive stages, not OS cancellation.
 
 Tests cover exact bytes and foils, malformed inputs, channel limits, finite
@@ -78,7 +80,8 @@ the research-default model can learn the task or run within a training budget.
 
 ## SFL and expressed emotion: evaluation before fitting
 
-The proposed scorer should preserve three simultaneous kinds of meaning:
+The implemented bootstrap scorer tests a constrained subset of three simultaneous
+kinds of meaning; the complete design remains broader:
 
 - **Ideational:** process, participants, target, conditions and evidence.
 - **Interpersonal:** request versus report, obligation, polarity, uncertainty,
@@ -95,9 +98,13 @@ Drummer-0's eight-dimensional private residual remains zero in its experiments.
 
 ## What must precede training
 
-The corpus, independent semantic scorer, closed-loop coordinator and training
-runner are **not implemented**. The next proposed unit is those evaluation
-contracts, not another model-size increase or a long training job.
+The in-memory corpus generator, independent semantic parser/scorer,
+recipient-specific ledger and closed-loop evaluator are now implemented and
+covered by 182 focused offline tests. The [bootstrap manual](rewrite-bootstrap.md)
+defines their grammar, state transitions, accounting and limits. These are
+authored instruments, not measured model comprehension. Durable corpus
+sealing/loading, a training runner, input-intervention studies and frozen
+model evaluation remain **unimplemented**. No training has resumed.
 
 1. Freeze fresh synthetic conversations and independent held-out paraphrase
    families. Split semantic/transition groups before rendering, normalizing
@@ -119,12 +126,15 @@ contracts, not another model-size increase or a long training job.
    recipient tokens. A perfect fallback policy is not learned compression.
 
 The prospective bootstrap proposes 8,192/1,024/1,024 eight-turn conversations,
-with at least 99% joint semantic fidelity on each complete-input evaluation
-slice, zero observed protected-field/authority violations, at least 80%
+with at least 99% joint semantic fidelity on each complete-input, delivered-payload
+evaluation slice, zero observed protected-field/authority violations, at least 80%
 non-fallback coverage, and at least 10% net delivered-byte reduction versus full
 English including the costs above. Report the terse/rule comparison even if it
 wins. These are narrow bootstrap criteria, not demonstrated results or the later
-20% end-to-end deployment target. They require review before fitting.
+20% end-to-end deployment target. They require review before fitting. Report
+candidate fidelity and actual first-pass delivery success separately: deliberate
+payload loss makes even the full-source control fail one of eight deliveries.
+Never omit those failures from the all-turn accounting or headline delivery rate.
 
 After the requested checkpoint pause, the proposed first training action remains
 a five-minute two-thread correctness/throughput smoke from frozen source, only

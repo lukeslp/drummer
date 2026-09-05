@@ -13,7 +13,7 @@ for that model, and a successful reference game is not the finished product.
 | --- | --- | --- | --- |
 | Drummer-0, trained from scratch | Learn useful signals and eventually context-dependent omission | A 3.43-million-parameter model has completed training experiments; the latest matched schedules reached 85.65% and 89.12%, both below the gate | Reliable grounded signaling, the unchanged omission gates, five independent seeds, cross-play, then gated multi-turn training |
 | Drummer Protocol and practical codecs | Test exact shorthand, jargon, references, and meaning preservation with existing agents | Exact validators, shared-state ledger, adapters, 24 handoffs, functional contrasts, measured codec failures, and two successful coding workflows | A complete matched comparison, causal communication controls, and net savings |
-| Rewrite-0, original practical communication component | Learn faithful English shortening in legitimate shared context | A 4.38-million-parameter encoder–decoder and exact-copy channel are component-tested; no training has started | Corpus, independent semantic scorer, closed-loop coordinator, frozen baselines, runner, training and held-out evaluation |
+| Rewrite-0, original practical communication component | Learn faithful English shortening in legitimate shared context | A 4.38-million-parameter encoder–decoder, exact-copy channel, in-memory corpus, independent scorer and closed-loop evaluator pass offline tests; no training has started | Durable corpus sealing, frozen baselines and interventions, runner, training and held-out evaluation |
 
 The first model learns a restricted signal channel, not English compression.
 Codex/Claude/local decoder calls measure existing models; they do not update those
@@ -92,11 +92,12 @@ roadmap.
 
 ## Next implementation sequence
 
-**Checkpoint pause:** the two schedule runs and their diagnostics are terminal.
-Rewrite-0 has no training run. No new training or model calls are part of this
-checkpoint. The next priority after resumption is the practical rewriter's
-independent evaluation contract, so restricted-game tuning does not displace
-the actual language-compression goal.
+**Offline work resumed:** the two schedule runs and their diagnostics are terminal.
+Rewrite-0 has no training run. Its independent evaluation instruments are now
+implemented; see the [bootstrap contract](rewrite-bootstrap.md). Durable corpus
+sealing, model-input interventions and a bounded training runner precede any
+new training. Restricted-game tuning does not displace the actual
+language-compression goal.
 
 1. Preserve completed positive and negative results, checkpoints, learning curves,
    and source identities. Do not select on the sealed original test corpus.
@@ -112,8 +113,8 @@ the actual language-compression goal.
    eight-workflow matrix is incomplete. Preserve the provider refusal as terminal;
    do not retry, rephrase, or switch models to circumvent it. Offline analysis and
    original-model research can proceed without resubmitting that request.
-4. Build the [Rewrite-0](rewrite.md) corpus, independent scorer and closed-loop
-   evaluation around its completed component boundary. Freeze the task and
+4. Freeze the [Rewrite-0](rewrite.md) corpus and evaluation instruments, add
+   durable sealing and model-input interventions, and freeze the task and
    baselines before fitting. Supervised shortening, discovered conventions and
    native cross-family comprehension are separate claims. Do not claim the
    symbolic model or an untrained rewriter already provides English compression.

@@ -39,8 +39,11 @@ A later matched exploration-schedule test improved aggregate success from
 85.65% to 89.12% through acknowledged repetition alone, while dropped-grounding
 and new-reference accuracy declined. Its predeclared combined hypothesis failed.
 An original English-rewriting encoder–decoder and exact-copy channel are now
-component-tested but untrained; independent functional evaluation must precede
-fitting. Neither milestone supplies a practical learned-compression result.
+component-tested but untrained. The subsequent [controlled-English bootstrap](rewrite-bootstrap.md)
+implements independent fifteen-field scoring, actual-output reference state and
+failure-inclusive accounting before fitting. Its 54 semantic bundles and authored
+shortening teachers do not establish arbitrary-English coverage or emergent jargon.
+Neither milestone supplies a practical learned-compression result.
 
 ## 1. Research question and contribution
 

@@ -39,5 +39,6 @@ practical compression tests, and the unimplemented bridge between them.
 19. [Joint-training results](joint-evidence.md): three matched objectives, learning curves, and causal message interventions.
 20. [Phrase-induction results](phrase-evidence.md): selected English fallback and full setup accounting.
 21. [Paired client codec study](client-codec-study.md): actual sender messages, native receiver schemas, and complete versus partial usage.
+22. [Actual paired-client results](client-codec-evidence.md): preserved bytes, ambiguous semantic roles, and auxiliary-model accounting.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

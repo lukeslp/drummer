@@ -160,6 +160,18 @@ then timed out on its fourteenth call. Its incomplete condition matrix prevents
 a balanced format ranking; the 12,285 known completed tokens are not a complete
 experiment total.
 
+A later [actual paired-client experiment](client-codec-evidence.md) completed
+twenty invocations across two cases in both directions. Native schemas yielded
+well-formed receiver outputs throughout, while strict success was 4/4 for full
+English and 1/4 for both terse and compact forms. The latter two produced identical
+parsed answers in every matched group. Two failures concerned a directive ID
+substituted for a handoff ID; another concerned a policy target restriction
+substituted for a step's binding condition. The exact codec preserved bytes,
+but literal presence alone did not preserve these roles. An auxiliary-usage audit
+raised recorded activity from 219,651 top-level tokens to 235,600 across all
+reported models. Neither quality-equivalent savings nor a learned convention
+was established.
+
 ## 5. What the SFL angle changes
 
 The proposed organizing question is: **which functional distinctions must the

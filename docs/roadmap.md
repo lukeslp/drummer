@@ -39,6 +39,10 @@ a pretrained specialist remain alternatives, not accomplished decisions.
 - **Measured:** one 1.5B decoder smoke completed thirteen schema-valid but
   semantically unsuccessful responses before a timeout. This is neither a
   general local-model verdict nor the intended product's capability ceiling.
+- **Measured:** twenty actual Codex/Claude calls completed. Full English passed
+  4/4 strict handoffs; terse and its exact encoding each passed 1/4 with matching
+  outputs. Identifier and constraint-role ambiguity need a versioned contract
+  correction. Compact delivery cost more; no candidate earned adoption.
 - **Open:** useful English compression learned by an original model, robust
   cross-family transfer, emotion-related communication effects, and end-to-end
   task savings have not been demonstrated.
@@ -70,7 +74,8 @@ roadmap.
 1. Preserve completed positive and negative results, checkpoints, learning curves,
    and source identities. Do not select on the sealed original test corpus.
 2. Test native structured receiver output and actual Codex↔Claude sender/receiver
-   exchanges on two frozen cases, then expand to the existing 24. Compare the
+   exchanges on two frozen cases (completed; see [results](client-codec-evidence.md)),
+   correct the documented role ambiguities prospectively, then expand to the existing 24. Compare the
    same generated terse message unchanged and encoded; retain exact scoring,
    shared-sender accounting, and client-internal usage.
 3. Build an inspect/propose/implement/review/test workflow in disposable

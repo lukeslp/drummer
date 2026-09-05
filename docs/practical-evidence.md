@@ -93,10 +93,13 @@ setup. Held-out use therefore fell back exactly to English. That is data-derived
 phrase selection with an unsuccessful compression candidate, not proof of emergent
 grammar, contextual omission, or unfamiliar-model interoperability.
 
-The next capable-client comparison must preserve identical actual sender content
-across terse and encoded delivery, use native structured receiver output without
-relaxing semantic scoring, and retain client-internal usage. A complete coding
-workflow remains a separate required milestone, not a claim from decoder tests.
+The subsequent [actual paired-client comparison](client-codec-evidence.md) preserved
+identical sender content across terse and encoded delivery and used native
+structured receiver output without relaxing scoring. Full English passed 4/4;
+terse and compact each passed 1/4, with identical parsed responses for those two
+arms in every group. Identifier and constraint-role ambiguity preceded the codec.
+Compact cost more, including separately audited auxiliary model usage. A complete
+coding workflow remains a separate required milestone, not a claim from decoder tests.
 
 The [functional decoder procedure](decoder-study.md) separately measures whether
 local models preserve process, polarity, negotiation, grounding, and expressed

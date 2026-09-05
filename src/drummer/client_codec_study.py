@@ -26,6 +26,7 @@ from drummer.handoffs import (
     _protected_values, _receiver_prompt, _response_contract, _reverse_case,
     _sender_prompt, _validate_sender_message, score_response, synthetic_handoff_cases,
 )
+from drummer import handoff_contracts
 from drummer.provenance import runtime, sha256
 from drummer.training import _atomic_json, _source_provenance
 
@@ -65,8 +66,11 @@ class ClientCodecConfig:
     max_seconds: float = 1800
     timeout_seconds: float = 120
     order_seed: int = 20260904
+    contract: str = RESPONSE_CONTRACT_VERSION
 
     def __post_init__(self):
+        if self.contract not in (RESPONSE_CONTRACT_VERSION, handoff_contracts.CONTRACT_VERSION):
+            raise ValueError("unknown handoff contract; select an explicit supported version")
         for model in (self.codex_model, self.claude_model):
             if model is not None and (not isinstance(model, str) or not model
                                       or len(model) > 128 or any(ord(c) < 32 for c in model)):
@@ -131,9 +135,14 @@ def _client_metadata(executable, *, timeout_seconds=10):
             "elapsed_seconds": time.monotonic() - started}
 
 
+def _receiver_schema(config):
+    return (handoff_contracts.receiver_schema()
+            if config.contract == handoff_contracts.CONTRACT_VERSION else RECEIVER_SCHEMA)
+
+
 def _make_adapter(client, role, config):
     return CLIENTS[client](model=getattr(config, f"{client}_model"), allow_live=True,
-                           response_schema=RECEIVER_SCHEMA if role == "receiver" else None)
+                           response_schema=_receiver_schema(config) if role == "receiver" else None)
 
 
 def _check_adapter(adapter, client, role, config):
@@ -141,7 +150,7 @@ def _check_adapter(adapter, client, role, config):
             or adapter.adapter_name != f"{client}-cli"
             or adapter.model != getattr(config, f"{client}_model")
             or adapter.allow_live is not True
-            or adapter.response_schema != (RECEIVER_SCHEMA if role == "receiver" else None)):
+            or adapter.response_schema != (_receiver_schema(config) if role == "receiver" else None)):
         raise ValueError("client identity, role, model, schema or live setting differs from the frozen plan")
 
 
@@ -220,6 +229,20 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
         _check_adapter(adapter, client, role, config)
     all_cases = {case.case_id: case for case in synthetic_handoff_cases()}
     cases = [all_cases[case_id] for case_id in CASE_IDS]
+    role_scoped = config.contract == handoff_contracts.CONTRACT_VERSION
+    reverse_case = handoff_contracts.reverse_case if role_scoped else _reverse_case
+    sender_prompt = (handoff_contracts.sender_prompt if role_scoped
+                     else lambda case, variant: _sender_prompt(case, variant, None))
+    screen_sender = handoff_contracts.screen_sender if role_scoped else _validate_sender_message
+    receiver_prompt = handoff_contracts.receiver_prompt if role_scoped else _receiver_prompt
+    protected_literals = handoff_contracts.protected_literals if role_scoped else _protected_values
+    response_score = handoff_contracts.score_response if role_scoped else score_response
+    response_contract = handoff_contracts.response_contract if role_scoped else _response_contract
+    schema = _receiver_schema(config)
+    # The v3 source view must not consult a historical answer, even for provenance.
+    case_definitions = ([{"case_id": case.case_id, "packet": case.packet, "policy": case.policy,
+                         "sender_card": case.sender_card, "receiver_card": case.receiver_card}
+                        for case in cases] if role_scoped else [asdict(case) for case in cases])
     dictionary = CompactDictionary()
     agreement = negotiate_dictionary(dictionary.capability_card(), dictionary.capability_card())
     setup = compact_setup(dictionary, agreement)
@@ -237,15 +260,16 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
                        "strategies": {arm: {"status": "pending", "sender_call_id": None,
                                              "receiver_call_id": None} for arm in ARMS}})
     report = {
-        "format": "drummer-client-codec-study/1", "status": "running", "config": asdict(config),
+        "format": f"drummer-client-codec-study/{2 if role_scoped else 1}",
+        "status": "running", "config": asdict(config),
         "created_at_utc": datetime.now(UTC).isoformat(), "source": source,
         "lock_sha256": sha256(root / "uv.lock"), "module_sha256": sha256(__file__),
         "runtime": runtime(), "clients": snapshot, "injected_test_backend": injected,
-        "corpus": SYNTHETIC_CORPUS_VERSION, "response_contract": RESPONSE_CONTRACT_VERSION,
-        "case_ids": list(CASE_IDS), "case_definitions_sha256": _digest(_json([asdict(case) for case in cases])),
-        "response_schema": json.loads(_json(RECEIVER_SCHEMA)), "response_schema_sha256": _digest(_json(RECEIVER_SCHEMA)),
-        "response_schema_utf8_bytes": len(_json(RECEIVER_SCHEMA).encode()),
-        "response_contract_sha256": _digest(_response_contract()),
+        "corpus": SYNTHETIC_CORPUS_VERSION, "response_contract": config.contract,
+        "case_ids": list(CASE_IDS), "case_definitions_sha256": _digest(_json(case_definitions)),
+        "response_schema": json.loads(_json(schema)), "response_schema_sha256": _digest(_json(schema)),
+        "response_schema_utf8_bytes": len(_json(schema).encode()),
+        "response_contract_sha256": _digest(response_contract()),
         "dictionary": {**dictionary.capability_card(), "entries": list(dictionary.entries)},
         "codec_setup_sha256": _digest(setup), "codec_setup_utf8_bytes": len(setup.encode()),
         "requested_client_calls_maximum": 20, "requested_strategies": 12, "groups": groups,
@@ -268,6 +292,23 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
             "Aggregates use each client's top-level usage; auxiliary coverage is unverified and all modelUsage records are retained separately.",
         ],
     }
+    if role_scoped:
+        report.update(source_view=handoff_contracts.SOURCE_VIEW_VERSION,
+                      sender_screen=handoff_contracts.SENDER_SCREEN_VERSION,
+                      contract_module_sha256=sha256(handoff_contracts.__file__),
+                      source_views=[{
+                          "case_id": case.case_id,
+                          "direction": "claude->codex" if reverse else "codex->claude",
+                          "sha256": _digest(handoff_contracts.source_facts(directed)),
+                          "utf8_bytes": len(handoff_contracts.source_facts(directed).encode()),
+                      } for case, reverse in schedule
+                        for directed in [reverse_case(case) if reverse else case]])
+        report["limitations"].extend([
+            "Role-scaffolded English, not unrestricted prose or learned jargon; anchors and instructions are charged.",
+            "The role screen checks declared bindings and literal presence, not arbitrary prose consistency.",
+            "V3 response is extraction, not permission; target restrictions never grant an action.",
+            "V3 source views and response scores differ from historical v2; compare transports within one frozen version.",
+        ])
     output.mkdir(parents=True, exist_ok=False)
     stop_reason = None
 
@@ -305,14 +346,14 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
     save()
     try:
         for index, ((original, reverse), group) in enumerate(zip(schedule, groups, strict=True)):
-            case = _reverse_case(original) if reverse else original
+            case = reverse_case(original) if reverse else original
             sender_client, receiver_client = group["direction"].split("->")
             for arm in group["sender_order"]:
                 variant = PromptVariant(arm)
-                sender = call(sender_client, "sender", _sender_prompt(case, variant, None), index, arm)
+                sender = call(sender_client, "sender", sender_prompt(case, variant), index, arm)
                 if sender is None:
                     break
-                valid, violations, _, validation_error = _validate_sender_message(case, variant, sender["result"]["text"])
+                valid, violations, _, validation_error = screen_sender(case, variant, sender["result"]["text"])
                 valid = valid and not sender["result"]["errors"]
                 group["senders"][arm] = {"call_id": sender["call_id"], "literal_screen_valid": valid,
                                           "violations": list(violations), "validation_error": validation_error}
@@ -330,7 +371,7 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
             if terse["literal_screen_valid"]:
                 text = report["calls"][terse["call_id"]]["result"]["text"]
                 codec_started = clock()
-                encoded = encode_compact(text, dictionary, agreement, protected_literals=_protected_values(case))
+                encoded = encode_compact(text, dictionary, agreement, protected_literals=protected_literals(case))
                 restored = decode_compact(encoded.wire, dictionary, agreement)
                 group["codec"] = {
                     "source_sender_call_id": terse["call_id"], "wire": encoded.wire,
@@ -339,7 +380,7 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
                     "roundtrip_exact": restored.encode() == text.encode(),
                     "protected_exact": encoded.protected_exact(text),
                     "protected_occurrences_checked": len(encoded.local_encoding.protected_spans),
-                    "expanded_receiver_prompt_equals_terse": _receiver_prompt(restored) == _receiver_prompt(text),
+                    "expanded_receiver_prompt_equals_terse": receiver_prompt(restored) == receiver_prompt(text),
                     "elapsed_seconds": clock() - codec_started,
                 }
                 failed_invariants = [name for name in (
@@ -358,7 +399,7 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
                     continue
                 sender = report["calls"][row["sender_call_id"]]
                 transmitted = sender["result"]["text"] if arm != "compact-dictionary" else group["codec"]["wire"]
-                prompt = _receiver_prompt(transmitted)
+                prompt = receiver_prompt(transmitted)
                 if arm == "compact-dictionary":
                     prompt = setup + "\n" + prompt
                 row.update(transmitted_sha256=_digest(transmitted),
@@ -369,7 +410,7 @@ def run_client_codec_study(output, config, *, allow_live=False, require_clean=Tr
                     break
                 row.update(receiver_call_id=receiver["call_id"],
                            status="client_failed" if receiver["result"]["errors"] else "complete",
-                           score=asdict(score_response(case, receiver["result"]["text"])))
+                           score=asdict(response_score(case, receiver["result"]["text"])))
                 save()
                 if stop_reason:
                     break

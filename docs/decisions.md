@@ -87,6 +87,17 @@ trained Drummer component. The bridge from restricted signals to learned practic
 conversation compression remains explicit uncompleted work. See the
 [roadmap](roadmap.md); the original omission gates and spending ceiling are unchanged.
 
+## DR-012 — Preserve semantic roles prospectively
+
+The paired-client results showed handoff/directive identity and binding-condition/
+policy-restriction ambiguity before exact dictionary encoding. Add a separately
+versioned [role-scoped benchmark contract](handoff-contracts.md), not a silent
+change to historical v2 scores or Protocol 0.1. Its source view and direction
+reversal use packet/policy observations without reading scoring answers. Charged
+anchors verify declared bindings, not arbitrary prose consistency; the response
+extracts meaning and never grants authority. Compare transports within one frozen
+contract. Offline implementation does not imply a new model collection or savings.
+
 ## Historical input fingerprints
 
 Original historical files are preserved unchanged in the local research archive;

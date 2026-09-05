@@ -8,9 +8,10 @@ import pytest
 
 from drummer.adapters import AdapterExecutionDisabled, ClaudeCLIAdapter, CodexCLIAdapter
 from drummer.client_codec_study import (
-    ARMS, CASE_IDS, RECEIVER_SCHEMA, ClientCodecConfig, _reported_subtotal, _sum_usage,
+    ARMS, CASE_IDS, RECEIVER_SCHEMA, ClientCodecConfig, _receiver_schema, _reported_subtotal, _sum_usage,
     run_client_codec_study,
 )
+from drummer import handoff_contracts
 from drummer.compact_dictionary import CompactDictionary, decode_compact, negotiate_dictionary
 from drummer.handoffs import _reverse_case, synthetic_handoff_cases
 
@@ -18,17 +19,20 @@ from drummer.handoffs import _reverse_case, synthetic_handoff_cases
 class FixtureClients:
     """Actual adapters with injected process runners; no CLI or network execution."""
 
-    def __init__(self, *, reject_senders=False, fail_call=None, wrong_id=False, time_state=None):
+    def __init__(self, *, reject_senders=False, fail_call=None, wrong_id=False, time_state=None,
+                 role_scoped=False):
         self.reject_senders = reject_senders
         self.fail_call = fail_call
         self.wrong_id = wrong_id
         self.time_state = time_state
+        self.role_scoped = role_scoped
         self.calls = []
         self.messages = {}
         self.cases = []
         for case in synthetic_handoff_cases():
             if case.case_id in CASE_IDS:
-                self.cases.extend((case, _reverse_case(case)))
+                reverse = handoff_contracts.reverse_case if role_scoped else _reverse_case
+                self.cases.extend((case, reverse(case)))
 
     def factory(self, client, role, config):
         def runner(args, **kwargs):
@@ -40,7 +44,8 @@ class FixtureClients:
                 raise subprocess.TimeoutExpired(args, kwargs["timeout"])
             if role == "sender":
                 source = kwargs["input"].split("<source-facts>\n", 1)[1].split("\n</source-facts>", 1)[0]
-                case = next(case for case in self.cases if case.full_english == source
+                source_view = handoff_contracts.source_facts if self.role_scoped else lambda c: c.full_english
+                case = next(case for case in self.cases if source_view(case) == source
                             and case.packet["sender"]["agent_id"] == client)
                 text = source + f"\nActual sender nonce: {len(self.calls)}"
                 if self.reject_senders:
@@ -59,9 +64,9 @@ class FixtureClients:
                 assert transmitted in self.messages  # Not a fixture substituted for a sender.
                 case = self.messages[transmitted]
                 assert case.packet["receivers"][0]["agent_id"] == client
-                structured = dict(case.expected_response)
+                structured = role_fixture_answer(case) if self.role_scoped else dict(case.expected_response)
                 if self.wrong_id:
-                    structured["case_id"] = "wrong-but-schema-valid"
+                    structured["handoff_id" if self.role_scoped else "case_id"] = "wrong-but-schema-valid"
                 text = json.dumps(structured)
             if client == "claude":
                 payload = {"type": "result", "subtype": "success", "is_error": False,
@@ -71,14 +76,14 @@ class FixtureClients:
                            "modelUsage": {"fixture-claude": {"inputTokens": 7, "outputTokens": 5}},
                            "num_turns": 2, "stop_reason": "end_turn"}
                 if role == "receiver":
-                    assert json.loads(args[args.index("--json-schema") + 1]) == RECEIVER_SCHEMA
+                    assert json.loads(args[args.index("--json-schema") + 1]) == _receiver_schema(config)
                     payload["structured_output"] = structured
                 else:
                     assert "--json-schema" not in args
                 stdout = json.dumps(payload)
             else:
                 if role == "receiver":
-                    assert json.loads(Path(args[args.index("--output-schema") + 1]).read_text()) == RECEIVER_SCHEMA
+                    assert json.loads(Path(args[args.index("--output-schema") + 1]).read_text()) == _receiver_schema(config)
                 else:
                     assert "--output-schema" not in args
                 stdout = '\n'.join([
@@ -90,7 +95,25 @@ class FixtureClients:
 
         kind = ClaudeCLIAdapter if client == "claude" else CodexCLIAdapter
         return kind(runner=runner, allow_live=True, model=getattr(config, f"{client}_model"),
-                    response_schema=RECEIVER_SCHEMA if role == "receiver" else None)
+                    response_schema=_receiver_schema(config) if role == "receiver" else None)
+
+
+def role_fixture_answer(case):
+    """Independent synthetic answer construction, used only by injected test clients."""
+    return {
+        "handoff_id": case.case_id,
+        "policy": {"policy_id": case.policy["policy_id"],
+                   "target_restrictions": [dict(item) for item in case.policy["target_constraints"]]},
+        "steps": [{
+            "directive_id": move["content_id"],
+            "process_action": move["ideational"]["agent_process"]["action"],
+            "requested_action_class": move["interpersonal"]["requested_effect"]["action_class"],
+            "target": move["ideational"]["target"]["path"],
+            "polarity": move["interpersonal"]["polarity"],
+            "binding_condition": next(c["value"] for c in move["ideational"]["circumstances"]
+                                      if c["kind"] == "condition"),
+        } for move in case.packet["moves"]],
+    }
 
 
 def execute(path, fixtures=None, config=None, **kwargs):
@@ -252,7 +275,80 @@ def test_mutable_adapter_settings_are_rechecked_before_each_call(tmp_path):
 
 @pytest.mark.parametrize("change", [{"max_calls": 21}, {"max_calls": True}, {"max_seconds": 1801},
                                     {"timeout_seconds": 121}, {"max_seconds": float("nan")},
-                                    {"order_seed": -1}, {"claude_model": ""}, {"codex_model": []}])
+                                    {"order_seed": -1}, {"claude_model": ""}, {"codex_model": []},
+                                    {"contract": "latest"}, {"contract": None}, {"contract": []}])
 def test_invalid_immutable_configuration(change):
     with pytest.raises(ValueError):
         replace(ClientCodecConfig(), **change)
+
+
+def test_role_contract_dispatch_preserves_actual_messages_and_charges_scaffolding(tmp_path):
+    fixtures = FixtureClients(role_scoped=True)
+    config = ClientCodecConfig(contract=handoff_contracts.CONTRACT_VERSION)
+    report, _ = execute(tmp_path / "v3", fixtures, config)
+    assert report["status"] == "complete" and len(report["calls"]) == 20
+    assert report["format"] == "drummer-client-codec-study/2"
+    assert report["source_view"] == handoff_contracts.SOURCE_VIEW_VERSION
+    assert report["sender_screen"] == handoff_contracts.SENDER_SCREEN_VERSION
+    assert len(report["contract_module_sha256"]) == 64
+    assert len(report["source_views"]) == 4
+    assert report["usage_actual_invocations"]["total_tokens"] == 300
+    assert report["response_schema"] == handoff_contracts.receiver_schema()
+    assert all(row["score"]["exact"] for group in report["groups"]
+               for row in group["strategies"].values())
+    for group in report["groups"]:
+        plain, compact = (group["strategies"][arm] for arm in ARMS[1:])
+        assert plain["sender_call_id"] == compact["sender_call_id"]
+        assert group["codec"]["expanded_receiver_prompt_equals_terse"] is True
+        assert group["codec"]["roundtrip_exact"] is True
+        sender = report["calls"][plain["sender_call_id"]]
+        assert "Actual sender nonce:" in sender["result"]["text"]
+        assert '<role-anchors version="role-anchors-v1">' in sender["result"]["text"]
+        assert compact["codec_setup_utf8_bytes"] > 0
+    for call in report["calls"]:
+        if call["role"] == "receiver":
+            outside = call["prompt_text"].split("<received-handoff", 1)[0]
+            assert not any(value in outside for value in
+                           (*CASE_IDS, "DO_NOT_DELETE", "NO_WRITE_AUTHORITY", "src/keep.py"))
+
+
+def test_role_sender_rejections_are_charged_and_not_replaced(tmp_path):
+    report, fixtures = execute(tmp_path / "v3", FixtureClients(role_scoped=True, reject_senders=True),
+                               ClientCodecConfig(contract=handoff_contracts.CONTRACT_VERSION))
+    assert report["status"] == "complete" and len(fixtures.calls) == 8
+    assert all(call["role"] == "sender" for call in report["calls"])
+    assert report["usage_actual_invocations"]["total_tokens"] == 120
+    assert all(row["status"] == "sender_rejected" for group in report["groups"]
+               for row in group["strategies"].values())
+
+
+def test_role_direction_source_and_score_do_not_consult_historical_answers(tmp_path, monkeypatch):
+    original_cases = synthetic_handoff_cases()
+    poisoned = [replace(case, expected_response={"INVALID_ANSWER_SENTINEL": "NOT_SOURCE"},
+                        full_english="INVALID_SOURCE_SENTINEL", terse_english="INVALID_SOURCE_SENTINEL",
+                        protected_values=("INVALID_LITERAL_SENTINEL",),
+                        decoy_response={"INVALID_DECOY_SENTINEL": "NOT_SOURCE"})
+                for case in original_cases]
+    monkeypatch.setattr("drummer.client_codec_study.synthetic_handoff_cases", lambda: poisoned)
+    fixtures = FixtureClients(role_scoped=True)
+    fixtures.cases = [directed for case in poisoned if case.case_id in CASE_IDS
+                      for directed in (case, handoff_contracts.reverse_case(case))]
+
+    def forbidden_reverse(*args):
+        raise AssertionError("v3 called historical answer-derived reversal")
+
+    monkeypatch.setattr("drummer.client_codec_study._reverse_case", forbidden_reverse)
+    report, _ = execute(tmp_path / "v3", fixtures,
+                         ClientCodecConfig(contract=handoff_contracts.CONTRACT_VERSION))
+    assert report["status"] == "complete"
+    assert all(row["score"]["exact"] for group in report["groups"]
+               for row in group["strategies"].values())
+    assert all("INVALID_" not in call["prompt_text"] for call in report["calls"])
+
+
+def test_role_schema_valid_wrong_meaning_stays_a_failure(tmp_path):
+    report, _ = execute(tmp_path / "v3", FixtureClients(role_scoped=True, wrong_id=True),
+                         ClientCodecConfig(contract=handoff_contracts.CONTRACT_VERSION))
+    assert report["status"] == "complete"
+    assert all(row["status"] == "complete" and not row["score"]["exact"]
+               for group in report["groups"] for row in group["strategies"].values())

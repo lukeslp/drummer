@@ -17,6 +17,12 @@ constraint exactly. These two cases are not a representative evaluation or a
 replacement for the planned 24-case matrix. There is no learned emotion result
 in this study.
 
+An explicit prospective `contract: "role-scoped-steps-v3"` configuration now
+selects the [role-scoped source/response contract](handoff-contracts.md), with
+report format `/2`. The default above and its historical results remain v2.
+V3 adds charged role anchors and independent directive/policy fields; it does
+not widen the two-case/twenty-call scope or automatically start another run.
+
 Each case runs in both actual directions: Codex sends to Claude, and Claude sends
 to Codex. Reversing the direction swaps both the source participants and the
 client roles; it is not merely a changed label on one decoder call.

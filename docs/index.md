@@ -43,5 +43,6 @@ practical compression tests, and the unimplemented bridge between them.
 23. [Coding-workflow harness](coding-workflow.md): actual-task coordinator, safe patch revisions, independent grading, and measured execution limits.
 24. [Actual coding-workflow results](workflow-evidence.md): two verified fixes, terminal refusal, exact transport overhead, and incomplete usage.
 25. [Frozen sender partitions](sender-partition.md): collision diagnosis and the prospective delayed-exploration comparison.
+26. [Role-scoped handoffs](handoff-contracts.md): prospective reference-identity and condition-scope checks without rewriting historical scores.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

@@ -44,8 +44,9 @@ a pretrained specialist remain alternatives, not accomplished decisions.
   general local-model verdict nor the intended product's capability ceiling.
 - **Measured:** twenty actual Codex/Claude calls completed. Full English passed
   4/4 strict handoffs; terse and its exact encoding each passed 1/4 with matching
-  outputs. Identifier and constraint-role ambiguity need a versioned contract
-  correction. Compact delivery cost more; no candidate earned adoption.
+  outputs. Compact delivery cost more; no candidate earned adoption. A prospective
+  [role-scoped contract](handoff-contracts.md) now checks identifier and condition
+  bindings offline; it has not supplied new model-comprehension evidence.
 - **Measured:** the complete coding-workflow state machine passes offline tests,
   and the production Pi executor passes preflight plus all 24 authored-correct
   behavioral cases; both defective controls fail. These are not agent-generated
@@ -91,7 +92,7 @@ roadmap.
    and source identities. Do not select on the sealed original test corpus.
 2. Test native structured receiver output and actual Codex↔Claude sender/receiver
    exchanges on two frozen cases (completed; see [results](client-codec-evidence.md)),
-   correct the documented role ambiguities prospectively, then expand to the existing 24. Compare the
+   validate the new role-scoped contract with models, then expand to the existing 24. Compare the
    same generated terse message unchanged and encoded; retain exact scoring,
    shared-sender accounting, and client-internal usage.
 3. Use the verified remote executor and implemented

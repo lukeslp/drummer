@@ -155,6 +155,17 @@ in every arm. All 39 curve points and checkpoint identities are retained. These
 are one-seed validation diagnostics, not independent replications or gate-passing
 omission evidence.
 
+A later [frozen partition diagnostic](sender-partition.md) localized the entropy
+checkpoint's dropped-grounding errors. Its sender mapped 64 identities into four
+groups of 16 in that condition; the receiver solved all 855 unique-match scenes,
+while every one of 612 errors occurred in 1,145 colliding scenes. The observed
+69.40% success was close to the partition's assumption-dependent uniform-scene
+reference, 69.3756%. This is not an accuracy upper bound or a new training result.
+The code agrees with two binary attributes in this slice, but current target
+and remembered intent coincide, preventing attribution to one input source.
+The finding motivates a prospective exploration-schedule comparison rather than
+an immediate claim that receiver size is the limiting factor.
+
 The [phrase-induction experiment](phrase-evidence.md) selected plain English over
 a training-derived dictionary on validation. Its held-out representation was
 therefore byte-identical to English. The [functional 1.5B smoke](practical-evidence.md)

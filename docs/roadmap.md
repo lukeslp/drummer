@@ -31,6 +31,9 @@ a pretrained specialist remain alternatives, not accomplished decisions.
 - **Measured:** the original cloud calibration failed at 66.89%. A separate
   three-objective local study finished at 73.99%, 85.27%, and 61.23%. It is one
   seed, not three independent confirmations. No omission gate passed.
+  A frozen follow-up localizes every dropped-grounding error to collisions in a
+  four-category sender code; the receiver solves all uniquely signaled scenes.
+  See [partition diagnosis and next control](sender-partition.md).
 - **Measured:** lower-overhead exact framing improved the earlier dictionary but
   remained larger than competent terse English in the measured handoffs.
 - **Measured:** training-derived phrase selection chose an empty dictionary on

@@ -68,3 +68,25 @@ This is one initialization seed with three matched objectives, not three
 independent seeds. There are no seed-level uncertainty estimates, confirmatory
 five-seed results, unfamiliar-partner cross-play, optional-message savings, or
 multi-turn returns. A better validation score does not amend the original gate.
+
+## Frozen follow-up: locating the dropped-grounding errors
+
+The separately implemented [partition diagnostic](sender-partition.md) evaluated
+the same final entropy checkpoint without optimization. In all 2,000
+dropped-grounding validation episodes, the sender consistently mapped the 64
+identities into four groups of 16, using symbols 0, 43, 49 and 50. This is a
+condition-specific subset of the seven symbols used across the full mixture.
+
+The receiver solved all 855 scenes with one candidate matching the target's
+signal. All 612 errors occurred in the 1,145 colliding scenes. Success remained
+69.40%, close to the 69.3756% uniform-scene reference for this partition; empirical
+uniform tie-breaking on the actual scenes gives 68.9458%. Those references are
+not distribution-free accuracy bounds. This finding localizes the errors to the
+coarse code; it does not establish which optimization change will improve it.
+
+The [frozen evidence extract](evidence/sender-partition-v1.json) pins analysis
+source `918834f`, unchanged checkpoint/corpus/model state, exact counts and
+rational reference values. The original training results are not relabeled or
+replaced. A prospective fresh matched comparison of shorter and longer entropy
+decay is documented separately; six bits are still transmitted per message and
+no omission or practical-language savings follow from this diagnosis.

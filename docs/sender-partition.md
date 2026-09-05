@@ -84,9 +84,26 @@ The first intended checkpoint is the entropy-annealed step-3,000 result from
 `c0e6e68847127d6409dffbff8ebfa9f5449ff68d1ed8ea11c7be4953c3d7ca08`
 and validation logical SHA-256
 `abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5`.
-The informal frozen review motivating this instrument is exploratory; the
-reproducible artifact must be collected and checked before publishing its counts
-as instrumented evidence.
+The informal frozen review motivating this instrument was exploratory. The
+subsequent instrumented check below reproduced it without changing weights.
+
+### First measured diagnostic
+
+Clean source `918834f` evaluated all 2,000 dropped-grounding validation episodes
+in 1.326 seconds, using one CPU thread and batch size 128. The sender consistently
+assigned all 64 identities to four groups of 16. The receiver was correct in all
+855 unique-match scenes; all 612 errors occurred among 1,145 colliding scenes.
+Overall success was 1,388/2,000 (69.40%). The empirical uniform-tie reference was
+68.9458%; the uniform-scene reference was 69.3756%, under the assumptions above.
+
+This localizes the observed errors to ambiguous codes. It does not prove that no
+receiver could use other distributional information, or that exploration is the
+only way to improve the code. The [evidence extract](evidence/sender-partition-v1.json)
+retains exact counts, fractions, partitions and provenance. Raw report SHA-256:
+`cf1db9d28b228527eb1013141b02c7ec97fe0add1bb95d02b398887efca7f39f`.
+Source, input files and model state remained unchanged. No optimizer ran and no
+test labels were loaded. The channel still costs six bits per compulsory message;
+four observed symbols are not a measured serialization saving.
 
 ## Prospective matched training comparison
 

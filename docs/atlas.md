@@ -89,3 +89,42 @@ Collisions remain, the 95% gate failed, and all results share one initialization
 seed. No unfamiliar-partner, omission, temporal negotiation, or affect function
 has been established. [Joint-training evidence](joint-evidence.md) records all
 arms rather than only this best-performing objective. No protocol meaning changed.
+
+### D0-JOINT101-ENTROPY-DROP — Four-way partition without delivered grounding
+
+Status: observed in a frozen validation diagnostic; **not promoted**. This entry
+uses the same checkpoint, training seed/source and compulsory channel as its
+parent above. Analysis source is `918834f`; corpus format 3, validation logical
+SHA-256 `abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5`.
+
+Audience context: the receiver has four candidates but no delivered referent;
+the sender's current target and remembered prior intent coincide. Across all
+2,000 such validation episodes, every identity has a consistent signal. The
+observed partition agrees exactly with the second and fourth binary attributes:
+
+| Second attribute | Fourth attribute | Observed symbol | Identities sharing it |
+| ---: | ---: | ---: | ---: |
+| 0 | 0 | 50 | 16 |
+| 0 | 1 | 43 | 16 |
+| 1 | 0 | 0 | 16 |
+| 1 | 1 | 49 | 16 |
+
+This is a post-hoc description of four flat categories, not evidence of
+compositional two-token messages. Target and remembered intent are identical
+here, so it does not identify which input drives the code. No context-free
+English gloss is assigned, and the mapping is not established for other
+grounding conditions, checkpoints or partners.
+
+The receiver is correct in 855/855 scenes with a unique matching category.
+All 612 errors occur among 1,145 scenes with category collisions. This supports
+a coarse referential function and shows where omitted distinctions matter when
+grounding is unavailable. It does not demonstrate a learned decision to omit
+information: the compulsory channel still emits six bits, without bit pressure.
+The earlier shuffled-message results remain the causal-use evidence; this new
+diagnostic alone is not a shuffle or a counterfactual input-source intervention.
+
+The [measurement extract](evidence/sender-partition-v1.json) retains the complete
+partition and confusion-by-multiplicity counts. Frozen inference took 1.326
+seconds on one CPU thread, with no gloss or expansion. There is no new cross-play,
+affect, permission, or omission evidence. The exact protocol and every active
+conversation retain their existing meanings.

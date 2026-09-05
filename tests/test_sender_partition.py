@@ -4,6 +4,7 @@ import copy
 from itertools import combinations
 import json
 import math
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -12,7 +13,7 @@ import torch
 from drummer import sender_partition as module
 from drummer.model import ModelConfig
 from drummer.provenance import sha256
-from drummer.world import _logical_hash, load_split
+from drummer.world import _logical_hash, identity_to_attributes, load_split
 
 
 def test_partition_requires_complete_consistent_observations_and_keeps_symbol_ids():
@@ -348,3 +349,29 @@ def test_cli_routes_only_validation_options_and_prints_external_report_hash(froz
     with pytest.raises(SystemExit):
         module.main(["--checkpoint", str(weights), "--corpus", str(corpus), "--output", str(output),
                      "--split", "test"])
+
+
+def test_published_partition_counts_and_descriptive_projection_are_consistent():
+    path = Path(__file__).resolve().parents[1] / "docs/evidence/sender-partition-v1.json"
+    evidence = json.loads(path.read_text())
+    assert evidence["source"]["dirty"] is False
+    assert evidence["optimization_steps"] == 0 and evidence["test_labels_loaded"] is False
+    assert evidence["promotion_evidence"] is False and evidence["model_state_unchanged"] is True
+    stats = evidence["statistics"]
+    buckets = stats["matching_candidates"]
+    assert sum(row["episodes"] for row in buckets) == stats["all"]["episodes"] == 2000
+    assert sum(row["correct"] for row in buckets) == stats["all"]["correct"] == 1388
+    assert stats["unique_match"]["incorrect"] == 0
+    assert stats["colliding"]["incorrect"] == stats["all"]["incorrect"] == 612
+    expected = sum(row["episodes"] / row["count"] for row in buckets) / stats["all"]["episodes"]
+    assert stats["empirical_uniform_tie_reference"]["success"] == pytest.approx(expected)
+    code = stats["partition"]["identity_to_symbol"]
+    reference = module.uniform_scene_reference(code)
+    for key in ("success", "numerator", "denominator", "distribution_free_upper_bound"):
+        assert reference[key] == stats["uniform_scene_reference"][key]
+    projection = evidence["observed_attribute_projection"]
+    pairs = {row["symbol"]: row["attribute_values"] for row in projection["symbol_pairs"]}
+    assert len(code) == 64 and set(code) == {0, 43, 49, 50}
+    for identity, symbol in enumerate(code):
+        attributes = identity_to_attributes(identity)
+        assert pairs[symbol] == [attributes[i] for i in projection["zero_based_attribute_indices"]]

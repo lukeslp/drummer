@@ -1,0 +1,363 @@
+{
+  "format": "drummer-sender-partition-evidence/1",
+  "author": "Luke Steuber",
+  "status": "complete",
+  "raw_report_sha256": "cf1db9d28b228527eb1013141b02c7ec97fe0add1bb95d02b398887efca7f39f",
+  "source": {
+    "dirty": false,
+    "revision": "918834f0efa2ba2fe55f2308ba52726bfc8a70fc",
+    "revision_source": "git",
+    "tree_sha256": "8d6da4ff664669109685b1c5ad3b35ded16b4ea4643777fdc5bd3328aa0b509d"
+  },
+  "checkpoint_source": {
+    "dirty": false,
+    "revision": "fff7df7c156685e90a5ad6620f6bd8b8d93191fd",
+    "revision_source": "git",
+    "tree_sha256": "745d34a86a0df939243fe410a43beaf5ee7646f6c9f042cd8de5e19af628909c"
+  },
+  "runtime": {
+    "architecture": "arm64",
+    "packages": {
+      "huggingface-hub": "1.30.0",
+      "jsonschema": "4.26.0",
+      "numpy": "2.5.2",
+      "safetensors": "0.8.0",
+      "torch": "2.14.0"
+    },
+    "platform": "Darwin",
+    "python": "3.12.12"
+  },
+  "pins": {
+    "checkpoint_manifest": {
+      "bytes": 1230,
+      "sha256": "e3f50db420fa2ea06539816037e603da3a310fc5d26738452f3bc71a5b46d51e"
+    },
+    "corpus_manifest": {
+      "bytes": 2178,
+      "sha256": "83047199b1781be2a26f31baf404c8b6911a3c000d5308798a918bb2740ed4a1"
+    },
+    "lock": {
+      "bytes": 72346,
+      "sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd"
+    },
+    "module": {
+      "bytes": 20624,
+      "sha256": "163ed5b0a6c5c878c26ec761fe2f16a7b7d9b41918a9d0a60030e7dd19b86cb9"
+    },
+    "validation": {
+      "bytes": 143260,
+      "sha256": "e18da6c6313075d547e8a25fbd0ae72b1ec9e66f4a325cac61d14dec14cb40d0"
+    },
+    "weights": {
+      "bytes": 13729852,
+      "sha256": "c0e6e68847127d6409dffbff8ebfa9f5449ff68d1ed8ea11c7be4953c3d7ca08"
+    }
+  },
+  "artifacts_unchanged": true,
+  "model_state_unchanged": true,
+  "model_state_sha256_before": "44886484d1a080c8ddd5d8104c480b19fad7c18f071db5d7cda9f26129a06b62",
+  "sender_actions_sha256": "bb124c3dad3ec4345e5673a468eb2180e47eb256364c68425b773fb039789992",
+  "receiver_predictions_sha256": "89cf614891a4e6ce3630efb6a050c8df4d3b62548073e6ee98043e0692a3d95f",
+  "selected_indices_sha256": "b87073d0a537ef8f3c1cf49570a5fe9fa48fba0cebb3a7a4bffcf73eeb32f9a1",
+  "model": {
+    "context": 128,
+    "dropout": 0,
+    "ffn": 1024,
+    "heads": 4,
+    "layers": 4,
+    "private_residual": 8,
+    "width": 256
+  },
+  "validation_logical_sha256": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5",
+  "validation_episodes": 10000,
+  "condition": "dropped_grounding",
+  "split": "validation",
+  "test_labels_loaded": false,
+  "test_unsealed": false,
+  "promotion_evidence": false,
+  "optimization_steps": 0,
+  "device": "cpu",
+  "threads": 1,
+  "batch_size": 128,
+  "max_seconds": 120,
+  "elapsed_seconds": 1.3259715419990243,
+  "channel": {
+    "ack_bits": 1,
+    "grounding_bits": 6,
+    "mode": "compulsory",
+    "probe_bits": 6,
+    "symbols": 64
+  },
+  "statistics": {
+    "all": {
+      "correct": 1388,
+      "episodes": 2000,
+      "incorrect": 612,
+      "success": 0.694
+    },
+    "colliding": {
+      "correct": 533,
+      "episodes": 1145,
+      "incorrect": 612,
+      "success": 0.46550218340611355
+    },
+    "empirical_uniform_tie_reference": {
+      "assumption": "choose uniformly among the candidates matching the observed symbol",
+      "distribution_free_upper_bound": false,
+      "expected_correct": 1378.9166666666667,
+      "expected_correct_denominator": 12,
+      "expected_correct_numerator": 16547,
+      "success": 0.6894583333333333
+    },
+    "matching_candidates": [
+      {
+        "correct": 855,
+        "count": 1,
+        "episodes": 855,
+        "incorrect": 0,
+        "success": 1
+      },
+      {
+        "correct": 438,
+        "count": 2,
+        "episodes": 865,
+        "incorrect": 427,
+        "success": 0.5063583815028901
+      },
+      {
+        "correct": 91,
+        "count": 3,
+        "episodes": 257,
+        "incorrect": 166,
+        "success": 0.3540856031128405
+      },
+      {
+        "correct": 4,
+        "count": 4,
+        "episodes": 23,
+        "incorrect": 19,
+        "success": 0.17391304347826086
+      }
+    ],
+    "partition": {
+      "identity_to_symbol": [
+        50,
+        50,
+        50,
+        50,
+        43,
+        43,
+        43,
+        43,
+        50,
+        50,
+        50,
+        50,
+        43,
+        43,
+        43,
+        43,
+        0,
+        0,
+        0,
+        0,
+        49,
+        49,
+        49,
+        49,
+        0,
+        0,
+        0,
+        0,
+        49,
+        49,
+        49,
+        49,
+        50,
+        50,
+        50,
+        50,
+        43,
+        43,
+        43,
+        43,
+        50,
+        50,
+        50,
+        50,
+        43,
+        43,
+        43,
+        43,
+        0,
+        0,
+        0,
+        0,
+        49,
+        49,
+        49,
+        49,
+        0,
+        0,
+        0,
+        0,
+        49,
+        49,
+        49,
+        49
+      ],
+      "symbols_used": 4,
+      "symbol_groups": [
+        {
+          "identities": [
+            16,
+            17,
+            18,
+            19,
+            24,
+            25,
+            26,
+            27,
+            48,
+            49,
+            50,
+            51,
+            56,
+            57,
+            58,
+            59
+          ],
+          "symbol": 0
+        },
+        {
+          "identities": [
+            4,
+            5,
+            6,
+            7,
+            12,
+            13,
+            14,
+            15,
+            36,
+            37,
+            38,
+            39,
+            44,
+            45,
+            46,
+            47
+          ],
+          "symbol": 43
+        },
+        {
+          "identities": [
+            20,
+            21,
+            22,
+            23,
+            28,
+            29,
+            30,
+            31,
+            52,
+            53,
+            54,
+            55,
+            60,
+            61,
+            62,
+            63
+          ],
+          "symbol": 49
+        },
+        {
+          "identities": [
+            0,
+            1,
+            2,
+            3,
+            8,
+            9,
+            10,
+            11,
+            32,
+            33,
+            34,
+            35,
+            40,
+            41,
+            42,
+            43
+          ],
+          "symbol": 50
+        }
+      ]
+    },
+    "uniform_scene_reference": {
+      "assumptions": [
+        "uniform target identity",
+        "uniform distinct candidates containing the target",
+        "exchangeability among candidates with the same symbol; no useful within-class side information"
+      ],
+      "denominator": 52948,
+      "distribution_free_upper_bound": false,
+      "num_candidates": 4,
+      "num_identities": 64,
+      "numerator": 36733,
+      "success": 0.6937561380977563
+    },
+    "unique_match": {
+      "correct": 855,
+      "episodes": 855,
+      "incorrect": 0,
+      "success": 1
+    }
+  },
+  "limitations": [
+    "Validation-only frozen-checkpoint diagnosis; no optimization or pilot promotion.",
+    "The partition is observed only after dropped grounding, not across arbitrary histories or partners.",
+    "Receiver accuracy is measured; uniform tie-breaking is an exchangeability reference, not an upper bound.",
+    "The uniform-scene reference assumes uniformly sampled targets and distinct candidates with no useful within-class side information.",
+    "Deadlines are cooperative between bounded batches and provenance checks, not hard process timeouts.",
+    "Hashes detect stale or changed artifacts, not a hostile operator who replaces both data and provenance."
+  ],
+  "observed_attribute_projection": {
+    "zero_based_attribute_indices": [
+      1,
+      3
+    ],
+    "kind": "post-hoc descriptive equality on the complete observed dropped-grounding partition",
+    "symbol_pairs": [
+      {
+        "symbol": 0,
+        "attribute_values": [
+          1,
+          0
+        ]
+      },
+      {
+        "symbol": 43,
+        "attribute_values": [
+          0,
+          1
+        ]
+      },
+      {
+        "symbol": 49,
+        "attribute_values": [
+          1,
+          1
+        ]
+      },
+      {
+        "symbol": 50,
+        "attribute_values": [
+          0,
+          0
+        ]
+      }
+    ],
+    "limitation": "Current target and sender's previous intent coincide in this slice. This does not identify which observation drives the signal or establish a cross-context meaning."
+  }
+}

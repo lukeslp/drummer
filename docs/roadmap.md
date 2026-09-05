@@ -43,6 +43,10 @@ a pretrained specialist remain alternatives, not accomplished decisions.
   4/4 strict handoffs; terse and its exact encoding each passed 1/4 with matching
   outputs. Identifier and constraint-role ambiguity need a versioned contract
   correction. Compact delivery cost more; no candidate earned adoption.
+- **Measured:** the complete coding-workflow state machine passes offline tests,
+  and authored execution controls pass the 24 behavioral cases. These are not
+  agent-generated fixes. Beast's native execution gate fails on memory enforcement;
+  an initial isolated Linux probe on the existing Pi passed that specific check.
 - **Open:** useful English compression learned by an original model, robust
   cross-family transfer, emotion-related communication effects, and end-to-end
   task savings have not been demonstrated.
@@ -78,9 +82,11 @@ roadmap.
    correct the documented role ambiguities prospectively, then expand to the existing 24. Compare the
    same generated terse message unchanged and encoded; retain exact scoring,
    shared-sender accounting, and client-internal usage.
-3. Build an inspect/propose/implement/review/test workflow in disposable
-   repositories. Compare the same capable agents with identical tools and
-   budgets. Passing a response schema is not passing the coding task.
+3. Complete the verified remote executor for the implemented
+   [inspect/propose/implement/review/test coordinator](coding-workflow.md), then
+   collect actual fixes in disposable source snapshots. Compare the same capable
+   agents with identical tools and budgets. Passing a response schema or mocked
+   state-machine test is not passing the coding task.
 4. Use the measured functional errors and cost breakdown to specify the learned
    practical component. Freeze the training task and independent evaluation
    before fitting it; do not claim the current symbolic model already provides

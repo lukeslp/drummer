@@ -61,6 +61,7 @@ to any server with the same name.
 - [Coding handoffs](docs/handoffs.md): adapters, synthetic fixtures, and token accounting
 - [Paired client codec study](docs/client-codec-study.md): actual Codex/Claude messages, shared-source comparison, and incomplete-usage safeguards
 - [Actual paired-client results](docs/client-codec-evidence.md): exact outcomes, role ambiguity, and audited auxiliary-model costs
+- [Complete coding-workflow harness](docs/coding-workflow.md): scoped fixes, independent grading, bounded exchanges, and execution gates
 - [Operations](docs/operations.md): reproducibility, bounded jobs, and funding
 - [Decisions](docs/decisions.md), [model card](docs/model-card.md), and [data card](docs/dataset-card.md)
 

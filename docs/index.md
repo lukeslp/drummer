@@ -40,5 +40,6 @@ practical compression tests, and the unimplemented bridge between them.
 20. [Phrase-induction results](phrase-evidence.md): selected English fallback and full setup accounting.
 21. [Paired client codec study](client-codec-study.md): actual sender messages, native receiver schemas, and complete versus partial usage.
 22. [Actual paired-client results](client-codec-evidence.md): preserved bytes, ambiguous semantic roles, and auxiliary-model accounting.
+23. [Coding-workflow harness](coding-workflow.md): actual-task coordinator, safe patch revisions, independent grading, and measured execution limits.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

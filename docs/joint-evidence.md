@@ -87,6 +87,8 @@ coarse code; it does not establish which optimization change will improve it.
 The [frozen evidence extract](evidence/sender-partition-v1.json) pins analysis
 source `918834f`, unchanged checkpoint/corpus/model state, exact counts and
 rational reference values. The original training results are not relabeled or
-replaced. A prospective fresh matched comparison of shorter and longer entropy
-decay is documented separately; six bits are still transmitted per message and
-no omission or practical-language savings follow from this diagnosis.
+replaced. The subsequent fresh 6,000-update [schedule comparison](sender-partition.md)
+finished at 85.65% versus 89.12%. Its overall gain comes entirely from acknowledged
+repetition, while dropped-grounding and new-reference performance decline. The
+combined prospective hypothesis therefore fails. Six bits are still transmitted
+per message; no omission or practical-language savings follow from these results.

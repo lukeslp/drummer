@@ -16,7 +16,7 @@ the learned signaling experiment, not behind its success gate.
 ## Read in order
 
 Start with the [goal and current roadmap](roadmap.md): the original trained model,
-practical compression tests, and the unimplemented bridge between them.
+practical compression tests, and the partially implemented, untrained bridge.
 
 1. [Implementation plan](plan.md): scope, sequence, and promotion gates.
 2. [Experiment](experiment.md): observations, corpus, training, and baselines.
@@ -42,7 +42,8 @@ practical compression tests, and the unimplemented bridge between them.
 22. [Actual paired-client results](client-codec-evidence.md): preserved bytes, ambiguous semantic roles, and auxiliary-model accounting.
 23. [Coding-workflow harness](coding-workflow.md): actual-task coordinator, safe patch revisions, independent grading, and measured execution limits.
 24. [Actual coding-workflow results](workflow-evidence.md): two verified fixes, terminal refusal, exact transport overhead, and incomplete usage.
-25. [Frozen sender partitions](sender-partition.md): collision diagnosis and the prospective delayed-exploration comparison.
+25. [Frozen sender partitions](sender-partition.md): collision diagnosis and the completed, unsupported delayed-exploration hypothesis.
 26. [Role-scoped handoffs](handoff-contracts.md): prospective reference-identity and condition-scope checks without rewriting historical scores.
+27. [Rewrite-0](rewrite.md): tested original model components, exact-copy limits, and unfinished training/evaluation work.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

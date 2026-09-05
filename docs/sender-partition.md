@@ -1,6 +1,6 @@
 # Frozen sender partitions and the next exploration control
 
-Luke Steuber · 2026-09-05 UTC · Diagnostic method and prospective training plan
+Luke Steuber · 2026-09-05 UTC · Diagnostic method, frozen plan, and measured result
 
 This diagnostic asks whether a failed referential choice comes from a coarse
 sender code or from receiver mistakes when the signal distinguishes the target.
@@ -180,5 +180,51 @@ The original 95% quality requirement, optional-message bit accounting,
 five-independent-seed comparisons, cross-play, and sealed-test gates are
 unchanged. This comparison does not establish English compression, SFL construct
 validity, expressed-affect effects, or a useful practical language component.
+
+## Measured schedule comparison: the full hypothesis failed
+
+Both fresh seed-101 runs completed all 6,000 updates at frozen source `918834f`.
+Each visited 767,328 training examples and evaluated all 10,000 validation
+episodes at 25 fixed checkpoints, including initialization. Source, runtime,
+model, corpus, optimizer, initial weights and training-order hashes match; the
+configuration differs only in `anneal_steps`. All 50 checkpoint weight hashes
+were checked. Neither run opened the original sealed test labels.
+
+| Final validation slice | Control: decay 1,500 | Slower: decay 4,500 |
+| --- | ---: | ---: |
+| All 10,000 episodes | 85.65% | 89.12% |
+| Acknowledged repetition, 6,000 | 5,590 correct (93.17%) | 6,000 correct (100%) |
+| Dropped grounding, 2,000 | 1,392 correct (69.60%) | 1,375 correct (68.75%) |
+| New reference, 2,000 | 1,583 correct (79.15%) | 1,537 correct (76.85%) |
+| Dropped-grounding symbol groups | Four groups of 16 | Four groups of 16 |
+| Unique-match receiver choices | 855 / 855 correct | 859 / 859 correct |
+| Colliding receiver choices | 537 / 1,145 correct | 516 / 1,141 correct |
+| Training seconds, excluding setup | 1,162.13 | 1,152.87 |
+
+The overall gain is 3.47 percentage points, or 347 additional correct choices:
+410 gained on repetition, minus 17 on dropped grounding and 46 on new references.
+Thus all of the net improvement comes from acknowledged repetition. The two
+sender partitions have the same group sizes but different memberships; they are
+not identical codes. Every dropped-grounding error still occurs in a collision.
+
+Final-checkpoint global message shuffling reduces control/slow success to
+35.31% / 43.61%; within-condition shuffling reduces it to 44.44% / 52.37%.
+Message correspondence remains causally useful in both checkpoints, but that
+does not establish a more informative identifying code in the slower run.
+
+The preregistered overall-gain, fewer-collisions and message-use criteria pass;
+the required dropped-grounding improvement fails. **The combined hypothesis is
+not supported.** Neither run reaches 95%, and neither tests optional-message
+savings. The fixed final checkpoint remains primary even though the slower
+run's minimum validation loss occurred at step 5,750. This is one familiar seed
+and a whole-schedule intervention, not a timing-only effect or independent
+replication. A larger model is not established as the necessary fix.
+
+The [versioned evidence extract](evidence/joint-schedule-v2.json) retains all
+50 scalar learning-curve points, checkpoint identities, complete partitions,
+intervention counts, six raw-report hashes and matched-run checks. Full
+symbol/identity matrices remain in the pinned raw reports in the research
+archive. Regression tests check the extract's arithmetic and failed-gate status;
+they do not rerun training or reconstruct predictions from weights.
 
 Original documentation: CC BY 4.0.

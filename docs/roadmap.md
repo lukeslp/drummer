@@ -11,9 +11,9 @@ for that model, and a successful reference game is not the finished product.
 
 | Part | Purpose | Current evidence | Still required |
 | --- | --- | --- | --- |
-| Drummer-0, trained from scratch | Learn useful signals and eventually context-dependent omission | A 3.43-million-parameter model has completed training experiments; the latest best arm reached 85.27% validation success | Reliable grounded signaling, the unchanged omission gates, five independent seeds, cross-play, then gated multi-turn training |
+| Drummer-0, trained from scratch | Learn useful signals and eventually context-dependent omission | A 3.43-million-parameter model has completed training experiments; the latest matched schedules reached 85.65% and 89.12%, both below the gate | Reliable grounded signaling, the unchanged omission gates, five independent seeds, cross-play, then gated multi-turn training |
 | Drummer Protocol and practical codecs | Test exact shorthand, jargon, references, and meaning preservation with existing agents | Exact validators, shared-state ledger, adapters, 24 handoffs, functional contrasts, measured codec failures, and two successful coding workflows | A complete matched comparison, causal communication controls, and net savings |
-| Learned practical communication component | Learn what to express, how compactly to express it, and when to clarify in richer exchanges | Not yet implemented or trained | A task/corpus, architecture decision, frozen baselines, training, and held-out task-level evaluation |
+| Rewrite-0, original practical communication component | Learn faithful English shortening in legitimate shared context | A 4.38-million-parameter encoder–decoder and exact-copy channel are component-tested; no training has started | Corpus, independent semantic scorer, closed-loop coordinator, frozen baselines, runner, training and held-out evaluation |
 
 The first model learns a restricted signal channel, not English compression.
 Codex/Claude/local decoder calls measure existing models; they do not update those
@@ -23,8 +23,9 @@ does not train a neural model. These are different learning and testing processe
 The intended progression is to validate useful reductions, train them into a
 capable communication component, and demonstrate complete agent work. The precise
 bridge from the small learned channel to practical conversations is an open
-research and engineering problem. A larger from-scratch architecture and adapting
-a pretrained specialist remain alternatives, not accomplished decisions.
+research and engineering problem. [Rewrite-0](rewrite.md) is the first proposed
+supervised bridge, not a trained solution or evidence of emergent jargon. Larger
+architectures and pretrained adaptation remain later comparisons, not defaults.
 
 ## Current results
 
@@ -33,7 +34,10 @@ a pretrained specialist remain alternatives, not accomplished decisions.
   seed, not three independent confirmations. No omission gate passed.
   A frozen follow-up localizes every dropped-grounding error to collisions in a
   four-category sender code; the receiver solves all uniquely signaled scenes.
-  See [partition diagnosis and next control](sender-partition.md).
+  A fresh matched 6,000-update comparison finished at 85.65% versus 89.12%.
+  Its gain comes entirely from acknowledged repetition; dropped-grounding and
+  new-reference accuracy decline. The combined exploration hypothesis fails.
+  See [partition diagnosis and measured comparison](sender-partition.md).
 - **Measured:** lower-overhead exact framing improved the earlier dictionary but
   remained larger than competent terse English in the measured handoffs.
 - **Measured:** training-derived phrase selection chose an empty dictionary on
@@ -88,6 +92,12 @@ roadmap.
 
 ## Next implementation sequence
 
+**Checkpoint pause:** the two schedule runs and their diagnostics are terminal.
+Rewrite-0 has no training run. No new training or model calls are part of this
+checkpoint. The next priority after resumption is the practical rewriter's
+independent evaluation contract, so restricted-game tuning does not displace
+the actual language-compression goal.
+
 1. Preserve completed positive and negative results, checkpoints, learning curves,
    and source identities. Do not select on the sealed original test corpus.
 2. Test native structured receiver output and actual Codex↔Claude sender/receiver
@@ -102,10 +112,11 @@ roadmap.
    eight-workflow matrix is incomplete. Preserve the provider refusal as terminal;
    do not retry, rephrase, or switch models to circumvent it. Offline analysis and
    original-model research can proceed without resubmitting that request.
-4. Use the measured functional errors and cost breakdown to specify the learned
-   practical component. Freeze the training task and independent evaluation
-   before fitting it; do not claim the current symbolic model already provides
-   an English compressor.
+4. Build the [Rewrite-0](rewrite.md) corpus, independent scorer and closed-loop
+   evaluation around its completed component boundary. Freeze the task and
+   baselines before fitting. Supervised shortening, discovered conventions and
+   native cross-family comprehension are separate claims. Do not claim the
+   symbolic model or an untrained rewriter already provides English compression.
 5. Continue original-model research under its own acceptance criteria. Multi-turn
    learned omission remains gated; practical coding workflows need not wait for
    that scientific gate.

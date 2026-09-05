@@ -1,0 +1,2826 @@
+{
+  "format": "drummer-joint-schedule-evidence/2",
+  "author": "Luke Steuber",
+  "status": "complete",
+  "promotion_evidence": false,
+  "test_labels_loaded": false,
+  "test_unsealed": false,
+  "source": {
+    "dirty": false,
+    "revision": "918834f0efa2ba2fe55f2308ba52726bfc8a70fc",
+    "revision_source": "git",
+    "tree_sha256": "8d6da4ff664669109685b1c5ad3b35ded16b4ea4643777fdc5bd3328aa0b509d"
+  },
+  "matched": {
+    "source": true,
+    "module_sha256": true,
+    "lock_sha256": true,
+    "runtime": true,
+    "model": true,
+    "corpus_logical_sha256": true,
+    "optimizer": true,
+    "channel": true,
+    "initial_checkpoint_sha256": true,
+    "training_order_sha256": true,
+    "steps": true,
+    "config_except_anneal_steps": true
+  },
+  "training_example_visits_per_run": 767328,
+  "selection": "Fixed final step primary; one familiar calibration seed, two whole exploration schedules.",
+  "outcomes": [
+    {
+      "label": "control",
+      "raw_hashes": {
+        "study": "c7903937fbb6f4451280f26cc8a413e66798fc29f94e35a5ec616e66064f3bfa",
+        "partition": "85d6d606b69468992d7e7fcd1e0391de84e830f92b229fba0f52f75fb06f9277",
+        "channel": "ff5e3dc8292fd762ef62e344ac88e6419969de9e38469ebaf6ca051bbc4362b4"
+      },
+      "config": {
+        "anneal_steps": 1500,
+        "arms": [
+          "entropy_annealed"
+        ],
+        "batch_size": 128,
+        "coefficient": 0.1,
+        "evaluate_every": 250,
+        "format": "drummer-joint-study/1",
+        "max_seconds_per_arm": 1500,
+        "seeds": [
+          101
+        ],
+        "steps": 6000,
+        "threads": 2
+      },
+      "source": {
+        "dirty": false,
+        "revision": "918834f0efa2ba2fe55f2308ba52726bfc8a70fc",
+        "revision_source": "git",
+        "tree_sha256": "8d6da4ff664669109685b1c5ad3b35ded16b4ea4643777fdc5bd3328aa0b509d"
+      },
+      "module_sha256": "2ab1233472fc160a75e6da49a40a1358def09f75cd9186bbe524fd0f9401efed",
+      "lock_sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd",
+      "runtime": {
+        "architecture": "arm64",
+        "packages": {
+          "huggingface-hub": "1.30.0",
+          "jsonschema": "4.26.0",
+          "numpy": "2.5.2",
+          "safetensors": "0.8.0",
+          "torch": "2.14.0"
+        },
+        "platform": "Darwin",
+        "python": "3.12.12"
+      },
+      "model": {
+        "context": 128,
+        "dropout": 0,
+        "ffn": 1024,
+        "heads": 4,
+        "layers": 4,
+        "private_residual": 8,
+        "width": 256
+      },
+      "corpus_logical_sha256": {
+        "train": "876aca0c257bfd445a21a4b2fde06179b6dc9b9014ce65232d6d6715f1b51bb1",
+        "validation": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5"
+      },
+      "optimizer": {
+        "clip_norm": 1,
+        "learning_rate": 0.0003,
+        "name": "AdamW",
+        "weight_decay": 0.01
+      },
+      "channel": {
+        "ack_bits": 1,
+        "grounding_bits": 6,
+        "mode": "compulsory",
+        "probe_bits": 6
+      },
+      "source_unchanged": true,
+      "run": {
+        "arm": "entropy_annealed",
+        "best_validation_step": 6000,
+        "curves": [
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.962347887802124,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 498,
+                "episodes": 2000,
+                "success": 0.249
+              },
+              "new_reference": {
+                "correct": 490,
+                "episodes": 2000,
+                "success": 0.245
+              },
+              "valid_repeat": {
+                "correct": 1533,
+                "episodes": 6000,
+                "success": 0.2555
+              }
+            },
+            "elapsed_seconds": 5.198245417006547,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 0.22411575324580602,
+            "soft_marginal_entropy_nats": 3.96680122574761,
+            "step": 0,
+            "success": 0.2521,
+            "symbols_used": 2,
+            "task_loss": 1.3933280265808106
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 4.155292687225342,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 498,
+                "episodes": 2000,
+                "success": 0.249
+              },
+              "new_reference": {
+                "correct": 301,
+                "episodes": 2000,
+                "success": 0.1505
+              },
+              "valid_repeat": {
+                "correct": 2995,
+                "episodes": 6000,
+                "success": 0.49916666666666665
+              }
+            },
+            "elapsed_seconds": 52.20001525001135,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4380440180931706,
+            "soft_marginal_entropy_nats": 4.15578419002672,
+            "step": 250,
+            "success": 0.3794,
+            "symbols_used": 9,
+            "task_loss": 1.2893722110748291
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.427840646362305,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 956,
+                "episodes": 2000,
+                "success": 0.478
+              },
+              "new_reference": {
+                "correct": 740,
+                "episodes": 2000,
+                "success": 0.37
+              },
+              "valid_repeat": {
+                "correct": 4847,
+                "episodes": 6000,
+                "success": 0.8078333333333333
+              }
+            },
+            "elapsed_seconds": 99.62959125000634,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.719122232040762,
+            "soft_marginal_entropy_nats": 4.122452058232211,
+            "step": 500,
+            "success": 0.6543,
+            "symbols_used": 24,
+            "task_loss": 0.6916963479995728
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.45663422203064,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 929,
+                "episodes": 2000,
+                "success": 0.4645
+              },
+              "new_reference": {
+                "correct": 712,
+                "episodes": 2000,
+                "success": 0.356
+              },
+              "valid_repeat": {
+                "correct": 5064,
+                "episodes": 6000,
+                "success": 0.844
+              }
+            },
+            "elapsed_seconds": 147.5775623750087,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.431094175984602,
+            "soft_marginal_entropy_nats": 4.150477992259038,
+            "step": 750,
+            "success": 0.6705,
+            "symbols_used": 28,
+            "task_loss": 0.6735336144447327
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.4516104850769045,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 944,
+                "episodes": 2000,
+                "success": 0.472
+              },
+              "new_reference": {
+                "correct": 636,
+                "episodes": 2000,
+                "success": 0.318
+              },
+              "valid_repeat": {
+                "correct": 5376,
+                "episodes": 6000,
+                "success": 0.896
+              }
+            },
+            "elapsed_seconds": 196.57268574999762,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.5168181151620157,
+            "soft_marginal_entropy_nats": 4.146320126589231,
+            "step": 1000,
+            "success": 0.6956,
+            "symbols_used": 26,
+            "task_loss": 0.6463134317398072
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.3584956256866456,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 960,
+                "episodes": 2000,
+                "success": 0.48
+              },
+              "new_reference": {
+                "correct": 783,
+                "episodes": 2000,
+                "success": 0.3915
+              },
+              "valid_repeat": {
+                "correct": 5488,
+                "episodes": 6000,
+                "success": 0.9146666666666666
+              }
+            },
+            "elapsed_seconds": 245.12061879200337,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.9467334545835593,
+            "soft_marginal_entropy_nats": 4.144025730415068,
+            "step": 1250,
+            "success": 0.7231,
+            "symbols_used": 40,
+            "task_loss": 0.5890465894699096
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.948032208633423,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 933,
+                "episodes": 2000,
+                "success": 0.4665
+              },
+              "new_reference": {
+                "correct": 1247,
+                "episodes": 2000,
+                "success": 0.6235
+              },
+              "valid_repeat": {
+                "correct": 5565,
+                "episodes": 6000,
+                "success": 0.9275
+              }
+            },
+            "elapsed_seconds": 293.3497474169999,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.1320970893515576,
+            "soft_marginal_entropy_nats": 4.017122717626362,
+            "step": 1500,
+            "success": 0.7745,
+            "symbols_used": 8,
+            "task_loss": 0.43405401248931885
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0656536297917366,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1351,
+                "episodes": 2000,
+                "success": 0.6755
+              },
+              "new_reference": {
+                "correct": 1393,
+                "episodes": 2000,
+                "success": 0.6965
+              },
+              "valid_repeat": {
+                "correct": 5554,
+                "episodes": 6000,
+                "success": 0.9256666666666666
+              }
+            },
+            "elapsed_seconds": 341.67756125000597,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.386570734745982,
+            "soft_marginal_entropy_nats": 1.7029495847755425,
+            "step": 1750,
+            "success": 0.8298,
+            "symbols_used": 7,
+            "task_loss": 0.28495780813694
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.005845515075325966,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1435,
+                "episodes": 2000,
+                "success": 0.7175
+              },
+              "new_reference": {
+                "correct": 1457,
+                "episodes": 2000,
+                "success": 0.7285
+              },
+              "valid_repeat": {
+                "correct": 5597,
+                "episodes": 6000,
+                "success": 0.9328333333333333
+              }
+            },
+            "elapsed_seconds": 390.0792347090028,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.445175742121506,
+            "soft_marginal_entropy_nats": 1.6994956816370788,
+            "step": 2000,
+            "success": 0.8489,
+            "symbols_used": 7,
+            "task_loss": 0.2291587619304657
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.003762294112145901,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1474,
+                "episodes": 2000,
+                "success": 0.737
+              },
+              "new_reference": {
+                "correct": 1450,
+                "episodes": 2000,
+                "success": 0.725
+              },
+              "valid_repeat": {
+                "correct": 5601,
+                "episodes": 6000,
+                "success": 0.9335
+              }
+            },
+            "elapsed_seconds": 438.8987670839997,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.445175742121506,
+            "soft_marginal_entropy_nats": 1.6969605275749102,
+            "step": 2250,
+            "success": 0.8525,
+            "symbols_used": 7,
+            "task_loss": 0.22392295651435853
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.007854337926208974,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1440,
+                "episodes": 2000,
+                "success": 0.72
+              },
+              "new_reference": {
+                "correct": 1397,
+                "episodes": 2000,
+                "success": 0.6985
+              },
+              "valid_repeat": {
+                "correct": 5526,
+                "episodes": 6000,
+                "success": 0.921
+              }
+            },
+            "elapsed_seconds": 487.2834149590053,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4223401730616634,
+            "soft_marginal_entropy_nats": 1.681334697019152,
+            "step": 2500,
+            "success": 0.8363,
+            "symbols_used": 7,
+            "task_loss": 0.2968324090242386
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.001181144046038389,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1392,
+                "episodes": 2000,
+                "success": 0.696
+              },
+              "new_reference": {
+                "correct": 1545,
+                "episodes": 2000,
+                "success": 0.7725
+              },
+              "valid_repeat": {
+                "correct": 5536,
+                "episodes": 6000,
+                "success": 0.9226666666666666
+              }
+            },
+            "elapsed_seconds": 535.5582882090093,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4381213935645465,
+            "soft_marginal_entropy_nats": 1.690518394665323,
+            "step": 2750,
+            "success": 0.8473,
+            "symbols_used": 7,
+            "task_loss": 0.26032427399158475
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.000605280221067369,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1388,
+                "episodes": 2000,
+                "success": 0.694
+              },
+              "new_reference": {
+                "correct": 1528,
+                "episodes": 2000,
+                "success": 0.764
+              },
+              "valid_repeat": {
+                "correct": 5611,
+                "episodes": 6000,
+                "success": 0.9351666666666667
+              }
+            },
+            "elapsed_seconds": 584.029233334004,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4381213935645465,
+            "soft_marginal_entropy_nats": 1.6902777041612405,
+            "step": 3000,
+            "success": 0.8527,
+            "symbols_used": 7,
+            "task_loss": 0.25142839424610136
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0013638821065425873,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1393,
+                "episodes": 2000,
+                "success": 0.6965
+              },
+              "new_reference": {
+                "correct": 1533,
+                "episodes": 2000,
+                "success": 0.7665
+              },
+              "valid_repeat": {
+                "correct": 5630,
+                "episodes": 6000,
+                "success": 0.9383333333333334
+              }
+            },
+            "elapsed_seconds": 632.2830527920014,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4381213935645465,
+            "soft_marginal_entropy_nats": 1.690925256945364,
+            "step": 3250,
+            "success": 0.8556,
+            "symbols_used": 7,
+            "task_loss": 0.2456866974592209
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.002535767590627074,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1398,
+                "episodes": 2000,
+                "success": 0.699
+              },
+              "new_reference": {
+                "correct": 1511,
+                "episodes": 2000,
+                "success": 0.7555
+              },
+              "valid_repeat": {
+                "correct": 5610,
+                "episodes": 6000,
+                "success": 0.935
+              }
+            },
+            "elapsed_seconds": 680.7985023340007,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4381213935645465,
+            "soft_marginal_entropy_nats": 1.6905612811031587,
+            "step": 3500,
+            "success": 0.8519,
+            "symbols_used": 7,
+            "task_loss": 0.24571875870227813
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.002162739730812609,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1375,
+                "episodes": 2000,
+                "success": 0.6875
+              },
+              "new_reference": {
+                "correct": 1542,
+                "episodes": 2000,
+                "success": 0.771
+              },
+              "valid_repeat": {
+                "correct": 5601,
+                "episodes": 6000,
+                "success": 0.9335
+              }
+            },
+            "elapsed_seconds": 729.0497644999996,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.440140527595655,
+            "soft_marginal_entropy_nats": 1.692658726180926,
+            "step": 3750,
+            "success": 0.8518,
+            "symbols_used": 7,
+            "task_loss": 0.24752129063606262
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.002249850944429636,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1355,
+                "episodes": 2000,
+                "success": 0.6775
+              },
+              "new_reference": {
+                "correct": 1539,
+                "episodes": 2000,
+                "success": 0.7695
+              },
+              "valid_repeat": {
+                "correct": 5619,
+                "episodes": 6000,
+                "success": 0.9365
+              }
+            },
+            "elapsed_seconds": 777.3143487500056,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4553859799247455,
+            "soft_marginal_entropy_nats": 1.702273304291634,
+            "step": 4000,
+            "success": 0.8513,
+            "symbols_used": 7,
+            "task_loss": 0.23706035299301148
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.001010790447704494,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1410,
+                "episodes": 2000,
+                "success": 0.705
+              },
+              "new_reference": {
+                "correct": 1514,
+                "episodes": 2000,
+                "success": 0.757
+              },
+              "valid_repeat": {
+                "correct": 5610,
+                "episodes": 6000,
+                "success": 0.935
+              }
+            },
+            "elapsed_seconds": 825.6563177500066,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4553859799247455,
+            "soft_marginal_entropy_nats": 1.7022709868056258,
+            "step": 4250,
+            "success": 0.8534,
+            "symbols_used": 7,
+            "task_loss": 0.23116734681129456
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.003010760188102722,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1327,
+                "episodes": 2000,
+                "success": 0.6635
+              },
+              "new_reference": {
+                "correct": 1540,
+                "episodes": 2000,
+                "success": 0.77
+              },
+              "valid_repeat": {
+                "correct": 5579,
+                "episodes": 6000,
+                "success": 0.9298333333333333
+              }
+            },
+            "elapsed_seconds": 873.765773209001,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4553859799247455,
+            "soft_marginal_entropy_nats": 1.7022176629530983,
+            "step": 4500,
+            "success": 0.8446,
+            "symbols_used": 7,
+            "task_loss": 0.22740206933021545
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0019452706180512905,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1365,
+                "episodes": 2000,
+                "success": 0.6825
+              },
+              "new_reference": {
+                "correct": 1524,
+                "episodes": 2000,
+                "success": 0.762
+              },
+              "valid_repeat": {
+                "correct": 5558,
+                "episodes": 6000,
+                "success": 0.9263333333333333
+              }
+            },
+            "elapsed_seconds": 922.0736489999981,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4553859799247455,
+            "soft_marginal_entropy_nats": 1.7023058402498155,
+            "step": 4750,
+            "success": 0.8447,
+            "symbols_used": 7,
+            "task_loss": 0.22826095237731933
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0018157947890460491,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1373,
+                "episodes": 2000,
+                "success": 0.6865
+              },
+              "new_reference": {
+                "correct": 1532,
+                "episodes": 2000,
+                "success": 0.766
+              },
+              "valid_repeat": {
+                "correct": 5602,
+                "episodes": 6000,
+                "success": 0.9336666666666666
+              }
+            },
+            "elapsed_seconds": 970.3151067500003,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4553859799247455,
+            "soft_marginal_entropy_nats": 1.7022749874483813,
+            "step": 5000,
+            "success": 0.8507,
+            "symbols_used": 7,
+            "task_loss": 0.22675045564174653
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.011280568450689315,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1393,
+                "episodes": 2000,
+                "success": 0.6965
+              },
+              "new_reference": {
+                "correct": 1537,
+                "episodes": 2000,
+                "success": 0.7685
+              },
+              "valid_repeat": {
+                "correct": 5582,
+                "episodes": 6000,
+                "success": 0.9303333333333333
+              }
+            },
+            "elapsed_seconds": 1018.6040770000109,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4537480584375264,
+            "soft_marginal_entropy_nats": 1.7003378495509671,
+            "step": 5250,
+            "success": 0.8512,
+            "symbols_used": 7,
+            "task_loss": 0.2277860719203949
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0014271726196631788,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1356,
+                "episodes": 2000,
+                "success": 0.678
+              },
+              "new_reference": {
+                "correct": 1574,
+                "episodes": 2000,
+                "success": 0.787
+              },
+              "valid_repeat": {
+                "correct": 5600,
+                "episodes": 6000,
+                "success": 0.9333333333333333
+              }
+            },
+            "elapsed_seconds": 1066.9009272920084,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.4537480584375264,
+            "soft_marginal_entropy_nats": 1.7011875673059214,
+            "step": 5500,
+            "success": 0.853,
+            "symbols_used": 7,
+            "task_loss": 0.22592464351654054
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.003129144663363695,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1377,
+                "episodes": 2000,
+                "success": 0.6885
+              },
+              "new_reference": {
+                "correct": 1562,
+                "episodes": 2000,
+                "success": 0.781
+              },
+              "valid_repeat": {
+                "correct": 5587,
+                "episodes": 6000,
+                "success": 0.9311666666666667
+              }
+            },
+            "elapsed_seconds": 1114.5295643749996,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.465659188494623,
+            "soft_marginal_entropy_nats": 1.7091765647706876,
+            "step": 5750,
+            "success": 0.8526,
+            "symbols_used": 7,
+            "task_loss": 0.22067338361740113
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.004766203200817108,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1392,
+                "episodes": 2000,
+                "success": 0.696
+              },
+              "new_reference": {
+                "correct": 1583,
+                "episodes": 2000,
+                "success": 0.7915
+              },
+              "valid_repeat": {
+                "correct": 5590,
+                "episodes": 6000,
+                "success": 0.9316666666666666
+              }
+            },
+            "elapsed_seconds": 1162.1137584590033,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.476371458011366,
+            "soft_marginal_entropy_nats": 1.7164866738088798,
+            "step": 6000,
+            "success": 0.8565,
+            "symbols_used": 7,
+            "task_loss": 0.20906461691856384
+          }
+        ],
+        "elapsed_seconds": 1162.130441041998,
+        "final_checkpoint": "seed-101-entropy_annealed/step-00006000.safetensors",
+        "final_checkpoint_sha256": "6e73ff1fe9907b3c388cb00a5a91eefe7c39253da24c85efda5ac867e48fffc5",
+        "initial_checkpoint_sha256": "d697dbaa741dc3fa7c0b124e1d583367dc0a2846386b4d519c1f24da5e694c14",
+        "seed": 101,
+        "status": "complete",
+        "steps": 6000,
+        "training_order_sha256": "48f3fc0e272f019a25014a8d67431201b73383c1a5065f748e2e33edf1effc63",
+        "checkpoints": [
+          {
+            "step": 0,
+            "weights_sha256": "d697dbaa741dc3fa7c0b124e1d583367dc0a2846386b4d519c1f24da5e694c14"
+          },
+          {
+            "step": 250,
+            "weights_sha256": "4265758c052d648607c2546e1b22478f084a4a0098ab66e24511e875340dec5d"
+          },
+          {
+            "step": 500,
+            "weights_sha256": "350f2768c1436926b7a74424f3b351b4698498217fc6d6da8ac881872fe3cd74"
+          },
+          {
+            "step": 750,
+            "weights_sha256": "ecd07d97445b8a414a631c774287ce6c886d97ce3b9924fb64f37bcc50806725"
+          },
+          {
+            "step": 1000,
+            "weights_sha256": "a624164a73765e12a79309b579a7f7ab795b882e577b8836a6c2d2e01e2defa9"
+          },
+          {
+            "step": 1250,
+            "weights_sha256": "d8369674c96876f202e433c262f31e813a3c556b0efd833e7007887e06c02bb8"
+          },
+          {
+            "step": 1500,
+            "weights_sha256": "d1297907117626478d3a0eb1e7f737d4db0dc0430c7320caa78335abb000bd42"
+          },
+          {
+            "step": 1750,
+            "weights_sha256": "73482bd6880678140830844c74518851dfcfe9eab7b523e15ddabb8d8a241798"
+          },
+          {
+            "step": 2000,
+            "weights_sha256": "3327c6e8bfce0b2454b6b698edaa09cb30d94e896d93c3e6fb4a41aa7036c9f1"
+          },
+          {
+            "step": 2250,
+            "weights_sha256": "e499cef22787b4642114f772c1a2995009eb23962c0351c9b03a125786325bb7"
+          },
+          {
+            "step": 2500,
+            "weights_sha256": "91e723f71dd934ec973e0294f5ce88b862e1f4ec3fab9bbe0aec5adce4d491f9"
+          },
+          {
+            "step": 2750,
+            "weights_sha256": "b4ed640894d5cca6c5757ba5d8716d0c02d189907daa6635ebe09dac365fff22"
+          },
+          {
+            "step": 3000,
+            "weights_sha256": "c0e6e68847127d6409dffbff8ebfa9f5449ff68d1ed8ea11c7be4953c3d7ca08"
+          },
+          {
+            "step": 3250,
+            "weights_sha256": "5de3739bf2f2f65b814ebd2cb4d42df4150ba1b5a2fe9e5b07c6cd60d6f6683b"
+          },
+          {
+            "step": 3500,
+            "weights_sha256": "ac210ba55c58dc8f667f96a096242e32dc0707c8e250938b790eea919ef9a02e"
+          },
+          {
+            "step": 3750,
+            "weights_sha256": "ae91310a6607d7408e0cd7f59879a615a79a82c05b934c432822203ac9bfd663"
+          },
+          {
+            "step": 4000,
+            "weights_sha256": "147f0dacd7fecff1973aac95e4cc85ba063acaf0017443e97cac1fd98653b9f5"
+          },
+          {
+            "step": 4250,
+            "weights_sha256": "6d3918a449b3dfd96b881f2c7b2c11051bb85e4bf27f57371f15713c36e24e27"
+          },
+          {
+            "step": 4500,
+            "weights_sha256": "3f613fff8594d4676c279b315029ec0020843e0b0f4cd7d786f3834ff2099498"
+          },
+          {
+            "step": 4750,
+            "weights_sha256": "b335db01aee38580b7333c54d6a7c11bf0d513e8f9e6c8985ee61e8be02566fa"
+          },
+          {
+            "step": 5000,
+            "weights_sha256": "c96330ff8dd41136ce145a2fe59f4098557fd4489ecd5f938f4804678532f9f2"
+          },
+          {
+            "step": 5250,
+            "weights_sha256": "aa3085aa0162f10b4532fab08c3c8788339150376da66a8ae45b29e60f2afd0f"
+          },
+          {
+            "step": 5500,
+            "weights_sha256": "512ff3c15abeadf661b5fb6ebb552105fdfb70e0ee3f70165c1858b1268c2ad6"
+          },
+          {
+            "step": 5750,
+            "weights_sha256": "cb4582c7121cfb9fbe795a0a8a6588137ad0a7db47cdc343cf3e4240bec85efe"
+          },
+          {
+            "step": 6000,
+            "weights_sha256": "6e73ff1fe9907b3c388cb00a5a91eefe7c39253da24c85efda5ac867e48fffc5"
+          }
+        ]
+      },
+      "partition": {
+        "status": "complete",
+        "pins": {
+          "checkpoint_manifest": {
+            "bytes": 1186,
+            "sha256": "cdc0ffb55f57b3d139681b409a3adf0e48d76f6aced7cafd9a496fc35009a15e"
+          },
+          "corpus_manifest": {
+            "bytes": 2178,
+            "sha256": "83047199b1781be2a26f31baf404c8b6911a3c000d5308798a918bb2740ed4a1"
+          },
+          "lock": {
+            "bytes": 72346,
+            "sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd"
+          },
+          "module": {
+            "bytes": 20624,
+            "sha256": "163ed5b0a6c5c878c26ec761fe2f16a7b7d9b41918a9d0a60030e7dd19b86cb9"
+          },
+          "validation": {
+            "bytes": 143260,
+            "sha256": "e18da6c6313075d547e8a25fbd0ae72b1ec9e66f4a325cac61d14dec14cb40d0"
+          },
+          "weights": {
+            "bytes": 13729852,
+            "sha256": "6e73ff1fe9907b3c388cb00a5a91eefe7c39253da24c85efda5ac867e48fffc5"
+          }
+        },
+        "statistics": {
+          "all": {
+            "correct": 1392,
+            "episodes": 2000,
+            "incorrect": 608,
+            "success": 0.696
+          },
+          "colliding": {
+            "correct": 537,
+            "episodes": 1145,
+            "incorrect": 608,
+            "success": 0.46899563318777293
+          },
+          "empirical_uniform_tie_reference": {
+            "assumption": "choose uniformly among the candidates matching the observed symbol",
+            "distribution_free_upper_bound": false,
+            "expected_correct": 1378.9166666666667,
+            "expected_correct_denominator": 12,
+            "expected_correct_numerator": 16547,
+            "success": 0.6894583333333333
+          },
+          "matching_candidates": [
+            {
+              "correct": 855,
+              "count": 1,
+              "episodes": 855,
+              "incorrect": 0,
+              "success": 1
+            },
+            {
+              "correct": 443,
+              "count": 2,
+              "episodes": 865,
+              "incorrect": 422,
+              "success": 0.5121387283236994
+            },
+            {
+              "correct": 91,
+              "count": 3,
+              "episodes": 257,
+              "incorrect": 166,
+              "success": 0.3540856031128405
+            },
+            {
+              "correct": 3,
+              "count": 4,
+              "episodes": 23,
+              "incorrect": 20,
+              "success": 0.13043478260869565
+            }
+          ],
+          "partition": {
+            "identity_to_symbol": [
+              50,
+              50,
+              50,
+              50,
+              43,
+              43,
+              43,
+              43,
+              50,
+              50,
+              50,
+              50,
+              43,
+              43,
+              43,
+              43,
+              0,
+              0,
+              0,
+              0,
+              49,
+              49,
+              49,
+              49,
+              0,
+              0,
+              0,
+              0,
+              49,
+              49,
+              49,
+              49,
+              50,
+              50,
+              50,
+              50,
+              43,
+              43,
+              43,
+              43,
+              50,
+              50,
+              50,
+              50,
+              43,
+              43,
+              43,
+              43,
+              0,
+              0,
+              0,
+              0,
+              49,
+              49,
+              49,
+              49,
+              0,
+              0,
+              0,
+              0,
+              49,
+              49,
+              49,
+              49
+            ],
+            "symbol_groups": [
+              {
+                "identities": [
+                  16,
+                  17,
+                  18,
+                  19,
+                  24,
+                  25,
+                  26,
+                  27,
+                  48,
+                  49,
+                  50,
+                  51,
+                  56,
+                  57,
+                  58,
+                  59
+                ],
+                "symbol": 0
+              },
+              {
+                "identities": [
+                  4,
+                  5,
+                  6,
+                  7,
+                  12,
+                  13,
+                  14,
+                  15,
+                  36,
+                  37,
+                  38,
+                  39,
+                  44,
+                  45,
+                  46,
+                  47
+                ],
+                "symbol": 43
+              },
+              {
+                "identities": [
+                  20,
+                  21,
+                  22,
+                  23,
+                  28,
+                  29,
+                  30,
+                  31,
+                  52,
+                  53,
+                  54,
+                  55,
+                  60,
+                  61,
+                  62,
+                  63
+                ],
+                "symbol": 49
+              },
+              {
+                "identities": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  8,
+                  9,
+                  10,
+                  11,
+                  32,
+                  33,
+                  34,
+                  35,
+                  40,
+                  41,
+                  42,
+                  43
+                ],
+                "symbol": 50
+              }
+            ],
+            "symbols_used": 4
+          },
+          "uniform_scene_reference": {
+            "assumptions": [
+              "uniform target identity",
+              "uniform distinct candidates containing the target",
+              "exchangeability among candidates with the same symbol; no useful within-class side information"
+            ],
+            "denominator": 52948,
+            "distribution_free_upper_bound": false,
+            "num_candidates": 4,
+            "num_identities": 64,
+            "numerator": 36733,
+            "success": 0.6937561380977563
+          },
+          "unique_match": {
+            "correct": 855,
+            "episodes": 855,
+            "incorrect": 0,
+            "success": 1
+          }
+        },
+        "model_state_unchanged": true,
+        "model_state_sha256": "06756db05606aa8d9a849d876e892e5a91cf3a82aa2b76e46ef64a163ea74ca7",
+        "artifacts_unchanged": true,
+        "sender_actions_sha256": "bb124c3dad3ec4345e5673a468eb2180e47eb256364c68425b773fb039789992",
+        "receiver_predictions_sha256": "8e5be9e5dc5553f8d192a9ca9398ec67d866ffb9a71c1f54186c9bb96d85e020",
+        "selected_indices_sha256": "b87073d0a537ef8f3c1cf49570a5fe9fa48fba0cebb3a7a4bffcf73eeb32f9a1",
+        "elapsed_seconds": 1.6062320420023752
+      },
+      "interventions": {
+        "original": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.8565,
+            "original_success": 0.8565,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.9316666666666666,
+            "original_success": 0.9316666666666666,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.696,
+            "original_success": 0.696,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.7915,
+            "original_success": 0.7915,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          }
+        },
+        "constant_modal": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.3918,
+            "original_success": 0.8565,
+            "success_delta": -0.46470000000000006,
+            "prediction_changes": 5604,
+            "correct_to_wrong": 4719,
+            "wrong_to_correct": 72
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.5171666666666667,
+            "original_success": 0.9316666666666666,
+            "success_delta": -0.4145,
+            "prediction_changes": 2667,
+            "correct_to_wrong": 2500,
+            "wrong_to_correct": 13
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.252,
+            "original_success": 0.696,
+            "success_delta": -0.44399999999999995,
+            "prediction_changes": 1272,
+            "correct_to_wrong": 905,
+            "wrong_to_correct": 17
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.1555,
+            "original_success": 0.7915,
+            "success_delta": -0.636,
+            "prediction_changes": 1665,
+            "correct_to_wrong": 1314,
+            "wrong_to_correct": 42
+          }
+        },
+        "shuffled_global": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.3531,
+            "original_success": 0.8565,
+            "success_delta": -0.5034000000000001,
+            "prediction_changes": 6158,
+            "correct_to_wrong": 5185,
+            "wrong_to_correct": 151
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.44066666666666665,
+            "original_success": 0.9316666666666666,
+            "success_delta": -0.491,
+            "prediction_changes": 3261,
+            "correct_to_wrong": 3012,
+            "wrong_to_correct": 66
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.2545,
+            "original_success": 0.696,
+            "success_delta": -0.44149999999999995,
+            "prediction_changes": 1313,
+            "correct_to_wrong": 922,
+            "wrong_to_correct": 39
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.189,
+            "original_success": 0.7915,
+            "success_delta": -0.6025,
+            "prediction_changes": 1584,
+            "correct_to_wrong": 1251,
+            "wrong_to_correct": 46
+          }
+        },
+        "shuffled_within_condition": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.4444,
+            "original_success": 0.8565,
+            "success_delta": -0.4121,
+            "prediction_changes": 5150,
+            "correct_to_wrong": 4279,
+            "wrong_to_correct": 158
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.5631666666666667,
+            "original_success": 0.9316666666666666,
+            "success_delta": -0.36849999999999994,
+            "prediction_changes": 2484,
+            "correct_to_wrong": 2277,
+            "wrong_to_correct": 66
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.2445,
+            "original_success": 0.696,
+            "success_delta": -0.45149999999999996,
+            "prediction_changes": 1353,
+            "correct_to_wrong": 952,
+            "wrong_to_correct": 49
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.288,
+            "original_success": 0.7915,
+            "success_delta": -0.5035000000000001,
+            "prediction_changes": 1313,
+            "correct_to_wrong": 1050,
+            "wrong_to_correct": 43
+          }
+        },
+        "uniform_symbols_ood": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.3767,
+            "original_success": 0.8565,
+            "success_delta": -0.47980000000000006,
+            "prediction_changes": 6108,
+            "correct_to_wrong": 5037,
+            "wrong_to_correct": 239
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.48933333333333334,
+            "original_success": 0.9316666666666666,
+            "success_delta": -0.4423333333333333,
+            "prediction_changes": 3066,
+            "correct_to_wrong": 2776,
+            "wrong_to_correct": 122
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.2485,
+            "original_success": 0.696,
+            "success_delta": -0.44749999999999995,
+            "prediction_changes": 1402,
+            "correct_to_wrong": 969,
+            "wrong_to_correct": 74
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.167,
+            "original_success": 0.7915,
+            "success_delta": -0.6244999999999999,
+            "prediction_changes": 1640,
+            "correct_to_wrong": 1292,
+            "wrong_to_correct": 43
+          }
+        }
+      },
+      "intervention_report": {
+        "source": {
+          "revision": "918834f0efa2ba2fe55f2308ba52726bfc8a70fc",
+          "dirty": false,
+          "tree_sha256": "8d6da4ff664669109685b1c5ad3b35ded16b4ea4643777fdc5bd3328aa0b509d",
+          "revision_source": "git"
+        },
+        "diagnostic_module_sha256": "db173b440d4bf6cdb70fb161fe4c902274342523893d951806676c76f387e67a",
+        "checkpoint_sha256": "6e73ff1fe9907b3c388cb00a5a91eefe7c39253da24c85efda5ac867e48fffc5",
+        "status": "complete",
+        "checkpoint_unchanged": true,
+        "evaluated_episodes": 10000,
+        "seed": 20260904,
+        "cpu_threads": 1,
+        "elapsed_seconds": 7.35801204200834
+      }
+    },
+    {
+      "label": "slow",
+      "raw_hashes": {
+        "study": "171362b26354f1ef4977758ae49200edd23f48c43990e833551ec994ed196a32",
+        "partition": "1db9e65ef5228dfe1245e307ffda1c92d2572a7b1d101d2b8292749b1611edd1",
+        "channel": "d27d5d99991094d09c5989f5a3ac3427f9d3906ff7d8a4f8f1cb23813ded0ac1"
+      },
+      "config": {
+        "anneal_steps": 4500,
+        "arms": [
+          "entropy_annealed"
+        ],
+        "batch_size": 128,
+        "coefficient": 0.1,
+        "evaluate_every": 250,
+        "format": "drummer-joint-study/1",
+        "max_seconds_per_arm": 1500,
+        "seeds": [
+          101
+        ],
+        "steps": 6000,
+        "threads": 2
+      },
+      "source": {
+        "dirty": false,
+        "revision": "918834f0efa2ba2fe55f2308ba52726bfc8a70fc",
+        "revision_source": "git",
+        "tree_sha256": "8d6da4ff664669109685b1c5ad3b35ded16b4ea4643777fdc5bd3328aa0b509d"
+      },
+      "module_sha256": "2ab1233472fc160a75e6da49a40a1358def09f75cd9186bbe524fd0f9401efed",
+      "lock_sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd",
+      "runtime": {
+        "architecture": "arm64",
+        "packages": {
+          "huggingface-hub": "1.30.0",
+          "jsonschema": "4.26.0",
+          "numpy": "2.5.2",
+          "safetensors": "0.8.0",
+          "torch": "2.14.0"
+        },
+        "platform": "Darwin",
+        "python": "3.12.12"
+      },
+      "model": {
+        "context": 128,
+        "dropout": 0,
+        "ffn": 1024,
+        "heads": 4,
+        "layers": 4,
+        "private_residual": 8,
+        "width": 256
+      },
+      "corpus_logical_sha256": {
+        "train": "876aca0c257bfd445a21a4b2fde06179b6dc9b9014ce65232d6d6715f1b51bb1",
+        "validation": "abe78a426b66d19270e4d3398f138ee316ac70fd8bb7ec54f162b4dc794fa3f5"
+      },
+      "optimizer": {
+        "clip_norm": 1,
+        "learning_rate": 0.0003,
+        "name": "AdamW",
+        "weight_decay": 0.01
+      },
+      "channel": {
+        "ack_bits": 1,
+        "grounding_bits": 6,
+        "mode": "compulsory",
+        "probe_bits": 6
+      },
+      "source_unchanged": true,
+      "run": {
+        "arm": "entropy_annealed",
+        "best_validation_step": 5750,
+        "curves": [
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.962347887802124,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 498,
+                "episodes": 2000,
+                "success": 0.249
+              },
+              "new_reference": {
+                "correct": 490,
+                "episodes": 2000,
+                "success": 0.245
+              },
+              "valid_repeat": {
+                "correct": 1533,
+                "episodes": 6000,
+                "success": 0.2555
+              }
+            },
+            "elapsed_seconds": 5.25966850000259,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 0.22411575324580602,
+            "soft_marginal_entropy_nats": 3.96680122574761,
+            "step": 0,
+            "success": 0.2521,
+            "symbols_used": 2,
+            "task_loss": 1.3933280265808106
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 4.156443063354492,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 493,
+                "episodes": 2000,
+                "success": 0.2465
+              },
+              "new_reference": {
+                "correct": 320,
+                "episodes": 2000,
+                "success": 0.16
+              },
+              "valid_repeat": {
+                "correct": 2892,
+                "episodes": 6000,
+                "success": 0.482
+              }
+            },
+            "elapsed_seconds": 54.88028591701004,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.231453443711156,
+            "soft_marginal_entropy_nats": 4.156862132174176,
+            "step": 250,
+            "success": 0.3705,
+            "symbols_used": 19,
+            "task_loss": 1.2977303421020507
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.3900795406341553,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 962,
+                "episodes": 2000,
+                "success": 0.481
+              },
+              "new_reference": {
+                "correct": 803,
+                "episodes": 2000,
+                "success": 0.4015
+              },
+              "valid_repeat": {
+                "correct": 4901,
+                "episodes": 6000,
+                "success": 0.8168333333333333
+              }
+            },
+            "elapsed_seconds": 102.31144029200368,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 4.310106138184207,
+            "soft_marginal_entropy_nats": 4.148307012629736,
+            "step": 500,
+            "success": 0.6666,
+            "symbols_used": 35,
+            "task_loss": 0.6589265622138977
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.3447769245147705,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 937,
+                "episodes": 2000,
+                "success": 0.4685
+              },
+              "new_reference": {
+                "correct": 860,
+                "episodes": 2000,
+                "success": 0.43
+              },
+              "valid_repeat": {
+                "correct": 5350,
+                "episodes": 6000,
+                "success": 0.8916666666666667
+              }
+            },
+            "elapsed_seconds": 149.72679166700982,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 4.448702754814463,
+            "soft_marginal_entropy_nats": 4.1475942839362325,
+            "step": 750,
+            "success": 0.7147,
+            "symbols_used": 41,
+            "task_loss": 0.5688839201927185
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.3443822074890135,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 959,
+                "episodes": 2000,
+                "success": 0.4795
+              },
+              "new_reference": {
+                "correct": 923,
+                "episodes": 2000,
+                "success": 0.4615
+              },
+              "valid_repeat": {
+                "correct": 5428,
+                "episodes": 6000,
+                "success": 0.9046666666666666
+              }
+            },
+            "elapsed_seconds": 197.0075603340083,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.9350566098688287,
+            "soft_marginal_entropy_nats": 4.147589799536595,
+            "step": 1000,
+            "success": 0.731,
+            "symbols_used": 39,
+            "task_loss": 0.5531154003620148
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.062232048034668,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 950,
+                "episodes": 2000,
+                "success": 0.475
+              },
+              "new_reference": {
+                "correct": 1205,
+                "episodes": 2000,
+                "success": 0.6025
+              },
+              "valid_repeat": {
+                "correct": 5682,
+                "episodes": 6000,
+                "success": 0.947
+              }
+            },
+            "elapsed_seconds": 244.39773520900053,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.254633128609534,
+            "soft_marginal_entropy_nats": 4.0905028573810025,
+            "step": 1250,
+            "success": 0.7837,
+            "symbols_used": 27,
+            "task_loss": 0.4349807521820068
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.0577427436828613,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 931,
+                "episodes": 2000,
+                "success": 0.4655
+              },
+              "new_reference": {
+                "correct": 1205,
+                "episodes": 2000,
+                "success": 0.6025
+              },
+              "valid_repeat": {
+                "correct": 5815,
+                "episodes": 6000,
+                "success": 0.9691666666666666
+              }
+            },
+            "elapsed_seconds": 291.76543737501197,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 4.121634398197058,
+            "soft_marginal_entropy_nats": 4.106605689017354,
+            "step": 1500,
+            "success": 0.7951,
+            "symbols_used": 44,
+            "task_loss": 0.369215594291687
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 3.0440613357543946,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 951,
+                "episodes": 2000,
+                "success": 0.4755
+              },
+              "new_reference": {
+                "correct": 1305,
+                "episodes": 2000,
+                "success": 0.6525
+              },
+              "valid_repeat": {
+                "correct": 5842,
+                "episodes": 6000,
+                "success": 0.9736666666666667
+              }
+            },
+            "elapsed_seconds": 339.1526790000062,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 4.245207373555781,
+            "soft_marginal_entropy_nats": 4.107563535612031,
+            "step": 1750,
+            "success": 0.8098,
+            "symbols_used": 37,
+            "task_loss": 0.35292131185531617
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.9690914340972903,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 893,
+                "episodes": 2000,
+                "success": 0.4465
+              },
+              "new_reference": {
+                "correct": 1352,
+                "episodes": 2000,
+                "success": 0.676
+              },
+              "valid_repeat": {
+                "correct": 5913,
+                "episodes": 6000,
+                "success": 0.9855
+              }
+            },
+            "elapsed_seconds": 386.67023754201364,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.8549172560476808,
+            "soft_marginal_entropy_nats": 4.090296662823285,
+            "step": 2000,
+            "success": 0.8158,
+            "symbols_used": 27,
+            "task_loss": 0.3281728808403015
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.9679972942352295,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 949,
+                "episodes": 2000,
+                "success": 0.4745
+              },
+              "new_reference": {
+                "correct": 1374,
+                "episodes": 2000,
+                "success": 0.687
+              },
+              "valid_repeat": {
+                "correct": 5953,
+                "episodes": 6000,
+                "success": 0.9921666666666666
+              }
+            },
+            "elapsed_seconds": 434.2445384590101,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.958454432967108,
+            "soft_marginal_entropy_nats": 4.091099711215988,
+            "step": 2250,
+            "success": 0.8276,
+            "symbols_used": 33,
+            "task_loss": 0.3135698972702026
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.968034261703491,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 918,
+                "episodes": 2000,
+                "success": 0.459
+              },
+              "new_reference": {
+                "correct": 1384,
+                "episodes": 2000,
+                "success": 0.692
+              },
+              "valid_repeat": {
+                "correct": 5962,
+                "episodes": 6000,
+                "success": 0.9936666666666667
+              }
+            },
+            "elapsed_seconds": 481.9899910420063,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 4.421228672014771,
+            "soft_marginal_entropy_nats": 4.091337845061775,
+            "step": 2500,
+            "success": 0.8264,
+            "symbols_used": 37,
+            "task_loss": 0.31144963064193726
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.9674333145141603,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 958,
+                "episodes": 2000,
+                "success": 0.479
+              },
+              "new_reference": {
+                "correct": 1380,
+                "episodes": 2000,
+                "success": 0.69
+              },
+              "valid_repeat": {
+                "correct": 5959,
+                "episodes": 6000,
+                "success": 0.9931666666666666
+              }
+            },
+            "elapsed_seconds": 531.140838834006,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.7230453178604916,
+            "soft_marginal_entropy_nats": 4.091063645366889,
+            "step": 2750,
+            "success": 0.8297,
+            "symbols_used": 30,
+            "task_loss": 0.31097301330566407
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.967428656768799,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 976,
+                "episodes": 2000,
+                "success": 0.488
+              },
+              "new_reference": {
+                "correct": 1380,
+                "episodes": 2000,
+                "success": 0.69
+              },
+              "valid_repeat": {
+                "correct": 5982,
+                "episodes": 6000,
+                "success": 0.997
+              }
+            },
+            "elapsed_seconds": 578.8737290000136,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.5347934757626804,
+            "soft_marginal_entropy_nats": 4.0910540394688635,
+            "step": 3000,
+            "success": 0.8338,
+            "symbols_used": 27,
+            "task_loss": 0.3075455005168915
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.9622557723999026,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 947,
+                "episodes": 2000,
+                "success": 0.4735
+              },
+              "new_reference": {
+                "correct": 1394,
+                "episodes": 2000,
+                "success": 0.697
+              },
+              "valid_repeat": {
+                "correct": 5971,
+                "episodes": 6000,
+                "success": 0.9951666666666666
+              }
+            },
+            "elapsed_seconds": 626.0791224170098,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.054639188475418,
+            "soft_marginal_entropy_nats": 4.089728899087998,
+            "step": 3250,
+            "success": 0.8312,
+            "symbols_used": 24,
+            "task_loss": 0.3120318558692932
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.8829407188415526,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 925,
+                "episodes": 2000,
+                "success": 0.4625
+              },
+              "new_reference": {
+                "correct": 1378,
+                "episodes": 2000,
+                "success": 0.689
+              },
+              "valid_repeat": {
+                "correct": 5974,
+                "episodes": 6000,
+                "success": 0.9956666666666667
+              }
+            },
+            "elapsed_seconds": 673.4442908750061,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 4.238351777841258,
+            "soft_marginal_entropy_nats": 4.054705873449511,
+            "step": 3500,
+            "success": 0.8277,
+            "symbols_used": 31,
+            "task_loss": 0.30690380868911743
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.882731865310669,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 941,
+                "episodes": 2000,
+                "success": 0.4705
+              },
+              "new_reference": {
+                "correct": 1364,
+                "episodes": 2000,
+                "success": 0.682
+              },
+              "valid_repeat": {
+                "correct": 5973,
+                "episodes": 6000,
+                "success": 0.9955
+              }
+            },
+            "elapsed_seconds": 720.9642547090043,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.722120814458782,
+            "soft_marginal_entropy_nats": 4.054473230738299,
+            "step": 3750,
+            "success": 0.8278,
+            "symbols_used": 25,
+            "task_loss": 0.30154039349555967
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.879129263305664,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 947,
+                "episodes": 2000,
+                "success": 0.4735
+              },
+              "new_reference": {
+                "correct": 1346,
+                "episodes": 2000,
+                "success": 0.673
+              },
+              "valid_repeat": {
+                "correct": 5941,
+                "episodes": 6000,
+                "success": 0.9901666666666666
+              }
+            },
+            "elapsed_seconds": 768.3618926670024,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.85025109746939,
+            "soft_marginal_entropy_nats": 4.054440098059587,
+            "step": 4000,
+            "success": 0.8234,
+            "symbols_used": 27,
+            "task_loss": 0.3121502460002899
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.668560164642334,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 967,
+                "episodes": 2000,
+                "success": 0.4835
+              },
+              "new_reference": {
+                "correct": 1486,
+                "episodes": 2000,
+                "success": 0.743
+              },
+              "valid_repeat": {
+                "correct": 5989,
+                "episodes": 6000,
+                "success": 0.9981666666666666
+              }
+            },
+            "elapsed_seconds": 816.2133515000023,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 3.0267878660720244,
+            "soft_marginal_entropy_nats": 3.9452759407050726,
+            "step": 4250,
+            "success": 0.8442,
+            "symbols_used": 17,
+            "task_loss": 0.2759032175242901
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.5755181301116945,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 932,
+                "episodes": 2000,
+                "success": 0.466
+              },
+              "new_reference": {
+                "correct": 1422,
+                "episodes": 2000,
+                "success": 0.711
+              },
+              "valid_repeat": {
+                "correct": 5945,
+                "episodes": 6000,
+                "success": 0.9908333333333333
+              }
+            },
+            "elapsed_seconds": 864.0485386250075,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 1.819446787331776,
+            "soft_marginal_entropy_nats": 3.8302376307505854,
+            "step": 4500,
+            "success": 0.8299,
+            "symbols_used": 10,
+            "task_loss": 0.2943061061501503
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 2.148287301635742,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 937,
+                "episodes": 2000,
+                "success": 0.4685
+              },
+              "new_reference": {
+                "correct": 1571,
+                "episodes": 2000,
+                "success": 0.7855
+              },
+              "valid_repeat": {
+                "correct": 5983,
+                "episodes": 6000,
+                "success": 0.9971666666666666
+              }
+            },
+            "elapsed_seconds": 911.4248952090129,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.1703034044860408,
+            "soft_marginal_entropy_nats": 3.487606623141738,
+            "step": 4750,
+            "success": 0.8491,
+            "symbols_used": 8,
+            "task_loss": 0.24519579384997486
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.03274409440755844,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1351,
+                "episodes": 2000,
+                "success": 0.6755
+              },
+              "new_reference": {
+                "correct": 1550,
+                "episodes": 2000,
+                "success": 0.775
+              },
+              "valid_repeat": {
+                "correct": 5995,
+                "episodes": 6000,
+                "success": 0.9991666666666666
+              }
+            },
+            "elapsed_seconds": 959.4858318340121,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.7307276926712523,
+            "soft_marginal_entropy_nats": 1.9158838289027114,
+            "step": 5000,
+            "success": 0.8896,
+            "symbols_used": 9,
+            "task_loss": 0.1742928888976574
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0012632319424301386,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1388,
+                "episodes": 2000,
+                "success": 0.694
+              },
+              "new_reference": {
+                "correct": 1514,
+                "episodes": 2000,
+                "success": 0.757
+              },
+              "valid_repeat": {
+                "correct": 6000,
+                "episodes": 6000,
+                "success": 1
+              }
+            },
+            "elapsed_seconds": 1008.7906770420086,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.7307276926712523,
+            "soft_marginal_entropy_nats": 1.8938613079333686,
+            "step": 5250,
+            "success": 0.8902,
+            "symbols_used": 9,
+            "task_loss": 0.1631211156785488
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.001204735081642866,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1343,
+                "episodes": 2000,
+                "success": 0.6715
+              },
+              "new_reference": {
+                "correct": 1547,
+                "episodes": 2000,
+                "success": 0.7735
+              },
+              "valid_repeat": {
+                "correct": 5996,
+                "episodes": 6000,
+                "success": 0.9993333333333333
+              }
+            },
+            "elapsed_seconds": 1056.7477098340023,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.7307276926712523,
+            "soft_marginal_entropy_nats": 1.893796589676048,
+            "step": 5500,
+            "success": 0.8886,
+            "symbols_used": 9,
+            "task_loss": 0.1772688086003065
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0008988062189891935,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1383,
+                "episodes": 2000,
+                "success": 0.6915
+              },
+              "new_reference": {
+                "correct": 1537,
+                "episodes": 2000,
+                "success": 0.7685
+              },
+              "valid_repeat": {
+                "correct": 6000,
+                "episodes": 6000,
+                "success": 1
+              }
+            },
+            "elapsed_seconds": 1104.784062125007,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.731418294513315,
+            "soft_marginal_entropy_nats": 1.8939498694813426,
+            "step": 5750,
+            "success": 0.892,
+            "symbols_used": 9,
+            "task_loss": 0.16300917469752021
+          },
+          {
+            "complete": true,
+            "conditional_entropy_nats": 0.0009401537496596575,
+            "conditions": {
+              "dropped_grounding": {
+                "correct": 1375,
+                "episodes": 2000,
+                "success": 0.6875
+              },
+              "new_reference": {
+                "correct": 1537,
+                "episodes": 2000,
+                "success": 0.7685
+              },
+              "valid_repeat": {
+                "correct": 6000,
+                "episodes": 6000,
+                "success": 1
+              }
+            },
+            "elapsed_seconds": 1152.8572871250071,
+            "episodes": 10000,
+            "hard_marginal_entropy_bits": 2.7277985793015755,
+            "soft_marginal_entropy_nats": 1.891445985233272,
+            "step": 6000,
+            "success": 0.8912,
+            "symbols_used": 9,
+            "task_loss": 0.16396752530746161
+          }
+        ],
+        "elapsed_seconds": 1152.874599584,
+        "final_checkpoint": "seed-101-entropy_annealed/step-00006000.safetensors",
+        "final_checkpoint_sha256": "ea4b4965615a3d6030843f5c21c661729a176d6fdf4ede20f54380a13a9ab1ce",
+        "initial_checkpoint_sha256": "d697dbaa741dc3fa7c0b124e1d583367dc0a2846386b4d519c1f24da5e694c14",
+        "seed": 101,
+        "status": "complete",
+        "steps": 6000,
+        "training_order_sha256": "48f3fc0e272f019a25014a8d67431201b73383c1a5065f748e2e33edf1effc63",
+        "checkpoints": [
+          {
+            "step": 0,
+            "weights_sha256": "d697dbaa741dc3fa7c0b124e1d583367dc0a2846386b4d519c1f24da5e694c14"
+          },
+          {
+            "step": 250,
+            "weights_sha256": "551e67c4c3040e50d911f4609df92ce0c4ec9b44dbf1167b065b83e5e78c82a1"
+          },
+          {
+            "step": 500,
+            "weights_sha256": "11f2ede862295f3fd14a7803d14d78634eafdb9a81820b17e883cbd3f69bb5a3"
+          },
+          {
+            "step": 750,
+            "weights_sha256": "48f44b9f70d658d117ef133dde2856e763927e1965214d9b7b081a94f5bedc76"
+          },
+          {
+            "step": 1000,
+            "weights_sha256": "443aadcc33690aac4a7760b03f0bc460b4886ebc2476d1de66abb3dc20796dff"
+          },
+          {
+            "step": 1250,
+            "weights_sha256": "c6e5a718cc31d3123efcaedef91ac72a1678ffc3de271a8ed7d3e5780f2b8621"
+          },
+          {
+            "step": 1500,
+            "weights_sha256": "7050b32a896677f29c3291607c16df57e3f6b9225bfa15b0debcee65b4df0df2"
+          },
+          {
+            "step": 1750,
+            "weights_sha256": "7f313ab1786c66b67dbd3e72ced2425fd1386caebd5038847c436249b7f4a9c9"
+          },
+          {
+            "step": 2000,
+            "weights_sha256": "4b156b01d2cf2b27695a1069bd40031e62d279aeeb6b211482c8ebba4d5691db"
+          },
+          {
+            "step": 2250,
+            "weights_sha256": "fd1f6509eb0031483305fc19fee22906803ce2ef3700138cda782eb225b78f36"
+          },
+          {
+            "step": 2500,
+            "weights_sha256": "f1fff799af9cb238d092fb336e5fb8a008a207d92f205742c60ffb198bf0c135"
+          },
+          {
+            "step": 2750,
+            "weights_sha256": "7fbf49798b84abaf2881d2a239b2e5a479b342af988bf3c9b770b9b4a8e19231"
+          },
+          {
+            "step": 3000,
+            "weights_sha256": "c2697479a4975371896d87f84a0295de4622dd2b9bb124cb7162f6c711c4b8aa"
+          },
+          {
+            "step": 3250,
+            "weights_sha256": "fbf39752cfbe12e4d924dbc82edbd872eafda772f4f3945786c2a8947ad85f7c"
+          },
+          {
+            "step": 3500,
+            "weights_sha256": "740a615a5ffd5dd19858bfa910002f0009afd1117254489dcb51d71972053e47"
+          },
+          {
+            "step": 3750,
+            "weights_sha256": "cc1ce976b95438deb902a06b2ca8b96d61a6491e056747cee5777e683d963bfe"
+          },
+          {
+            "step": 4000,
+            "weights_sha256": "1bc0ea72377854075a435fba468bcfd8b6db8ee35beced03f1a4cd29893ad5ad"
+          },
+          {
+            "step": 4250,
+            "weights_sha256": "024cd44c5ce8357443cea54d9773d059bf37e73f11b11ff6b718a11f80738e5f"
+          },
+          {
+            "step": 4500,
+            "weights_sha256": "3886e6d4b86dd30f47f576545a1d935968bc6a25d8b3d48ed353036e2c95e04f"
+          },
+          {
+            "step": 4750,
+            "weights_sha256": "0b4d22ea4f0f0581828d8692b4cb650b9c512f1a417c6bce48da5ff1fcef197d"
+          },
+          {
+            "step": 5000,
+            "weights_sha256": "f7f82fc3860608321b176cbdb8840b65f19a478654f6c4b08a0c42d7cc905894"
+          },
+          {
+            "step": 5250,
+            "weights_sha256": "ad9b0baa562aa413cb75391ddbbf79cb84cbec115b30c5cd593489a4f3a7c845"
+          },
+          {
+            "step": 5500,
+            "weights_sha256": "f5c4ce6a9aa2c02c3378c8642768c61a6244a79c1e83f610a6a5b2f5e746ee38"
+          },
+          {
+            "step": 5750,
+            "weights_sha256": "12523da8b5ad6781395efe912fab6fa023b2126fad18619dde9fd109d3fa20b9"
+          },
+          {
+            "step": 6000,
+            "weights_sha256": "ea4b4965615a3d6030843f5c21c661729a176d6fdf4ede20f54380a13a9ab1ce"
+          }
+        ]
+      },
+      "partition": {
+        "status": "complete",
+        "pins": {
+          "checkpoint_manifest": {
+            "bytes": 1186,
+            "sha256": "b37c56f0c3a8911f4e1841d7df414e1434c912262cc79e76c5471631bb605340"
+          },
+          "corpus_manifest": {
+            "bytes": 2178,
+            "sha256": "83047199b1781be2a26f31baf404c8b6911a3c000d5308798a918bb2740ed4a1"
+          },
+          "lock": {
+            "bytes": 72346,
+            "sha256": "b41960a0339fccf6893ff20a24dd578875d4e2368e624c8f13b4d8f2641680bd"
+          },
+          "module": {
+            "bytes": 20624,
+            "sha256": "163ed5b0a6c5c878c26ec761fe2f16a7b7d9b41918a9d0a60030e7dd19b86cb9"
+          },
+          "validation": {
+            "bytes": 143260,
+            "sha256": "e18da6c6313075d547e8a25fbd0ae72b1ec9e66f4a325cac61d14dec14cb40d0"
+          },
+          "weights": {
+            "bytes": 13729852,
+            "sha256": "ea4b4965615a3d6030843f5c21c661729a176d6fdf4ede20f54380a13a9ab1ce"
+          }
+        },
+        "statistics": {
+          "all": {
+            "correct": 1375,
+            "episodes": 2000,
+            "incorrect": 625,
+            "success": 0.6875
+          },
+          "colliding": {
+            "correct": 516,
+            "episodes": 1141,
+            "incorrect": 625,
+            "success": 0.45223488168273446
+          },
+          "empirical_uniform_tie_reference": {
+            "assumption": "choose uniformly among the candidates matching the observed symbol",
+            "distribution_free_upper_bound": false,
+            "expected_correct": 1381.1666666666667,
+            "expected_correct_denominator": 6,
+            "expected_correct_numerator": 8287,
+            "success": 0.6905833333333333
+          },
+          "matching_candidates": [
+            {
+              "correct": 859,
+              "count": 1,
+              "episodes": 859,
+              "incorrect": 0,
+              "success": 1
+            },
+            {
+              "correct": 441,
+              "count": 2,
+              "episodes": 865,
+              "incorrect": 424,
+              "success": 0.5098265895953757
+            },
+            {
+              "correct": 71,
+              "count": 3,
+              "episodes": 248,
+              "incorrect": 177,
+              "success": 0.2862903225806452
+            },
+            {
+              "correct": 4,
+              "count": 4,
+              "episodes": 28,
+              "incorrect": 24,
+              "success": 0.14285714285714285
+            }
+          ],
+          "partition": {
+            "identity_to_symbol": [
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              45,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              59,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              22,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40,
+              40
+            ],
+            "symbol_groups": [
+              {
+                "identities": [
+                  32,
+                  33,
+                  34,
+                  35,
+                  36,
+                  37,
+                  38,
+                  39,
+                  40,
+                  41,
+                  42,
+                  43,
+                  44,
+                  45,
+                  46,
+                  47
+                ],
+                "symbol": 22
+              },
+              {
+                "identities": [
+                  48,
+                  49,
+                  50,
+                  51,
+                  52,
+                  53,
+                  54,
+                  55,
+                  56,
+                  57,
+                  58,
+                  59,
+                  60,
+                  61,
+                  62,
+                  63
+                ],
+                "symbol": 40
+              },
+              {
+                "identities": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15
+                ],
+                "symbol": 45
+              },
+              {
+                "identities": [
+                  16,
+                  17,
+                  18,
+                  19,
+                  20,
+                  21,
+                  22,
+                  23,
+                  24,
+                  25,
+                  26,
+                  27,
+                  28,
+                  29,
+                  30,
+                  31
+                ],
+                "symbol": 59
+              }
+            ],
+            "symbols_used": 4
+          },
+          "uniform_scene_reference": {
+            "assumptions": [
+              "uniform target identity",
+              "uniform distinct candidates containing the target",
+              "exchangeability among candidates with the same symbol; no useful within-class side information"
+            ],
+            "denominator": 52948,
+            "distribution_free_upper_bound": false,
+            "num_candidates": 4,
+            "num_identities": 64,
+            "numerator": 36733,
+            "success": 0.6937561380977563
+          },
+          "unique_match": {
+            "correct": 859,
+            "episodes": 859,
+            "incorrect": 0,
+            "success": 1
+          }
+        },
+        "model_state_unchanged": true,
+        "model_state_sha256": "3120d2260c75c5b4d43bef05e4003265a7e2e3e723a7add0759b216c80f2aef5",
+        "artifacts_unchanged": true,
+        "sender_actions_sha256": "b3d7d30c909b6e249313bd29e8856c9d7031097ff64ae6822bf52dbbef2aeb28",
+        "receiver_predictions_sha256": "ee002c5ca1c28a9edc97749e2aae1439f1bbacbb12a93729097b04294275236f",
+        "selected_indices_sha256": "b87073d0a537ef8f3c1cf49570a5fe9fa48fba0cebb3a7a4bffcf73eeb32f9a1",
+        "elapsed_seconds": 1.362654124997789
+      },
+      "interventions": {
+        "original": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.8912,
+            "original_success": 0.8912,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 1,
+            "original_success": 1,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.6875,
+            "original_success": 0.6875,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.7685,
+            "original_success": 0.7685,
+            "success_delta": 0,
+            "prediction_changes": 0,
+            "correct_to_wrong": 0,
+            "wrong_to_correct": 0
+          }
+        },
+        "constant_modal": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.5153,
+            "original_success": 0.8912,
+            "success_delta": -0.3759,
+            "prediction_changes": 4628,
+            "correct_to_wrong": 3812,
+            "wrong_to_correct": 53
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.7456666666666667,
+            "original_success": 1,
+            "success_delta": -0.2543333333333333,
+            "prediction_changes": 1526,
+            "correct_to_wrong": 1526,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.244,
+            "original_success": 0.6875,
+            "success_delta": -0.4435,
+            "prediction_changes": 1284,
+            "correct_to_wrong": 914,
+            "wrong_to_correct": 27
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.0955,
+            "original_success": 0.7685,
+            "success_delta": -0.6729999999999999,
+            "prediction_changes": 1818,
+            "correct_to_wrong": 1372,
+            "wrong_to_correct": 26
+          }
+        },
+        "shuffled_global": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.4361,
+            "original_success": 0.8912,
+            "success_delta": -0.4551,
+            "prediction_changes": 5483,
+            "correct_to_wrong": 4659,
+            "wrong_to_correct": 108
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.5903333333333334,
+            "original_success": 1,
+            "success_delta": -0.4096666666666666,
+            "prediction_changes": 2458,
+            "correct_to_wrong": 2458,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.2635,
+            "original_success": 0.6875,
+            "success_delta": -0.424,
+            "prediction_changes": 1348,
+            "correct_to_wrong": 925,
+            "wrong_to_correct": 77
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.146,
+            "original_success": 0.7685,
+            "success_delta": -0.6224999999999999,
+            "prediction_changes": 1677,
+            "correct_to_wrong": 1276,
+            "wrong_to_correct": 31
+          }
+        },
+        "shuffled_within_condition": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.5237,
+            "original_success": 0.8912,
+            "success_delta": -0.36749999999999994,
+            "prediction_changes": 4417,
+            "correct_to_wrong": 3752,
+            "wrong_to_correct": 77
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.6948333333333333,
+            "original_success": 1,
+            "success_delta": -0.3051666666666667,
+            "prediction_changes": 1831,
+            "correct_to_wrong": 1831,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.24,
+            "original_success": 0.6875,
+            "success_delta": -0.4475,
+            "prediction_changes": 1320,
+            "correct_to_wrong": 938,
+            "wrong_to_correct": 43
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.294,
+            "original_success": 0.7685,
+            "success_delta": -0.4745,
+            "prediction_changes": 1266,
+            "correct_to_wrong": 983,
+            "wrong_to_correct": 34
+          }
+        },
+        "uniform_symbols_ood": {
+          "all": {
+            "episodes": 10000,
+            "success": 0.4601,
+            "original_success": 0.8912,
+            "success_delta": -0.4311,
+            "prediction_changes": 5353,
+            "correct_to_wrong": 4451,
+            "wrong_to_correct": 140
+          },
+          "valid_repeat": {
+            "episodes": 6000,
+            "success": 0.6456666666666667,
+            "original_success": 1,
+            "success_delta": -0.3543333333333333,
+            "prediction_changes": 2126,
+            "correct_to_wrong": 2126,
+            "wrong_to_correct": 0
+          },
+          "dropped_grounding": {
+            "episodes": 2000,
+            "success": 0.24,
+            "original_success": 0.6875,
+            "success_delta": -0.4475,
+            "prediction_changes": 1466,
+            "correct_to_wrong": 992,
+            "wrong_to_correct": 97
+          },
+          "new_reference": {
+            "episodes": 2000,
+            "success": 0.1235,
+            "original_success": 0.7685,
+            "success_delta": -0.645,
+            "prediction_changes": 1761,
+            "correct_to_wrong": 1333,
+            "wrong_to_correct": 43
+          }
+        }
+      },
+      "intervention_report": {
+        "source": {
+          "revision": "918834f0efa2ba2fe55f2308ba52726bfc8a70fc",
+          "dirty": false,
+          "tree_sha256": "8d6da4ff664669109685b1c5ad3b35ded16b4ea4643777fdc5bd3328aa0b509d",
+          "revision_source": "git"
+        },
+        "diagnostic_module_sha256": "db173b440d4bf6cdb70fb161fe4c902274342523893d951806676c76f387e67a",
+        "checkpoint_sha256": "ea4b4965615a3d6030843f5c21c661729a176d6fdf4ede20f54380a13a9ab1ce",
+        "status": "complete",
+        "checkpoint_unchanged": true,
+        "evaluated_episodes": 10000,
+        "seed": 20260904,
+        "cpu_threads": 1,
+        "elapsed_seconds": 6.121522916000686
+      }
+    }
+  ],
+  "comparison": {
+    "overall_percentage_points": 3.47,
+    "condition_deltas": {
+      "dropped_grounding": {
+        "correct": -17,
+        "percentage_points": -0.85
+      },
+      "new_reference": {
+        "correct": -46,
+        "percentage_points": -2.3
+      },
+      "valid_repeat": {
+        "correct": 410,
+        "percentage_points": 6.8333
+      }
+    },
+    "criterion_overall_gain_at_least_three_points": true,
+    "criterion_dropped_grounding_improved": false,
+    "criterion_fewer_colliding_scenes": true,
+    "criterion_message_use_retained": true,
+    "prospective_joint_support": false,
+    "original_95_percent_gate_passed": false
+  },
+  "limitations": [
+    "One calibration seed, not independent replications or five-seed uncertainty.",
+    "Whole schedules differ in total entropy regularization as well as decay timing.",
+    "Both channels remain compulsory six-bit messages; no omission or practical-language savings established.",
+    "Uniform-scene and empirical tie references are not distribution-free accuracy bounds.",
+    "Elapsed training times exclude source/data/model setup and coexist with other CPU workloads.",
+    "Raw reports retain full symbol/identity matrices; this extract retains their report hashes and scalar curves.",
+    "Packet and model checks do not establish affect, cross-play, novel compositionality or practical compression."
+  ]
+}

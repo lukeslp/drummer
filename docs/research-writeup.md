@@ -35,6 +35,13 @@ A subsequent coding study completed two independently verified fixes before a
 provider refusal stopped the schedule. The completed workflows used different
 tasks and transports, preventing a matched compression comparison.
 
+A later matched exploration-schedule test improved aggregate success from
+85.65% to 89.12% through acknowledged repetition alone, while dropped-grounding
+and new-reference accuracy declined. Its predeclared combined hypothesis failed.
+An original English-rewriting encoder–decoder and exact-copy channel are now
+component-tested but untrained; independent functional evaluation must precede
+fitting. Neither milestone supplies a practical learned-compression result.
+
 ## 1. Research question and contribution
 
 The target includes useful abbreviation and jargon inventories, compact notation,
@@ -163,8 +170,17 @@ while every one of 612 errors occurred in 1,145 colliding scenes. The observed
 reference, 69.3756%. This is not an accuracy upper bound or a new training result.
 The code agrees with two binary attributes in this slice, but current target
 and remembered intent coincide, preventing attribution to one input source.
-The finding motivates a prospective exploration-schedule comparison rather than
-an immediate claim that receiver size is the limiting factor.
+The ensuing fresh 6,000-update exploration-schedule comparison reached 85.65%
+with the original decay versus 89.12% with slower decay. The gain decomposes as
+410 additional correct acknowledged repetitions, minus 17 dropped-grounding
+and 46 new-reference successes. Both dropped-grounding codes retain four groups
+of 16, with different memberships, and all errors remain colliding choices.
+Shuffle controls still show message use. The joint prospective hypothesis fails
+because dropped-grounding performance does not improve. This does not establish
+receiver size as the limiting factor or pass the original 95% gate. The
+[schedule evidence](evidence/joint-schedule-v2.json) preserves all 50 curve points
+and checkpoint identities; fixed final steps, not best intermediate scores,
+are the primary comparison.
 
 The [phrase-induction experiment](phrase-evidence.md) selected plain English over
 a training-derived dictionary on validation. Its held-out representation was

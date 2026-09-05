@@ -98,6 +98,24 @@ anchors verify declared bindings, not arbitrary prose consistency; the response
 extracts meaning and never grants authority. Compare transports within one frozen
 contract. Offline implementation does not imply a new model collection or savings.
 
+## DR-013 — Preserve the failed schedule hypothesis and prioritize the practical bridge
+
+The matched 6,000-update schedule comparison raises aggregate success but
+reduces dropped-grounding and new-reference success. Its combined prospective
+criterion fails; the original 95% gate and all omission gates are unchanged.
+Preserve this result rather than making repeated restricted-game tuning the
+critical path to practical language work.
+
+The original [Rewrite-0](rewrite.md) encoder–decoder and byte/COPY components are
+implemented but untrained. They start a separate supervised practical bridge,
+not Milestone 2 actor–critic learning or a discovered language. Freeze independent
+semantic and closed-loop evaluation before fitting; preserve SFL functions and
+expressed affect, not only literal bytes. Supervised imitation of a shortening
+rule must be distinguished from novel convention discovery. Larger local
+partners remain in scope without expanding the budget or changing model weights
+through ordinary inference. New training and model calls remain paused at this
+checkpoint while the pre-training evaluation contract is reviewed.
+
 ## Historical input fingerprints
 
 Original historical files are preserved unchanged in the local research archive;

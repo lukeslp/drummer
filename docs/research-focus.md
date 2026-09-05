@@ -11,8 +11,10 @@ not a replacement for that goal. Its success must not gate practical experiments
 Building an original trained communication component remains a core goal. The
 present 3.43-million-parameter model learns restricted signals, not English
 compression; existing-model decoder tests do not train it or replace it. The
-[roadmap](roadmap.md) separates that model, practical validation, and the still
-unimplemented bridge to learned compression of richer exchanges.
+[roadmap](roadmap.md) separates that model, practical validation, and the partly
+implemented bridge to richer exchanges. [Rewrite-0](rewrite.md) now has a tested
+4.38-million-parameter encoder–decoder and exact-copy channel, but no corpus,
+independent semantic scorer, closed-loop coordinator or training result yet.
 
 ## Two complementary kinds of compression
 
@@ -93,7 +95,8 @@ is claimed as newly invented. A working result must outperform full and terse
 English at comparable quality after dictionary setup, both endpoints, failures,
 repair and runtime are counted. Current measurements do not establish that yet.
 
-Priority: continue bounded joint-learning diagnosis, but build and measure the
-practical compression and functional-contrast bench in parallel. Keep affect as
-an explicit, separately tested research track rather than claiming an unused
-vector has already implemented it.
+Priority after the checkpoint pause: build the practical rewriting corpus and
+independent functional scorer before training Rewrite-0. The latest restricted-
+game schedule improved repetition but failed its identifying-code hypothesis;
+more schedule tuning is not the next priority. Keep affect explicitly scored
+and separately studied rather than claiming an unused vector implements it.

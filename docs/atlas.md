@@ -128,3 +128,27 @@ partition and confusion-by-multiplicity counts. Frozen inference took 1.326
 seconds on one CPU thread, with no gloss or expansion. There is no new cross-play,
 affect, permission, or omission evidence. The exact protocol and every active
 conversation retain their existing meanings.
+
+## D0-SCHEDULE101 — Improved repetition without a finer identifying code
+
+Status: measured exploratory validation comparison; **not promoted**. Both runs
+start fresh at source `918834f`, seed 101, corpus format 3 and compulsory six-bit
+messages, and finish at 6,000 updates. Final control weights:
+`6e73ff1fe9907b3c388cb00a5a91eefe7c39253da24c85efda5ac867e48fffc5`;
+slower-decay weights:
+`ea4b4965615a3d6030843f5c21c661729a176d6fdf4ede20f54380a13a9ab1ce`.
+
+Slower entropy decay raises overall success from 85.65% to 89.12%, entirely
+through improved acknowledged repetition. Dropped-grounding and new-reference
+success decline. Each dropped-grounding partition has four groups of 16, but
+membership differs across checkpoints. All unique-match scenes are solved;
+every error has multiple candidates sharing the target's signal. Shuffle
+interventions support message use, not stable English meanings or native
+cross-play. The prospective joint support criterion and original quality gate fail.
+
+The function implicated is reference under differing common-ground conditions,
+not learned silence: message length remains six bits. No affect convention,
+compositional shorthand or useful English compression is established. See the
+[measured comparison](sender-partition.md)
+and [complete partitions and curves](evidence/joint-schedule-v2.json). No existing
+atlas mapping or protocol meaning is overwritten.

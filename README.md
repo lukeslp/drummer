@@ -17,7 +17,7 @@ Building an original trained communication component remains a core goal. The
 current small model learns restricted signals, not English compression. Existing
 models test practical conventions; they do not replace that research. Start with
 the [goal and current roadmap](docs/roadmap.md) to distinguish the two tracks and
-the still-unbuilt bridge between them.
+the partially implemented, still-untrained bridge between them.
 
 Author: Luke Steuber.
 
@@ -26,6 +26,10 @@ transformer, exact expected-loss training over 64 symbols plus omission, sealed
 evaluation, five-seed and cross-play reports, an exact protocol validator, and
 24 synthetic coding handoffs. **Implementation is not evidence of learned
 compression.** Measured results belong in versioned experiment reports.
+
+The separate [Rewrite-0 component](docs/rewrite.md) now has a tested
+4.38-million-parameter encoder–decoder and exact-copy channel. Its corpus,
+independent scorer, conversation coordinator and training remain unfinished.
 
 ## Start locally
 
@@ -47,6 +51,7 @@ to any server with the same name.
 
 - [Accepted plan and milestones](docs/plan.md)
 - [Goal and current roadmap](docs/roadmap.md): what is trained, what is tested, and what remains
+- [Rewrite-0](docs/rewrite.md): original practical model, component contract, and pre-training gates
 - [Protocol manual](docs/protocol.md): exact semantics, shared state, authority, and fallback
 - [Experiment specification](docs/experiment.md): task, controls, training, and evaluation
 - [Language atlas](docs/atlas.md): evidence and limits of learned conventions

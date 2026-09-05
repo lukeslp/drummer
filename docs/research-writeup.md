@@ -172,6 +172,34 @@ raised recorded activity from 219,651 top-level tokens to 235,600 across all
 reported models. Neither quality-equivalent savings nor a learned convention
 was established.
 
+The practical track now includes a complete
+[coding-workflow coordinator](coding-workflow.md), not just message decoding.
+Two dependency-free tasks require an actual scoped source change, independent
+review and behavioral verification. A pinned Linux namespace executor passed
+resource/access preflight; authored corrected controls passed all 24 behavioral
+sequences and both defective controls failed. The native Mac executor remains
+unavailable because its requested hard memory limit was not enforced. These
+controls establish the execution instrument, not communication savings.
+
+The first live workflow collection exposed missing model-visible patch hashes.
+It was stopped and classified as harness-invalid, with five recorded invocations
+retained. Four completed calls reported 116,942 top-level tokens; the interrupted
+fifth makes complete usage unknown. The correction makes current file hashes
+explicit in every observation and removes host-side hash computation from the
+offline client doubles. A separately frozen version is required for subsequent
+collection; the failed attempt cannot support a transport ranking. This is an
+information-availability defect: references required for an action must be
+recoverable by the actual partner under its actual tools and context, not merely
+derivable in principle by the test author.
+
+The workflow supplies complete current source and public requirements to each
+partner. A correct patch under compact delivery therefore does not, by itself,
+prove the prior message was used or that a model natively understood every compact
+distinction. This first task-level comparison measures outcomes and total costs;
+context-only and shuffled-message interventions remain necessary for causal
+communication claims. Redundant communication may itself be a useful target for
+later learned omission, but these workflows do not yet train that policy.
+
 ## 5. What the SFL angle changes
 
 The proposed organizing question is: **which functional distinctions must the

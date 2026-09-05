@@ -50,7 +50,8 @@ a pretrained specialist remain alternatives, not accomplished decisions.
   complete eight-workflow client comparison is implemented with shared budgets
   and immutable result records. Its first collection was stopped after discovering
   missing model-visible patch hashes; that attempt is not a valid compression
-  comparison. The corrected contract must be frozen and evaluated separately.
+  comparison. The corrected contract is frozen at `fbf9bfa`; collection and its
+  full outcome/cost audit are separate from the successful harness controls.
 - **Open:** useful English compression learned by an original model, robust
   cross-family transfer, emotion-related communication effects, and end-to-end
   task savings have not been demonstrated.

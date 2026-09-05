@@ -420,3 +420,46 @@ Offline doubles and explicitly opted-in authored execution controls are harness
 evidence only. Actual client workflows must be reported separately. The first
 study tests hand-designed reversible substitution, not learned compression or
 native reference reuse; its traces are inputs to the next training-design step.
+
+### Measured production-path controls
+
+Clean revision `4926613` passed the actual Pi preflight, then executed the existing
+authored controls through `RemoteLinuxExecutor.verify()` without a bypass.
+The corrected expiration implementation passed all 10 sequences and the corrected
+refresh implementation passed all 14. Both deliberately defective implementations
+completed execution but failed their visible behavioral examples. This establishes
+the positive and negative harness controls, not agent-generated task success.
+Both 144 MiB heap/mmap attempts were denied under the 128 MiB address-space cap.
+
+The [control evidence extract](evidence/workflow-isolation-v1.json) records the
+clean source identity, worker/runtime hashes and complete raw-artifact digest.
+The repository suite passed 624 local tests; remote preflight and full authored
+controls were separately opted into and run. Local tests do not silently stand in
+for remote measurements. The frozen eight-workflow client collection follows
+these controls and must have its own outcome and cost report.
+
+### First collection stopped: missing patch metadata
+
+The first frozen collection at `4926613` was interrupted after five recorded
+client invocations. One workflow finished without an accepted patch; the second
+had an in-flight inspection. The observation serialized current source text but
+dropped the per-file hashes required by the patch contract. Tools were disabled,
+so requiring the model to calculate or invent SHA-256 was a harness error. The
+initial patch was rejected for a stale file hash; the repair supplied no files.
+This attempt is **invalid as a compression comparison**, not evidence that one
+transport or model is worse. No model-generated source was activated or executed.
+
+The unchanged study artifact has SHA-256
+`4224472f91bc205bad503e3e1447898e04ec8a764c9baffd062d4ca889a56dc9`.
+Four completed calls report a known subtotal of 116,942 top-level tokens; complete
+usage remains unknown because the fifth was interrupted. The study recorded
+178.99 seconds before termination. Its interruption path did not persist the
+final whole-study source/artifact audit, so those fields must not be inferred as
+passed. An initially orphaned CLI subsequently exited; no unrelated process was
+stopped. All calls and failures remain in accounting.
+
+The next version must serialize coordinator-computed current file hashes in every
+observation, tell agents to copy those hashes, and make offline clients use only
+that supplied information. It also needs interruption-safe CLI reaping and a
+persisted terminal identity audit. A new source/config freeze and separate output
+directory are required; the failed attempt is not silently resumed or relabeled.

@@ -1,0 +1,32 @@
+{
+  "kind": "authored-controls-not-agent-results",
+  "author": "Luke Steuber",
+  "source_revision": "49266134f7a447d276d3447e4ca461de89d0a3a3",
+  "source_tree_sha256": "752565ce1fbda822c969ba23d86e021fb9b9582ac070c57c66568e5e2b71c956",
+  "source_dirty": false,
+  "raw_artifact_sha256": "1be1f8881d218ae60a4c3e324e0b1949827562e4ad1c2292a059a51c5cdf00bc",
+  "worker_sha256": "b31717f51416cb91978e631b7b65899ae31c572cc1c1ba87fc9cdf37115bfe4d",
+  "python_version": "3.13.5",
+  "python_sha256": "5a8d634b3cf42fa618c2a39c7e674206cefc3b0be3d2f7023d5b1f8ebb51a013",
+  "bubblewrap_sha256": "cfb460873c31b2210347d628a2f1fe5c79358573bcfd68c99caa58ce7d01932a",
+  "bootstrap_sha256": "cc0a8a1ef4d8eaddd0a1c534c9d4d22666561bab4191c94ae2c68935034a3cce",
+  "driver_sha256": "bf8ba317aeb838022755dc35e305a428afc4904f6fe8af4f03b0c82b636b0046",
+  "policy_sha256": "fb69f0f0d28bd9d34e3537e29631197e4e4435d8f575036d2800292ed4e578cb",
+  "ready": true,
+  "preflight_passed": ["boundary", "memory_heap", "memory_mmap", "cpu", "wall", "output"],
+  "address_space_limit_bytes": 134217728,
+  "heap_and_mmap_attempted_bytes": 150994944,
+  "heap_and_mmap_denied": true,
+  "corrected_control_cases": {"expiry-boundary": 10, "refresh-integrity": 14},
+  "corrected_control_cases_passed": 24,
+  "defective_visible_cases": 2,
+  "defective_visible_cases_failed": 2,
+  "all_case_processes_completed": true,
+  "interpretation": "Production-path harness controls only; not agent-generated fixes or evidence of communication savings.",
+  "limitations": [
+    "Only synthetic dependency-free fixture APIs were exercised.",
+    "Candidate-observable in-process driver output is not tamper-resistant behavioral proof.",
+    "Local SSH cleanup alone does not independently establish remote termination after disconnection.",
+    "The coordinator, remote account, runtime libraries and kernel remain trusted."
+  ]
+}

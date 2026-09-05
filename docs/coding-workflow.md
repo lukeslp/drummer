@@ -7,7 +7,11 @@ independent behavioral expectations, legitimate-observation interfaces, a bounde
 patch application boundary, and an inspect → propose → implement → review → test
 coordinator. Offline tests exercise that complete state machine with explicitly
 injected clients and verifier outputs. Those tests are not real agent task results.
-Live collection remains gated on independently verified execution containment.
+Live collection requires independently verified execution containment. The Pi
+backend passed that gate; a separately frozen collection completed two actual
+agent workflows before a provider refusal stopped the remaining schedule. See
+the [task-level results](workflow-evidence.md); this is not a completed transport
+comparison.
 
 The original trained communication component remains central. These tasks can
 eventually produce communication traces and downstream task outcomes for it;
@@ -52,7 +56,9 @@ introduced through held-out tests.
 Task B is independent rather than importing a corrected copy of task A. No
 canonical fix is stored in either public fixture. Separate trusted executor
 controls run authored test implementations, never supplied to coding agents.
-Successful completion by a real coding agent has not yet been established.
+Actual Codex-authored fixes subsequently passed both tasks, with Claude inspecting
+and reviewing. The reverse role direction did not complete. Authored executor
+controls remain distinct from those measured agent results.
 
 ### Public projection and trusted verifier separation
 

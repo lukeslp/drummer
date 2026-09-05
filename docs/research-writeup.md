@@ -31,6 +31,9 @@ all remained below the quality gate. A held-out phrase-selection experiment
 chose an empty dictionary on validation. A partial 1.5B functional decoder study
 returned thirteen schema-valid but semantically unsuccessful responses. These
 results refine the next experiments without establishing useful deployment.
+A subsequent coding study completed two independently verified fixes before a
+provider refusal stopped the schedule. The completed workflows used different
+tasks and transports, preventing a matched compression comparison.
 
 ## 1. Research question and contribution
 
@@ -191,6 +194,22 @@ collection; the failed attempt cannot support a transport ranking. This is an
 information-availability defect: references required for an action must be
 recoverable by the actual partner under its actual tools and context, not merely
 derivable in principle by the test author.
+
+The corrected [task-level collection](workflow-evidence.md), frozen at `fbf9bfa`,
+completed two workflows: a compact-transport expiration fix and an English
+refresh fix. Claude inspected and reviewed; Codex supplied each patch. Both
+passed the visible sequence and all held-out sequences on the first attempt,
+without clarification or repair. The third workflow, in the reverse role
+direction, stopped on a provider safeguard refusal during implementation. No
+patch was activated there, and five remaining workflows never started. The
+study's 11 calls and 323.04 seconds are preserved, including reported partial
+usage from the refusal; no retry or provider substitution was attempted.
+
+These are two successful task executions, not a matched transport experiment:
+neither task/direction has both completed arms. The refusal also cannot identify
+which prompt feature caused the provider decision. Source and child artifact
+identity checks passed at termination. The earlier harness-invalid collection
+remains a separate record, not a discarded cost or an extra task result.
 
 The workflow supplies complete current source and public requirements to each
 partner. A correct patch under compact delivery therefore does not, by itself,

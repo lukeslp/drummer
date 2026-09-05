@@ -41,5 +41,6 @@ practical compression tests, and the unimplemented bridge between them.
 21. [Paired client codec study](client-codec-study.md): actual sender messages, native receiver schemas, and complete versus partial usage.
 22. [Actual paired-client results](client-codec-evidence.md): preserved bytes, ambiguous semantic roles, and auxiliary-model accounting.
 23. [Coding-workflow harness](coding-workflow.md): actual-task coordinator, safe patch revisions, independent grading, and measured execution limits.
+24. [Actual coding-workflow results](workflow-evidence.md): two verified fixes, terminal refusal, exact transport overhead, and incomplete usage.
 
 Author: Luke Steuber. Original documentation: CC BY 4.0.

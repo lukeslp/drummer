@@ -12,7 +12,7 @@ for that model, and a successful reference game is not the finished product.
 | Part | Purpose | Current evidence | Still required |
 | --- | --- | --- | --- |
 | Drummer-0, trained from scratch | Learn useful signals and eventually context-dependent omission | A 3.43-million-parameter model has completed training experiments; the latest best arm reached 85.27% validation success | Reliable grounded signaling, the unchanged omission gates, five independent seeds, cross-play, then gated multi-turn training |
-| Drummer Protocol and practical codecs | Test exact shorthand, jargon, references, and meaning preservation with existing agents | Exact validators, shared-state ledger, adapters, 24 handoffs, functional contrasts, and measured codec failures | Reliable capable-client comparisons and complete coding workflows with net savings |
+| Drummer Protocol and practical codecs | Test exact shorthand, jargon, references, and meaning preservation with existing agents | Exact validators, shared-state ledger, adapters, 24 handoffs, functional contrasts, measured codec failures, and two successful coding workflows | A complete matched comparison, causal communication controls, and net savings |
 | Learned practical communication component | Learn what to express, how compactly to express it, and when to clarify in richer exchanges | Not yet implemented or trained | A task/corpus, architecture decision, frozen baselines, training, and held-out task-level evaluation |
 
 The first model learns a restricted signal channel, not English compression.
@@ -50,8 +50,12 @@ a pretrained specialist remain alternatives, not accomplished decisions.
   complete eight-workflow client comparison is implemented with shared budgets
   and immutable result records. Its first collection was stopped after discovering
   missing model-visible patch hashes; that attempt is not a valid compression
-  comparison. The corrected contract is frozen at `fbf9bfa`; collection and its
-  full outcome/cost audit are separate from the successful harness controls.
+  comparison. The corrected collection at `fbf9bfa` completed two actual workflows:
+  Claude inspected/reviewed, Codex patched, and both fixes passed visible and
+  held-out tests without repair. A provider safeguard refusal in the reverse
+  direction stopped the study after 11 calls; five workflows never started.
+  The two successes use different tasks and transports, so they supply no matched
+  transport comparison. See [task-level results](workflow-evidence.md).
 - **Open:** useful English compression learned by an original model, robust
   cross-family transfer, emotion-related communication effects, and end-to-end
   task savings have not been demonstrated.
@@ -90,8 +94,10 @@ roadmap.
 3. Use the verified remote executor and implemented
    [inspect/propose/implement/review/test coordinator](coding-workflow.md) to
    collect actual fixes in disposable source snapshots. Compare the same capable
-   agents with identical tools and budgets. Passing a response schema or mocked
-   state-machine test is not passing the coding task.
+   agents with identical tools and budgets. Two real fixes now pass, but the
+   eight-workflow matrix is incomplete. Preserve the provider refusal as terminal;
+   do not retry, rephrase, or switch models to circumvent it. Offline analysis and
+   original-model research can proceed without resubmitting that request.
 4. Use the measured functional errors and cost breakdown to specify the learned
    practical component. Freeze the training task and independent evaluation
    before fitting it; do not claim the current symbolic model already provides

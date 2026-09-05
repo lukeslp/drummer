@@ -1,0 +1,251 @@
+{
+  "format": "drummer-client-codec-audit/1",
+  "author": "Luke Steuber",
+  "evidence_class": "Measured",
+  "raw_study_sha256": "7976f4ad34302586e6bf2b8bd43e63797b3a8b450754b1051628b473e1db0ccb",
+  "source": {
+    "dirty": false,
+    "revision": "a6336e61f53cafb182d1e9d4c028e24670941edb",
+    "revision_source": "git",
+    "tree_sha256": "b6989ec669cb58f76719c0de7361a81571d3ed4fab1a81b936fdbf79b8ea2ab5"
+  },
+  "status": "complete",
+  "source_unchanged": true,
+  "elapsed_seconds": 251.06369033298688,
+  "calculation": "For every Claude invocation, verify top-level input/output/cache counts equal Opus-only modelUsage. Sum Opus and separately reported Haiku once; retain Codex top-level counts because no per-model split was returned. Auxiliary records are additional to, not included in, the matched Opus top-level counts.",
+  "actual_top_level_tokens": 219651,
+  "actual_additional_recorded_auxiliary_tokens": 15949,
+  "actual_all_recorded_tokens": 235600,
+  "standalone_strategy_totals": {
+    "full-english": {
+      "invocations": 8,
+      "strict_exact": 4,
+      "top_level_tokens": 81468,
+      "additional_recorded_auxiliary_tokens": 6588,
+      "all_recorded_tokens": 88056
+    },
+    "terse-english": {
+      "invocations": 8,
+      "strict_exact": 1,
+      "top_level_tokens": 79319,
+      "additional_recorded_auxiliary_tokens": 6140,
+      "all_recorded_tokens": 85459
+    },
+    "compact-dictionary": {
+      "invocations": 8,
+      "strict_exact": 1,
+      "top_level_tokens": 99694,
+      "additional_recorded_auxiliary_tokens": 6762,
+      "all_recorded_tokens": 106456
+    }
+  },
+  "invocations": [
+    {
+      "call_id": 0,
+      "client": "codex",
+      "role": "sender",
+      "arm": "full-english",
+      "top_level_tokens": 15507,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15507
+    },
+    {
+      "call_id": 1,
+      "client": "codex",
+      "role": "sender",
+      "arm": "terse-english",
+      "top_level_tokens": 15406,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15406
+    },
+    {
+      "call_id": 2,
+      "client": "claude",
+      "role": "receiver",
+      "arm": "terse-english",
+      "top_level_tokens": 4091,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1348,
+      "all_recorded_tokens": 5439
+    },
+    {
+      "call_id": 3,
+      "client": "claude",
+      "role": "receiver",
+      "arm": "full-english",
+      "top_level_tokens": 4263,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1444,
+      "all_recorded_tokens": 5707
+    },
+    {
+      "call_id": 4,
+      "client": "claude",
+      "role": "receiver",
+      "arm": "compact-dictionary",
+      "top_level_tokens": 4936,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1662,
+      "all_recorded_tokens": 6598
+    },
+    {
+      "call_id": 5,
+      "client": "claude",
+      "role": "sender",
+      "arm": "terse-english",
+      "top_level_tokens": 4866,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1774,
+      "all_recorded_tokens": 6640
+    },
+    {
+      "call_id": 6,
+      "client": "claude",
+      "role": "sender",
+      "arm": "full-english",
+      "top_level_tokens": 5241,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1767,
+      "all_recorded_tokens": 7008
+    },
+    {
+      "call_id": 7,
+      "client": "codex",
+      "role": "receiver",
+      "arm": "compact-dictionary",
+      "top_level_tokens": 33475,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 33475
+    },
+    {
+      "call_id": 8,
+      "client": "codex",
+      "role": "receiver",
+      "arm": "full-english",
+      "top_level_tokens": 15421,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15421
+    },
+    {
+      "call_id": 9,
+      "client": "codex",
+      "role": "receiver",
+      "arm": "terse-english",
+      "top_level_tokens": 15163,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15163
+    },
+    {
+      "call_id": 10,
+      "client": "claude",
+      "role": "sender",
+      "arm": "terse-english",
+      "top_level_tokens": 5232,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1767,
+      "all_recorded_tokens": 6999
+    },
+    {
+      "call_id": 11,
+      "client": "claude",
+      "role": "sender",
+      "arm": "full-english",
+      "top_level_tokens": 5391,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1765,
+      "all_recorded_tokens": 7156
+    },
+    {
+      "call_id": 12,
+      "client": "codex",
+      "role": "receiver",
+      "arm": "full-english",
+      "top_level_tokens": 15434,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15434
+    },
+    {
+      "call_id": 13,
+      "client": "codex",
+      "role": "receiver",
+      "arm": "compact-dictionary",
+      "top_level_tokens": 15619,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15619
+    },
+    {
+      "call_id": 14,
+      "client": "codex",
+      "role": "receiver",
+      "arm": "terse-english",
+      "top_level_tokens": 15194,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15194
+    },
+    {
+      "call_id": 15,
+      "client": "codex",
+      "role": "sender",
+      "arm": "full-english",
+      "top_level_tokens": 15663,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15663
+    },
+    {
+      "call_id": 16,
+      "client": "codex",
+      "role": "sender",
+      "arm": "terse-english",
+      "top_level_tokens": 15326,
+      "top_level_equals_opus_only": null,
+      "additional_recorded_auxiliary_tokens": 0,
+      "all_recorded_tokens": 15326
+    },
+    {
+      "call_id": 17,
+      "client": "claude",
+      "role": "receiver",
+      "arm": "full-english",
+      "top_level_tokens": 4548,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1612,
+      "all_recorded_tokens": 6160
+    },
+    {
+      "call_id": 18,
+      "client": "claude",
+      "role": "receiver",
+      "arm": "terse-english",
+      "top_level_tokens": 4041,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1251,
+      "all_recorded_tokens": 5292
+    },
+    {
+      "call_id": 19,
+      "client": "claude",
+      "role": "receiver",
+      "arm": "compact-dictionary",
+      "top_level_tokens": 4834,
+      "top_level_equals_opus_only": true,
+      "additional_recorded_auxiliary_tokens": 1559,
+      "all_recorded_tokens": 6393
+    }
+  ],
+  "limitations": [
+    "This all-recorded-model view does not prove that the provider reports every internal operation.",
+    "Standalone strategy totals overlap at the four shared terse sender calls and must not be added as actual experiment consumption.",
+    "Token counts include reported cache reads and writes; list-price metadata is not a verified invoice.",
+    "Strict failure scores are unchanged. Semantic roles and identifier binding need separate analysis.",
+    "No later call or revised output contributes to this analysis."
+  ]
+}

@@ -50,9 +50,9 @@ All operative requirements and examples are included in the public task, not
 introduced through held-out tests.
 
 Task B is independent rather than importing a corrected copy of task A. No
-canonical fix is stored in either public fixture. Current tests inspect source
-syntax without executing it; successful completion by a real coding agent has
-not yet been established.
+canonical fix is stored in either public fixture. Separate trusted executor
+controls run authored test implementations, never supplied to coding agents.
+Successful completion by a real coding agent has not yet been established.
 
 ### Public projection and trusted verifier separation
 
@@ -325,3 +325,43 @@ Freeze adapters, containment, limits, code, task and verifier digests before
 collection. Passing the offline state-machine tests does not demonstrate agent
 correctness, communication savings, or useful trained transfer; real complete
 workflows must supply that evidence.
+
+## Execution preflight: measured limits
+
+`workflow_executor.WorkflowExecutor` supplies an immutable readiness report and
+per-case verification records. Its public verification method cannot skip the
+preflight. Private conformance execution is reserved for bounded, authored trusted
+programs and is explicitly marked in every process record; it is not a route for
+executing model-produced candidates.
+
+Beast's native executor remains **not ready for generated-code execution**.
+Trusted probes passed filesystem isolation, including the Data-volume alias,
+network/process denial, environment stripping, CPU, wall-time, output limits,
+and process cleanup. However, macOS rejected the requested 128 MiB address-space
+limit; bounded heap and anonymous-mapping probes both allocated and touched
+144 MiB. Public verification therefore fails closed. The ordinary settings are
+four seconds wall time, two CPU seconds, 65,536 captured output bytes, and the
+required but unsupported 128 MiB memory cap.
+
+Separately labelled trusted controls established that the defective fixtures
+fail their visible contracts and authored corrected controls pass all 24 current
+cases. These are harness checks, not coding-agent results. The driver verifies
+public parameter names, kinds, and defaults and observes actual clock/loader
+calls. The host scores returned observations; expected answers never enter the
+child. Only a projection of actual visible behavior enters later model prompts,
+not repeated resource-probe transcripts. A misrouted held-out case stops delivery.
+
+Candidate code can inspect its test inputs and the same-interpreter driver.
+Stdout remains untrusted; the runner is not an adversarial-correctness guarantee
+against malicious introspection. Python isolation flags are not an OS sandbox.
+
+An initial trusted probe on the existing Pi found bubblewrap 0.11.0 and Python
+3.13.5 already available. An isolated namespace rejected oversized heap and mmap
+allocations under a 64 MiB address-space cap, denied fork and host-network access,
+and exposed neither the home directory nor host temporary files. Its root was
+read-only. No software installation, service change, or candidate execution was
+performed. This is evidence for the next backend, not a complete remote executor:
+bounded transport, output/process cleanup, repeatable conformance, runtime/source
+pinning and complete-workflow integration remain required. Project and training
+Python remain 3.12; a different child runtime must be recorded and held constant
+across comparison arms.

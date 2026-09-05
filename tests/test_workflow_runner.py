@@ -21,7 +21,7 @@ class Verification:
     tree_sha256: str
     passed: bool
     status: str = "complete"
-    cases: str = "TEST-HELDOUT-CANARY"
+    cases: tuple = ()
 
 
 class TestVerifier:
@@ -39,7 +39,9 @@ class TestVerifier:
         self.calls.append((snapshot.root.name, visibility))
         passed = snapshot.root.name != "base" and not (self.fail_first and snapshot.root.name == "revision-1")
         return Verification("0" * 64 if self.mismatch else snapshot.tree_sha256, passed,
-                            cases="TEST-HELDOUT-CANARY" if visibility == "heldout" else "visible observation")
+                            cases=({"case_id": visibility + ".test", "visibility": visibility,
+                                    "passed": passed, "observations_json": canonical_json(
+                                        ["TEST-HELDOUT-CANARY" if visibility == "heldout" else "visible observation"])},))
 
 
 class Clients:
@@ -174,6 +176,15 @@ def test_final_verifier_cannot_change_source_without_invalidation(tmp_path):
     report, _, _ = execute(tmp_path, verifier=MutatingVerifier())
     assert report["status"] == "snapshot_changed" and not report["final_success"]
     assert not report["snapshots_unchanged_after_verification"]
+
+
+def test_visible_projection_rejects_misrouted_heldout_results_before_first_call(tmp_path):
+    class MisroutedVerifier(TestVerifier):
+        def verify(self, snapshot, fixture, *, visibility, timeout_seconds):
+            return super().verify(snapshot, fixture, visibility="heldout", timeout_seconds=timeout_seconds)
+    report, clients, _ = execute(tmp_path, verifier=MisroutedVerifier())
+    assert report["status"] == "visible_result_contains_heldout"
+    assert not report["final_success"] and clients.calls == []
 
 
 def test_exception_after_selected_success_never_persists_interrupted_success(tmp_path):

@@ -207,8 +207,19 @@ def run_workflow(output, config, *, allow_live=False, test_adapter_factory=None,
         if result.get("status") != "complete":
             raise WorkflowStopped("verification_incomplete")
         if visibility == "visible":
+            checks = []
+            for case in result.get("cases", ()):
+                if case.get("visibility") != "visible":
+                    raise WorkflowStopped("visible_result_contains_heldout")
+                checks.append({"case_id": case["case_id"], "passed": case["passed"],
+                               "observations": _strict_json(case["observations_json"])
+                               if case.get("observations_json") is not None else None})
+            # Runtime/preflight/cost metadata remains in the artifact, not every
+            # model prompt. Only legitimate visible behavior belongs in feedback.
+            feedback = {"status": result["status"], "passed": result["passed"],
+                        "tree_sha256": result["tree_sha256"], "checks": checks}
             visible.append(VisibleEvidence(label, "isolated visible fixture check",
-                                            fingerprint(result), canonical_json(result)))
+                                            fingerprint(result), canonical_json(feedback)))
         return result.get("passed") is True
 
     def send(client, stage, extra=""):

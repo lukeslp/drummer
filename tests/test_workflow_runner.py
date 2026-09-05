@@ -68,12 +68,14 @@ class Clients:
                 elif stage in {"implement", "repair"}:
                     raw = prompt.split("Current observation (source and all delivered context):\n", 1)[1]
                     observation = json.loads(raw.split("\nCoordinator observation:", 1)[0])
-                    file = next(file for file in observation["visible_files"] if file["path"].endswith(".py"))
+                    path = observation["public_contract"]["editable_paths"][0]
+                    file = next(file for file in observation["visible_files"] if file["path"] == path)
                     text = file["text"]
-                    response = {"version": "workflow-patch-1", "task_id": config.task_id,
+                    response = {"version": prompt.split("Patch version: ", 1)[1].splitlines()[0],
+                                "task_id": observation["task_id"],
                                 "base_tree_sha256": observation["base_tree_sha256"],
                                 "files": [{"path": file["path"],
-                                           "base_sha256": hashlib.sha256(text.encode()).hexdigest(),
+                                           "base_sha256": observation["file_sha256"][file["path"]],
                                            "edits": [{"old": text.splitlines()[0],
                                                       "new": '"""Synthetic test-only revision ' + stage + '."""'}]}]}
                     if owner.bad_patch and stage == "implement":

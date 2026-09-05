@@ -425,7 +425,7 @@ def test_default_process_runner_kills_the_whole_child_group_on_timeout(
     monkeypatch.setattr(adapters_module.subprocess, "Popen", fake_popen)
     monkeypatch.setattr(adapters_module.os, "killpg", lambda pid, sig: killed.append((pid, sig)))
 
-    with pytest.raises(subprocess.TimeoutExpired):
+    with pytest.raises(subprocess.TimeoutExpired) as caught:
         adapters_module.run_process_group(
             ["fake"],
             input="prompt",
@@ -437,6 +437,201 @@ def test_default_process_runner_kills_the_whole_child_group_on_timeout(
         )
 
     assert killed == [(4321, adapters_module.signal.SIGKILL)]
+    assert caught.value.output == "partial stdout"
+    assert caught.value.stderr == "partial stderr"
+
+
+@pytest.mark.parametrize("failure", [KeyboardInterrupt("stop"), SystemExit(7),
+                                    GeneratorExit("stop"), RuntimeError("read failed")])
+def test_process_runner_cleans_up_on_baseexception_and_preserves_original(failure, monkeypatch):
+    calls = []
+
+    class FakeProcess:
+        pid = 4321
+        returncode = -9
+
+        def communicate(self, **kwargs):
+            calls.append(("communicate", kwargs))
+            if len(calls) == 1:
+                raise failure
+            return "partial", ""
+
+    monkeypatch.setattr(adapters_module.subprocess, "Popen", lambda *args, **kwargs: FakeProcess())
+    monkeypatch.setattr(adapters_module.os, "killpg", lambda pid, sig: calls.append(("killpg", pid, sig)))
+    with pytest.raises(type(failure)) as caught:
+        adapters_module.run_process_group(["fake"], input="once", text=True, capture_output=True,
+                                          timeout=1, shell=False)
+    assert caught.value is failure
+    assert calls[1] == ("killpg", 4321, adapters_module.signal.SIGKILL)
+    assert len([call for call in calls if call[0] == "communicate"]) == 2
+    assert calls[-1][1].get("input") is None  # Drain only; never resend the prompt.
+
+
+def test_process_runner_missing_group_and_interrupted_drain_do_not_mask_original(monkeypatch):
+    original = KeyboardInterrupt("first interrupt")
+    calls = []
+
+    class FakeProcess:
+        pid = 4321
+        returncode = -9
+
+        def communicate(self, **kwargs):
+            calls.append("communicate")
+            if calls.count("communicate") == 1:
+                raise original
+            raise KeyboardInterrupt("second interrupt during drain")
+
+        def kill(self):
+            calls.append("kill")
+
+        def wait(self, *, timeout):
+            assert 0 < timeout <= 2
+            calls.append("wait")
+            return self.returncode
+
+    def gone(pid, sig):
+        calls.append("killpg")
+        raise ProcessLookupError("group already ended")
+
+    monkeypatch.setattr(adapters_module.subprocess, "Popen", lambda *args, **kwargs: FakeProcess())
+    monkeypatch.setattr(adapters_module.os, "killpg", gone)
+    with pytest.raises(KeyboardInterrupt) as caught:
+        adapters_module.run_process_group(["fake"], capture_output=True, timeout=1, shell=False)
+    assert caught.value is original
+    assert "wait" in calls
+
+
+def test_timeout_keeps_partial_output_if_cleanup_is_incomplete(monkeypatch):
+    original = subprocess.TimeoutExpired(["fake"], 1, output=b"first", stderr=b"error")
+    calls = []
+
+    class FakeProcess:
+        pid = 4321
+        returncode = -9
+
+        def communicate(self, **kwargs):
+            calls.append("communicate")
+            if len(calls) == 1:
+                raise original
+            raise subprocess.TimeoutExpired(["fake"], 1, output=b"first plus later", stderr=None)
+
+        def kill(self):
+            calls.append("kill")
+
+        def wait(self, *, timeout):
+            calls.append("wait")
+            return self.returncode
+
+    monkeypatch.setattr(adapters_module.subprocess, "Popen", lambda *args, **kwargs: FakeProcess())
+    monkeypatch.setattr(adapters_module.os, "killpg", lambda *args: None)
+    with pytest.raises(subprocess.TimeoutExpired) as caught:
+        adapters_module.run_process_group(["fake"], capture_output=True, timeout=1, shell=False)
+    assert caught.value is original
+    assert caught.value.output == b"first plus later"
+    assert caught.value.stderr == b"error"
+    assert "wait" in calls
+
+
+def test_cleanup_signal_wait_and_close_failures_never_replace_original_exception(monkeypatch):
+    original = KeyboardInterrupt("original")
+
+    class FailedPipe:
+        def close(self):
+            raise OSError("synthetic close failure")
+
+    class FakeProcess:
+        pid = 4321
+        returncode = None
+        stdout = FailedPipe()
+        communications = 0
+
+        def communicate(self, **kwargs):
+            self.communications += 1
+            if self.communications == 1:
+                raise original
+            assert kwargs["timeout"] == 1.0
+            raise RuntimeError("synthetic drain failure")
+
+        def kill(self):
+            raise OSError("synthetic kill failure")
+
+        def wait(self, *, timeout):
+            assert timeout == 1.0
+            raise KeyboardInterrupt("synthetic repeated interrupt while reaping")
+
+    def failed_group(*args):
+        raise PermissionError("synthetic group failure")
+
+    monkeypatch.setattr(adapters_module.subprocess, "Popen", lambda *args, **kwargs: FakeProcess())
+    monkeypatch.setattr(adapters_module.os, "killpg", failed_group)
+    with pytest.raises(KeyboardInterrupt) as caught:
+        adapters_module.run_process_group(["fake"], capture_output=True, timeout=1, shell=False)
+    assert caught.value is original
+    assert len(original.__notes__) == 5
+    assert any("reap incomplete" in note for note in original.__notes__)
+
+
+def test_interrupt_terminates_real_authored_child_group_and_reaps_leader(monkeypatch):
+    import select
+    import sys
+    import time
+
+    real_popen = subprocess.Popen
+    launched = []
+    descendant = []
+    original = KeyboardInterrupt("synthetic interruption, not a model call")
+
+    class InterruptingProcess:
+        def __init__(self, *args, **kwargs):
+            self.process = real_popen(*args, **kwargs)
+            self.communications = 0
+            launched.append(self.process)
+
+        def __getattr__(self, name):
+            return getattr(self.process, name)
+
+        def communicate(self, **kwargs):
+            self.communications += 1
+            if self.communications == 1:
+                assert select.select([self.process.stdout], [], [], 2)[0], "trusted child did not start"
+                descendant.append(int(self.process.stdout.readline()))
+                raise original
+            return self.process.communicate(**kwargs)
+
+    monkeypatch.setattr(adapters_module.subprocess, "Popen", InterruptingProcess)
+    program = ("import subprocess, sys, time\n"
+               "child = subprocess.Popen([sys.executable, '-I', '-S', '-B', '-c', 'import time; time.sleep(30)'])\n"
+               "print(child.pid, flush=True)\n"
+               "time.sleep(30)\n")
+    try:
+        with pytest.raises(KeyboardInterrupt) as caught:
+            adapters_module.run_process_group([sys.executable, "-I", "-S", "-B", "-c", program],
+                                              text=True, capture_output=True, timeout=3, shell=False,
+                                              env={"LC_ALL": "C"})
+        assert caught.value is original
+        assert len(launched) == 1 and launched[0].returncode == -adapters_module.signal.SIGKILL
+        assert descendant
+        deadline = time.monotonic() + 2
+        while time.monotonic() < deadline:
+            try:
+                os.kill(descendant[0], 0)
+            except ProcessLookupError:
+                break
+            time.sleep(0.01)
+        else:
+            pytest.fail("trusted descendant remained after process-group interruption cleanup")
+    finally:
+        # Keep the regression itself leak-free even against the old broken code.
+        for process in launched:
+            if process.poll() is None:
+                try:
+                    os.killpg(process.pid, adapters_module.signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            process.wait(timeout=2)
+            for stream in (process.stdin, process.stdout, process.stderr):
+                if stream is not None:
+                    stream.close()
 
 
 def response_shape():

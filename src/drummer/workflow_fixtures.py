@@ -410,9 +410,11 @@ class WorkflowObservation:
     base_tree_sha256: str
     public_contract: Mapping[str, object]
     visible_files: tuple[FixtureFile, ...]
+    file_sha256: Mapping[str, str]
     prior_deliveries: tuple[str, ...]
     acknowledgements: tuple[AcknowledgedReference, ...]
     visible_evidence: tuple[VisibleEvidence, ...]
+    observation_version: str = "coding-workflow-observation-2"
 
     @property
     def sha256(self) -> str:
@@ -456,7 +458,8 @@ def build_observation(fixture: WorkflowFixture, *, actor_id: str, stage: str,
             raise ValueError("acknowledgement version must be a positive integer, excluding bool")
     del contract["files"]  # Use only the current selected file bytes, never stale initial source.
     return WorkflowObservation(fixture.task_id, actor_id, stage, base_tree_sha256, contract,
-                               tuple(visible_files), tuple(prior_deliveries), tuple(acknowledgements),
+                               tuple(visible_files), {file.path: file.sha256 for file in visible_files},
+                               tuple(prior_deliveries), tuple(acknowledgements),
                                tuple(visible_evidence))
 
 

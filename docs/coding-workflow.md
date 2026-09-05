@@ -216,9 +216,17 @@ coordinator-owned private storage and serialize revision ownership.
 
 - the public contract and exact current tree digest;
 - selected current source files, not silently reinserted initial versions;
+- coordinator-computed `file_sha256[path]` values for those exact current files;
 - actual prior deliveries, recipient-specific acknowledged reference versions,
   and explicitly model-visible evidence;
 - actor/stage identity and a content fingerprint.
+
+`coding-workflow-observation-2` serializes the per-file hash mapping explicitly.
+Clients copy `base_sha256` from that mapping and `base_tree_sha256` from the
+observation; they are never asked to calculate cryptographic hashes without tools.
+The mapping is rebuilt from current file bytes after each accepted revision, not
+copied from the initial fixture. This changes the observation contract, not the
+task requirements, hidden cases, patch grammar, or permission boundary.
 
 `VisibleEvidence` records a procedure, observed content, and artifact digest.
 `AcknowledgedReference` records recipient, reference ID, version, and content
@@ -458,8 +466,18 @@ final whole-study source/artifact audit, so those fields must not be inferred as
 passed. An initially orphaned CLI subsequently exited; no unrelated process was
 stopped. All calls and failures remain in accounting.
 
-The next version must serialize coordinator-computed current file hashes in every
-observation, tell agents to copy those hashes, and make offline clients use only
-that supplied information. It also needs interruption-safe CLI reaping and a
-persisted terminal identity audit. A new source/config freeze and separate output
-directory are required; the failed attempt is not silently resumed or relabeled.
+Workflow/study version 2 serializes coordinator-computed current file hashes in
+every observation, tells agents to copy them, and makes offline clients use only
+that supplied information. It also persists the terminal identity audit on
+interruption. CLI failures now terminate the fresh process group, bound output
+draining and reaping, preserve the original exception and timeout output, and
+never resend a prompt. An authored local parent/child interruption regression
+verifies termination separately from the Pi execution controls. A new
+source/config freeze and separate output directory are required; the failed
+attempt is not silently resumed or relabeled.
+
+The functional lesson is information availability: a necessary reference is not
+usable common ground merely because a model could theoretically derive it from
+other text. The partner must actually receive what the action contract needs.
+That is relevant to the SFL textual/common-ground analysis, but this infrastructure
+failure is not a test of SFL construct validity or learned language behavior.

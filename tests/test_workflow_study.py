@@ -174,6 +174,18 @@ def test_missing_report_does_not_invent_zero_usage_or_call_count(tmp_path):
     assert report["runs"][0]["allocated_config"]["max_calls"] == 8
 
 
+def test_keyboard_interrupt_preserves_terminal_identity_audit_and_unknown_work(tmp_path):
+    def interrupted(output, config, *, allow_live, clock):
+        raise KeyboardInterrupt
+    with pytest.raises(KeyboardInterrupt):
+        run_study(tmp_path / "interrupted", WorkflowStudyConfig(), test_workflow=interrupted)
+    report = json.loads((tmp_path / "interrupted/study.json").read_text())
+    assert report["status"] == "interrupted"
+    assert report["source_unchanged"] is True and report["child_artifacts_unchanged"] is True
+    assert report["actual_call_count"] is None and report["usage_actual_invocations"]["total_tokens"] is None
+    assert all(row["status"] == "not_started" for row in report["runs"][1:])
+
+
 def test_returned_child_must_equal_saved_artifact_and_is_not_promoted_on_error(tmp_path):
     report, children = execute(tmp_path, OfflineChildren(failure="mismatch"))
     assert len(children.configs) == 1 and report["status"] == "stopped"
@@ -287,11 +299,13 @@ def offline_factory(client, stage, schema, config):
             if stage == "implement":
                 raw = prompt.split("Current observation (source and all delivered context):\n", 1)[1]
                 observation = json.loads(raw.split("\nCoordinator observation:", 1)[0])
-                file = next(item for item in observation["visible_files"] if item["path"].endswith(".py"))
-                response = {"version": "workflow-patch-1", "task_id": config.task_id,
+                path = observation["public_contract"]["editable_paths"][0]
+                file = next(item for item in observation["visible_files"] if item["path"] == path)
+                response = {"version": prompt.split("Patch version: ", 1)[1].splitlines()[0],
+                            "task_id": observation["task_id"],
                             "base_tree_sha256": observation["base_tree_sha256"],
                             "files": [{"path": file["path"],
-                                       "base_sha256": hashlib.sha256(file["text"].encode()).hexdigest(),
+                                       "base_sha256": observation["file_sha256"][file["path"]],
                                        "edits": [{"old": file["text"].splitlines()[0],
                                                   "new": '"""Authored offline test-only revision."""'}]}]}
             elif stage == "propose":

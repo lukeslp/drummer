@@ -33,7 +33,12 @@ class ProcessRunner(Protocol):
 
 
 def run_process_group(args: list[str], **kwargs: object) -> subprocess.CompletedProcess[str]:
-    """Run one CLI in a fresh process group and reap that group on timeout."""
+    """Run one CLI; terminate its group and reap its leader after any failure.
+
+    Interruption cleanup permits one second to drain and one second to reap.
+    Cleanup failures annotate, but never replace, the original exception. A
+    second communicate call only drains existing output; it never resends input.
+    """
 
     if kwargs.get("shell") is not False:
         raise ValueError("agent CLIs must run with shell=False")
@@ -49,11 +54,57 @@ def run_process_group(args: list[str], **kwargs: object) -> subprocess.Completed
     process = subprocess.Popen(args, start_new_session=True, **kwargs)
     try:
         stdout, stderr = process.communicate(input=input_text, timeout=timeout)
-    except subprocess.TimeoutExpired as error:
-        os.killpg(process.pid, signal.SIGKILL)
-        stdout, stderr = process.communicate()
-        error.output = stdout
-        error.stderr = stderr
+    except BaseException as error:
+        original_error = error
+
+        def note(stage: str, failure: BaseException) -> None:
+            try:
+                original_error.add_note(f"CLI cleanup {stage}: {type(failure).__name__}")
+            except BaseException:
+                pass  # Even a failure to annotate must not mask the original.
+
+        def retain_output(output: object, stderr: object) -> None:
+            if isinstance(original_error, subprocess.TimeoutExpired):
+                # communicate() returns its cumulative capture after a timeout.
+                # Missing/empty cleanup output must not erase an earlier capture.
+                if output is not None and (output or original_error.output is None):
+                    original_error.output = output
+                if stderr is not None and (stderr or original_error.stderr is None):
+                    original_error.stderr = stderr
+
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass  # The group may have ended while the exception was propagating.
+        except BaseException as failure:
+            note("group termination failed", failure)
+        try:
+            stdout, stderr = process.communicate(timeout=1.0)
+            retain_output(stdout, stderr)
+        except BaseException as failure:
+            if isinstance(failure, subprocess.TimeoutExpired):
+                retain_output(failure.output, failure.stderr)
+            note("output drain incomplete", failure)
+            # A second interrupt or a pipe held by an escaped descendant must
+            # not leave the direct CLI child running/unreaped or block forever.
+            try:
+                process.kill()
+            except ProcessLookupError:
+                pass
+            except BaseException as cleanup_error:
+                note("leader termination failed", cleanup_error)
+            try:
+                process.wait(timeout=1.0)
+            except BaseException as cleanup_error:
+                note("leader reap incomplete", cleanup_error)
+        finally:
+            for name in ("stdin", "stdout", "stderr"):
+                stream = getattr(process, name, None)
+                if stream is not None:
+                    try:
+                        stream.close()
+                    except BaseException as failure:
+                        note("pipe close failed", failure)
         raise
     completed = subprocess.CompletedProcess(args, process.returncode, stdout, stderr)
     if check:

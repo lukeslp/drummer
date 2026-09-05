@@ -221,6 +221,10 @@ def test_observation_projects_current_visible_source_and_excludes_verifier_objec
     assert "# revised current source" in rendered
     assert fixture.files[1].text not in rendered
     assert "files" not in observation.public_contract
+    assert observation.file_sha256 == {current.path: current.sha256}
+    assert json.loads(rendered)["file_sha256"] == {current.path: current.sha256}
+    assert observation.observation_version == "coding-workflow-observation-2"
+    assert fixture.files[1].sha256 not in observation.file_sha256.values()
     assert len(observation.sha256) == 64
     with pytest.raises(ValueError, match="model-visible"):
         build_observation(fixture, actor_id="sender", stage="inspect", base_tree_sha256="a" * 64,
@@ -231,6 +235,20 @@ def test_observation_projects_current_visible_source_and_excludes_verifier_objec
     trace_fields = {field.name for field in fields(CommunicationTraceBoundary)}
     assert "sender_observation_sha256" in trace_fields
     assert not trace_fields & {"hidden_target", "receiver_private_state", "loss_vector", "expected_results"}
+
+
+def test_every_stage_serializes_copyable_current_file_hashes_without_changing_fixtures():
+    for fixture in workflow_fixtures():
+        expected_definition = fixture.definition_sha256
+        for stage in ("inspect", "propose", "implement", "review", "clarify", "repair"):
+            current = tuple(FixtureFile(file.path, file.text + "\n# current revision\n")
+                            for file in fixture.files)
+            observation = build_observation(fixture, actor_id="sender", stage=stage,
+                                              base_tree_sha256="a" * 64, visible_files=current)
+            wire = json.loads(canonical_json(asdict(observation)))
+            assert wire["file_sha256"] == {file.path: file.sha256 for file in current}
+            assert set(wire["file_sha256"]) == {file["path"] for file in wire["visible_files"]}
+            assert fixture.definition_sha256 == expected_definition
 
 
 def test_observation_rejects_verifier_objects_directly_and_nested_before_projection():

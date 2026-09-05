@@ -24,7 +24,7 @@ from drummer.workflow_fixtures import canonical_json, fingerprint
 from drummer.workflow_runner import VERSION as CHILD_VERSION, WorkflowConfig, run_workflow
 
 
-VERSION = "drummer-coding-workflow-study/1"
+VERSION = "drummer-coding-workflow-study/2"
 MAX_CHILD_REPORT_BYTES = 64 * 1024 * 1024
 
 
@@ -293,9 +293,12 @@ def run_study(output, config: WorkflowStudyConfig, *, allow_live=False,
             row.update(completed=False, task_success=None, first_pass_success=None)
             report.update(status="interrupted" if isinstance(error, (KeyboardInterrupt, SystemExit)) else "stopped",
                           stop_reason="child_exception")
-            save()
             if isinstance(error, (KeyboardInterrupt, SystemExit)):
+                report["source_unchanged"] = source_matches()
+                report["child_artifacts_unchanged"] = artifacts_match()
+                save()
                 raise
+            save()
             break
         save()
         if row["status"] != "complete":

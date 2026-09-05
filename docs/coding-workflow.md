@@ -360,8 +360,63 @@ An initial trusted probe on the existing Pi found bubblewrap 0.11.0 and Python
 allocations under a 64 MiB address-space cap, denied fork and host-network access,
 and exposed neither the home directory nor host temporary files. Its root was
 read-only. No software installation, service change, or candidate execution was
-performed. This is evidence for the next backend, not a complete remote executor:
-bounded transport, output/process cleanup, repeatable conformance, runtime/source
-pinning and complete-workflow integration remain required. Project and training
-Python remain 3.12; a different child runtime must be recorded and held constant
-across comparison arms.
+performed during that initial probe. Project and training Python remain 3.12;
+the child runtime is separately recorded and held constant across comparison arms.
+
+## Explicit Pi executor and whole-study bounds
+
+`workflow_remote_executor.RemoteLinuxExecutor` keeps grading on Beast and sends
+only synthetic source plus operation inputs to the existing Pi. The ephemeral
+standard-library worker is supplied over authenticated SSH, not installed as a
+service. It binds sealed memory-backed source/driver files read-only inside
+bubblewrap. No persistent remote source, model prompt, expected answer, home
+directory, host temporary directory, credential, or agent socket enters the child.
+There is no general-purpose remote host or arbitrary preflight-program option.
+
+The fixed Linux limits are 128 MiB address space, two CPU seconds, four wall
+seconds, 65,536 combined output bytes, no fork, no regular-file writes, no core
+dumps, and 32 open descriptors. Preflight separately checks heap and mmap denial,
+read-only mounts, absent host roots, unreachable host networking, denied process
+creation and nested user namespaces, a minimal environment, CPU/wall/output caps,
+and cleanup. Accepting a resource setting alone is not a passing memory test.
+The Mac backend remains independently unavailable; selecting `pi-linux` never
+waives its failed memory gate.
+
+The coordinator pins worker bytes, driver, Python and bubblewrap binaries,
+bootstrap, policy and per-request limits. Replies must match the exact request,
+source and operation hashes. The SSH guardian bounds input/output and time,
+disables configuration-based forwarding, retains host-key validation, and never
+retries an uncertain result. The remote guardian also enforces its own deadline;
+SSH disconnection is not its only termination mechanism. No protection against
+a compromised kernel or hostile same-account operator is claimed. A local SSH
+cleanup flag alone is not independent observation of remote termination after
+disconnection; process containment and transport cleanup remain separate claims.
+
+The runner's `executor_backend` selects `macos` (default) or `pi-linux` explicitly.
+Neither backend executes a candidate without passing readiness. A completed
+process still has to pass the independent host grader; a failed or incomplete
+process cannot pass even when its output resembles the expected answer.
+
+`workflow_study.run_study()` schedules two tasks × two role directions × English
+or DCD1, shuffled prospectively with seed `20260905`. Defaults request Codex
+`gpt-6-astra` and Claude `claude-opus-5[1m]`, using the Pi executor for every arm.
+The **whole study** is capped at 64 recorded client invocations and 3,600 seconds;
+each child additionally receives at most eight calls, 900 seconds, and 120 seconds
+per invocation, reduced to the remaining study allowance. Provider-internal
+activity is retained separately, not assumed included in that invocation count.
+
+The study freezes clean source, keeps child artifacts and hashes, checks source
+and completed artifacts between workflows, and refuses overwrite, implicit
+resume, or live execution with test doubles. A completed coding-task failure
+remains a result. Infrastructure, containment, source, transport, or budget
+failure stops the remaining matrix. Known costs and unknown totals remain
+distinct, including when a child fails before saving a complete report.
+
+```text
+python -m drummer.workflow_study --config <frozen-study.json> --output <new-study-directory> --live
+```
+
+Offline doubles and explicitly opted-in authored execution controls are harness
+evidence only. Actual client workflows must be reported separately. The first
+study tests hand-designed reversible substitution, not learned compression or
+native reference reuse; its traces are inputs to the next training-design step.

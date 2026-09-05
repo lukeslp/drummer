@@ -248,7 +248,30 @@ def test_wall_budget_and_no_overwrite(tmp_path):
 
 
 @pytest.mark.parametrize("changes", [{"max_calls": True}, {"max_calls": 9}, {"max_seconds": float("nan")},
-                                      {"arm": "oracle"}, {"direction": "private"}, {"codex_model": ""}])
+                                      {"arm": "oracle"}, {"direction": "private"}, {"codex_model": ""},
+                                      {"executor_backend": "unsafe"}])
 def test_config_is_bounded(changes):
     with pytest.raises(ValueError):
         replace(WorkflowConfig(), **changes)
+
+
+@pytest.mark.parametrize("backend", ["macos", "pi-linux"])
+def test_explicit_backend_preflight_respects_remaining_budget_before_calls(tmp_path, monkeypatch, backend):
+    import drummer.workflow_executor as native
+    import drummer.workflow_remote_executor as remote
+    import drummer.workflow_runner as runner
+    selected = []
+    class Blocked:
+        def preflight(self, *, timeout_seconds):
+            selected.append((backend, timeout_seconds))
+            return Readiness(False)
+    monkeypatch.setattr(runner, "_source_provenance", lambda: {"dirty": False})
+    monkeypatch.setattr(native, "WorkflowExecutor", Blocked if backend == "macos" else
+                        lambda: pytest.fail("wrong backend"))
+    monkeypatch.setattr(remote, "RemoteLinuxExecutor", Blocked if backend == "pi-linux" else
+                        lambda: pytest.fail("wrong backend"))
+    monkeypatch.setattr(runner, "_client_metadata", lambda *args, **kwargs: pytest.fail("unready invoked client"))
+    with pytest.raises(ValueError, match="preflight"):
+        run_workflow(tmp_path / "never", WorkflowConfig(executor_backend=backend, max_seconds=0.5),
+                     allow_live=True)
+    assert selected == [(backend, 0.5)] and not (tmp_path / "never").exists()

@@ -78,6 +78,7 @@ class WorkflowConfig:
     arm: str = "english"
     codex_model: str = "gpt-6-astra"
     claude_model: str = "claude-opus-5[1m]"
+    executor_backend: str = "macos"
     max_calls: int = 8
     max_seconds: float = 900
     timeout_seconds: float = 120
@@ -88,6 +89,8 @@ class WorkflowConfig:
             raise ValueError("unknown role direction")
         if self.arm not in {"english", "compact-dictionary"}:
             raise ValueError("unknown transport arm")
+        if self.executor_backend not in {"macos", "pi-linux"}:
+            raise ValueError("unknown isolated executor backend")
         if type(self.max_calls) is not int or not 1 <= self.max_calls <= 8:
             raise ValueError("at most eight client calls")
         for name, ceiling in (("max_seconds", 900), ("timeout_seconds", 120)):
@@ -121,6 +124,8 @@ def run_workflow(output, config, *, allow_live=False, test_adapter_factory=None,
     """
     if not isinstance(config, WorkflowConfig):
         raise TypeError("validated frozen WorkflowConfig required")
+    if type(allow_live) is not bool:
+        raise TypeError("allow_live must be an explicit boolean")
     injected = test_adapter_factory is not None or test_verifier is not None
     if allow_live and injected:
         raise ValueError("test backends cannot be used as live evidence")
@@ -143,10 +148,16 @@ def run_workflow(output, config, *, allow_live=False, test_adapter_factory=None,
         executor = test_verifier
         metadata = {name: {"test_backend": True} for name in CLIENTS}
     else:
-        from drummer.workflow_executor import WorkflowExecutor
-        executor = WorkflowExecutor()
+        if config.executor_backend == "pi-linux":
+            from drummer.workflow_remote_executor import RemoteLinuxExecutor
+            executor = RemoteLinuxExecutor()
+        else:
+            from drummer.workflow_executor import WorkflowExecutor
+            executor = WorkflowExecutor()
         metadata = {}
-    readiness = _serialize(executor.preflight())
+    readiness = _serialize(executor.preflight() if injected else executor.preflight(
+        timeout_seconds=min(40 if config.executor_backend == "pi-linux" else 20,
+                            config.max_seconds)))
     if readiness.get("ready") is not True:
         raise ValueError("isolated execution preflight not ready; no model calls")
     for client in (() if injected else CLIENTS):
